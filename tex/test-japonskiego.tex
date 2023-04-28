@@ -1,0 +1,103 @@
+
+
+\documentclass[a4paper,12pt]{article}
+
+\usepackage{ifxetex}
+\usepackage{url}
+
+
+\ifxetex  % XeLaTeX
+   \usepackage{fontspec}
+   \defaultfontfeatures{Mapping=tex--text}   % to support TeX conventions like dashes etc
+   \usepackage{xltxtra} % extra customisation for XeLaTeX
+   \setsansfont{Linux Biolinum O}
+   \setmainfont[Ligatures={Common,TeX}, Numbers={OldStyle}]{Linux Libertine O}
+	\usepackage[%
+	  boldfont,
+	  CJKnumber,
+	  CJKchecksingle
+	]{xeCJK}
+
+	\setCJKmainfont[Script=CJK]{Kozuka Mincho Std M}
+
+\else  % LaTeX
+   \usepackage[T1]{fontenc}
+   \usepackage[utf8]{inputenc} 
+   \usepackage[osf,tt=false]{libertine}
+   
+\fi
+
+\usepackage[japanese,polish]{babel}
+%\usepackage[british]{babel}
+%\usepackage[ngerman]{babel}
+%\usepackage[czech]{babel}
+%\usepackage[spanish]{babel}
+
+\usepackage[all]{nowidow}  % dla unikniecia wdow i sierot
+\usepackage{indentfirst}
+
+\frenchspacing
+
+\newcommand{\aster}{*} % maybe \ding{97} ?
+\newcommand\asterism{
+   \begin{center}
+      %\vspace{-1.75em}
+      \parbox{1in}{ % needed to prevent split across page boundaries
+         \begin{center}
+            \aster\\
+            \aster\hspace{1.15em}\aster
+         \end{center}
+      } %\parbox
+      \vspace{-0.75em}
+   \end{center}
+}
+
+
+\newcommand{\intro}[1]{\textbf{#1}}
+
+%\newcommand{\obcy}[1]{\emph{#1}}
+\newcommand{\obcy}[1]{#1}
+\newcommand{\japanese}[1]{{\selectlanguage{japanese}\obcy{#1}}} 
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% mala zmiana sposobu wyswietlania notek bocznych
+\let\oldmarginpar\marginpar
+\renewcommand\marginpar[1]{%
+  {\linespread{0.85}\normalfont\scriptsize%
+\oldmarginpar[\hspace{1cm}\begin{minipage}{3cm}\raggedleft\scriptsize\color{black}\textsf{#1}\end{minipage}]%    left pages
+{\hspace{0cm}\begin{minipage}{3cm}\raggedright\scriptsize\color{black}\textsf{#1}\end{minipage}}% right pages
+}%
+}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+ 
+%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\title{\sffamily\bfseries Test dla języka japońskiego}
+\author{}
+\date{\today}
+
+\begin{document}
+\maketitle
+
+\ifxetex 
+% XeLaTeX
+\section*{\XeLaTeX} 
+
+彼がやった。 何を食べますか。 送り仮名 コンピュータ tekst łaciński
+東京  とうきょう   トーキョー 平仮名, ひらがな,  漢字,  片仮名、カタカナ
+
+
+\else 
+% LaTeX
+Trzeba kompilować XeLaTeXem!
+
+
+\fi  
+
+\end{document}
+
+
+
+
