@@ -9,6 +9,10 @@ import android.widget.Button;
 import android.widget.ScrollView;
 import android.widget.TextView;
 
+import java.util.List;
+
+import pl.polsl.kanjiapp.models.CharacterModel;
+import pl.polsl.kanjiapp.models.SentenceModel;
 import pl.polsl.kanjiapp.utils.DataBaseAdapter;
 
 public class MainActivity extends AppCompatActivity {
@@ -32,9 +36,9 @@ public class MainActivity extends AppCompatActivity {
                 mDbHelper.createDatabase();
                 mDbHelper.open();
 
-                Cursor testdata = mDbHelper.getTestData();
+                List<SentenceModel> testdata = mDbHelper.getSentencesByKanji("字");
                 TextView tv = new TextView(MainActivity.this);
-                tv.setText(testdata.getColumnName(2));
+                tv.setText(testdata.get(0).toString());
                 scrl1.addView(tv);
 
                 mDbHelper.close();
