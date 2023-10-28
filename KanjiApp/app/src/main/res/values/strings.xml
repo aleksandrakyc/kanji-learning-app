@@ -3,4 +3,10 @@
     <string name="TitleText">Kanji Learning App</string>
     <string name="TitleButton">Click me to retrieve data!</string>
     <string name="ScrollviewDescription">Kanji Data</string>
+    <string name="kanji">KJ!</string>
+    <string name="onyomi">on reading of kanji</string>
+    <string name="kunyomi">kun reading of kanji</string>
+    <string name="meaning">english meaning of kanji</string>
+    <string name="example_sentence">This is an example sentence containing this kanji.</string>
+    <string name="word_view">These are some words containing that character.</string>
 </resources>

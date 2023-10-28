@@ -2,13 +2,13 @@ package pl.polsl.kanjiapp.utils;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import android.content.Context;
 import android.database.Cursor;
 import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
-import android.provider.Telephony;
 import android.util.Log;
 
 import pl.polsl.kanjiapp.models.CharacterModel;
@@ -31,7 +31,7 @@ public class DataBaseAdapter {
         try {
             mDbHelper.createDataBase();
         } catch (IOException mIOException) {
-            Log.e(TAG, mIOException.toString() + "  UnableToCreateDatabase");
+            Log.e(TAG, mIOException + "  UnableToCreateDatabase");
             throw new Error("UnableToCreateDatabase");
         }
         return this;
@@ -43,7 +43,7 @@ public class DataBaseAdapter {
             mDbHelper.close();
             mDb = mDbHelper.getReadableDatabase();
         } catch (SQLException mSQLException) {
-            Log.e(TAG, "open >>"+ mSQLException.toString());
+            Log.e(TAG, "open >>"+ mSQLException);
             throw mSQLException;
         }
         return this;
@@ -70,7 +70,7 @@ public class DataBaseAdapter {
             }
             return returnList;
         } catch (SQLException mSQLException) {
-            Log.e(TAG, "readDatabase >>" + mSQLException.toString());
+            Log.e(TAG, "readDatabase >>" + mSQLException);
             throw mSQLException;
         }
     }
@@ -78,26 +78,45 @@ public class DataBaseAdapter {
     public List<CharacterModel> getKanjiByLevel(String level) {
         List<CharacterModel> returnList = new ArrayList<>();
         try {
-            String sql = "SELECT id, kanji, reading, okurigana, annotated_acc, meaning, grade, jlpt, frequency FROM edict WHERE jlpt LIKE '%" + level + "%';";
+            String sql = "SELECT kanji, onyomi, kunyomi, meaning, grade, jlpt, frequency FROM kanjidict WHERE jlpt LIKE '%" + level + "%';";
             Cursor cursor = mDb.rawQuery(sql, null);
             if (cursor.moveToFirst()) {
                 do {
-                    int id = cursor.getInt(0);
-                    String kanji = cursor.getString(1);
-                    String reading = cursor.getString(2);
-                    String okurigana = cursor.getString(3);
-                    String annotated_acc = cursor.getString(4);
-                    String meaning = cursor.getString(5);
-                    String grade = cursor.getString(6);
-                    String jlpt = cursor.getString(7);
-                    String frequency = cursor.getString(8);
-                    CharacterModel newCharacter = new CharacterModel(id, kanji, reading, okurigana, annotated_acc, meaning, grade, jlpt, frequency);
+                    String kanji = cursor.getString(0);
+                    ArrayList<String> onyomi = new ArrayList<String>(Arrays.asList(cursor.getString(1).split("、")));
+                    ArrayList<String> kunyomi = new ArrayList<String>(Arrays.asList(cursor.getString(2).split("、")));
+                    ArrayList<String> meaning = new ArrayList<String>(Arrays.asList(cursor.getString(3).split("、")));
+                    String grade = cursor.getString(4);
+                    String jlpt = cursor.getString(5);
+                    int frequency = cursor.getInt(6);
+                    CharacterModel newCharacter = new CharacterModel(kanji, onyomi, kunyomi, meaning, grade, jlpt, frequency);
                     returnList.add(newCharacter);
                 } while (cursor.moveToNext());
             }
             return returnList;
         } catch (SQLException mSQLException) {
-            Log.e(TAG, "readDatabase >>" + mSQLException.toString());
+            Log.e(TAG, "readDatabase >>" + mSQLException);
+            throw mSQLException;
+        }
+    }
+    public CharacterModel getKanjiByCharacter(String character) {
+        try {
+            String sql = "SELECT kanji, onyomi, kunyomi, meaning, grade, jlpt, frequency FROM kanjidict WHERE kanji='" + character + "';";
+            Cursor cursor = mDb.rawQuery(sql, null);
+            CharacterModel newCharacter = null;
+            if (cursor.moveToFirst()) {
+                String kanji = cursor.getString(0);
+                ArrayList<String> onyomi = new ArrayList<String>(Arrays.asList(cursor.getString(1).split("、")));
+                ArrayList<String> kunyomi = new ArrayList<String>(Arrays.asList(cursor.getString(2).split("、")));
+                ArrayList<String> meaning = new ArrayList<String>(Arrays.asList(cursor.getString(3).split(";")));
+                String grade = cursor.getString(4);
+                String jlpt = cursor.getString(5);
+                int frequency = cursor.getInt(6);
+                newCharacter = new CharacterModel(kanji, onyomi, kunyomi, meaning, grade, jlpt, frequency);
+            }
+            return newCharacter;
+        } catch (SQLException mSQLException) {
+            Log.e(TAG, "readDatabase >>" + mSQLException);
             throw mSQLException;
         }
     }

@@ -2,49 +2,44 @@ package pl.polsl.kanjiapp;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.database.Cursor;
 import android.os.Bundle;
-import android.view.View;
-import android.widget.Button;
-import android.widget.ScrollView;
 import android.widget.TextView;
-
-import java.util.List;
 
 import pl.polsl.kanjiapp.models.CharacterModel;
 import pl.polsl.kanjiapp.models.SentenceModel;
 import pl.polsl.kanjiapp.utils.DataBaseAdapter;
 
 public class MainActivity extends AppCompatActivity {
+    DataBaseAdapter dataBaseAdapter;
 
-    Button btn1;
-    ScrollView scrl1;
-    DataBaseAdapter mDbHelper;
+    TextView kanjiView, kunyomiView, onyomiView, meaningView, wordView, sentenceView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        btn1 = findViewById(R.id.btn1);
-        scrl1 = findViewById(R.id.scrl1);
+        dataBaseAdapter = new DataBaseAdapter(MainActivity.this);
+        dataBaseAdapter.createDatabase();
+        dataBaseAdapter.open();
 
-        btn1.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                mDbHelper = new DataBaseAdapter(MainActivity.this);
-                mDbHelper.createDatabase();
-                mDbHelper.open();
+        CharacterModel character = dataBaseAdapter.getKanjiByCharacter("来");
 
-                List<SentenceModel> testdata = mDbHelper.getSentencesByKanji("字");
-                TextView tv = new TextView(MainActivity.this);
-                tv.setText(testdata.get(0).toString());
-                scrl1.addView(tv);
+        kanjiView = findViewById(R.id.kanjiView);
+        kanjiView.setText(character.getKanji());
 
-                mDbHelper.close();
+        onyomiView = findViewById((R.id.onyomiView));
+        onyomiView.setText(String.join(", ", character.getOnyomi()));
 
-            }
-        });
+        kunyomiView = findViewById((R.id.kunyomiView));
+        kunyomiView.setText(String.join(", ", character.getKunyomi()));
+
+        meaningView = findViewById((R.id.meaningView));
+        meaningView.setText(String.join(", ", character.getMeaning()));
+
+        SentenceModel sentence = dataBaseAdapter.getSentencesByKanji(character.getKanji()).get(0);
+        sentenceView = findViewById((R.id.exampleSentenceView));
+        sentenceView.setText(sentence.getJapanese());
 
     }
 }
