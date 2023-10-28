@@ -17,7 +17,7 @@
 
 ---
 ### wymagania niefunkcjonalne
-- Aplikacja posiada lokalną bazę danych ze znakami kanji, ich złożeniami i przykładowymi zdaniami nie przekraczającą 10MB
+- Aplikacja posiada lokalną bazę danych ze znakami kanji, ich złożeniami i przykładowymi zdaniami nie przekraczającą 15MB
 - Podstawowa funkcjonalność aplikacji jest dostępna offline
 - System bezpiecznie przechowuje dane użytkowników w bazie danych hostowanej w chmurze
 - Aplikacja jest skierowana do osób operujących językiem angielskim
