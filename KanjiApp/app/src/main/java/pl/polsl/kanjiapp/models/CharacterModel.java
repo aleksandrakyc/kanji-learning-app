@@ -2,13 +2,15 @@ package pl.polsl.kanjiapp.models;
 
 import java.util.ArrayList;
 
+import pl.polsl.kanjiapp.types.Jlpt;
+
 public class CharacterModel {
     private String kanji;
     private ArrayList<String> onyomi;
     private ArrayList<String> kunyomi;
     private ArrayList<String> meaning;
     private String grade; //nullable
-    private String jlpt; //nullable
+    private Jlpt jlpt; //nullable
     private int frequency; //nullable
 
     public CharacterModel(String kanji, ArrayList<String> onyomi, ArrayList<String> kunyomi, ArrayList<String> meaning, String grade, String jlpt, int frequency) {
@@ -17,7 +19,7 @@ public class CharacterModel {
         this.kunyomi = kunyomi;
         this.meaning = meaning;
         this.grade = grade;
-        this.jlpt = jlpt;
+        this.jlpt = Jlpt.stringToJlpt(jlpt);
         this.frequency = frequency;
     }
     public String getKanji() {
@@ -60,11 +62,11 @@ public class CharacterModel {
         this.grade = grade;
     }
 
-    public String getJlpt() {
+    public Jlpt getJlpt() {
         return jlpt;
     }
 
-    public void setJlpt(String jlpt) {
+    public void setJlpt(Jlpt jlpt) {
         this.jlpt = jlpt;
     }
 

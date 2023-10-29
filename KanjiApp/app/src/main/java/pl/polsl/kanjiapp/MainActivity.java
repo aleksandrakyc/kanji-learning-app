@@ -23,7 +23,7 @@ public class MainActivity extends AppCompatActivity {
         dataBaseAdapter.createDatabase();
         dataBaseAdapter.open();
 
-        CharacterModel character = dataBaseAdapter.getKanjiByCharacter("来");
+        CharacterModel character = dataBaseAdapter.getKanjiByCharacter('来');
 
         kanjiView = findViewById(R.id.kanjiView);
         kanjiView.setText(character.getKanji());

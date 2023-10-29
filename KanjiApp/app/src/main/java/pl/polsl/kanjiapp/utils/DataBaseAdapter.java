@@ -3,7 +3,10 @@ package pl.polsl.kanjiapp.utils;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.stream.Stream;
 
 import android.content.Context;
 import android.database.Cursor;
@@ -13,6 +16,8 @@ import android.util.Log;
 
 import pl.polsl.kanjiapp.models.CharacterModel;
 import pl.polsl.kanjiapp.models.SentenceModel;
+import pl.polsl.kanjiapp.models.WordModel;
+import pl.polsl.kanjiapp.types.Jlpt;
 
 public class DataBaseAdapter {
 
@@ -75,10 +80,10 @@ public class DataBaseAdapter {
         }
     }
 
-    public List<CharacterModel> getKanjiByLevel(String level) {
+    public List<CharacterModel> getKanjiByLevel(Jlpt level) {
         List<CharacterModel> returnList = new ArrayList<>();
         try {
-            String sql = "SELECT kanji, onyomi, kunyomi, meaning, grade, jlpt, frequency FROM kanjidict WHERE jlpt LIKE '%" + level + "%';";
+            String sql = "SELECT kanji, onyomi, kunyomi, meaning, grade, jlpt, frequency FROM kanjidict WHERE jlpt LIKE '%" + level.name() + "%';";
             Cursor cursor = mDb.rawQuery(sql, null);
             if (cursor.moveToFirst()) {
                 do {
@@ -99,7 +104,7 @@ public class DataBaseAdapter {
             throw mSQLException;
         }
     }
-    public CharacterModel getKanjiByCharacter(String character) {
+    public CharacterModel getKanjiByCharacter(char character) {
         try {
             String sql = "SELECT kanji, onyomi, kunyomi, meaning, grade, jlpt, frequency FROM kanjidict WHERE kanji='" + character + "';";
             Cursor cursor = mDb.rawQuery(sql, null);
@@ -120,6 +125,31 @@ public class DataBaseAdapter {
             throw mSQLException;
         }
     }
+//    public ArrayList<WordModel> getWordsByKanjiAndLevel(char character, Jlpt level){
+//        ArrayList<WordModel> returnList = new ArrayList<>();
+//        Map<String, String> tableNames =  new HashMap<String, String>() {{
+//            put("edict", "okurigana");
+//            put("jukugo", "jukugo");
+//            put("compverbs", "compverb");
+//        }};
+//        try {
+//            for(String tableName : tableNames.keySet()) {
+//                String sql = "SELECT id, kanji, "+tableNames.get(tableName)+", reading, meaning, jlpt FROM " + tableName + " WHERE kanji="+character+" AND jlpt LIKE '%" + level.name() + "%';";
+//                Cursor cursor = mDb.rawQuery(sql, null);
+//                if (cursor.moveToFirst()) {
+//                    do {
+//
+//                        WordModel newWord = new WordModel();
+//                        returnList.add(newWord);
+//                    } while (cursor.moveToNext());
+//                }
+//            }
+//            return returnList;
+//        } catch (SQLException mSQLException) {
+//            Log.e(TAG, "readDatabase >>" + mSQLException);
+//            throw mSQLException;
+//        }
+//    }
     public void close() {
         mDbHelper.close();
     }
