@@ -9,6 +9,7 @@ public class CharacterModel {
     private ArrayList<String> onyomi;
     private ArrayList<String> kunyomi;
     private ArrayList<String> meaning;
+    private String compact_meaning; //TODO
     private String grade; //nullable
     private Jlpt jlpt; //nullable
     private int frequency; //nullable

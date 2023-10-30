@@ -1,12 +1,14 @@
 package pl.polsl.kanjiapp.models;
 
+import pl.polsl.kanjiapp.types.Jlpt;
+
 public class WordModel {
     private int id;
     private String kanji;
     private String word; //okurigana in edict, jukugo in jukugo, compverb in compverbs
     private String reading;
     private String meaning;
-    private String jlpt;
+    private Jlpt jlpt;
 
     public WordModel(int id, String kanji, String word, String reading, String meaning, String jlpt) {
         this.id = id;
@@ -14,7 +16,7 @@ public class WordModel {
         this.word = word;
         this.reading = reading;
         this.meaning = meaning;
-        this.jlpt = jlpt;
+        this.jlpt = Jlpt.stringToJlpt(jlpt);
     }
 
     public int getId() {
@@ -56,11 +58,11 @@ public class WordModel {
         this.meaning = meaning;
     }
 
-    public String getJlpt() {
+    public Jlpt getJlpt() {
         return jlpt;
     }
 
-    public void setJlpt(String jlpt) {
+    public void setJlpt(Jlpt jlpt) {
         this.jlpt = jlpt;
     }
 

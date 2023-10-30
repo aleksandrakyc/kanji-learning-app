@@ -3,15 +3,16 @@ package pl.polsl.kanjiapp;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import pl.polsl.kanjiapp.models.CharacterModel;
 import pl.polsl.kanjiapp.models.SentenceModel;
+import pl.polsl.kanjiapp.types.Jlpt;
 import pl.polsl.kanjiapp.utils.DataBaseAdapter;
 
 public class MainActivity extends AppCompatActivity {
     DataBaseAdapter dataBaseAdapter;
-
     TextView kanjiView, kunyomiView, onyomiView, meaningView, wordView, sentenceView;
 
     @Override
@@ -36,6 +37,9 @@ public class MainActivity extends AppCompatActivity {
 
         meaningView = findViewById((R.id.meaningView));
         meaningView.setText(String.join(", ", character.getMeaning()));
+
+        wordView = findViewById(R.id.wordView);
+        wordView.setText(dataBaseAdapter.getWordsByKanjiAndLevel('来', Jlpt.N5).get(0).getWord());
 
         SentenceModel sentence = dataBaseAdapter.getSentencesByKanji(character.getKanji()).get(0);
         sentenceView = findViewById((R.id.exampleSentenceView));

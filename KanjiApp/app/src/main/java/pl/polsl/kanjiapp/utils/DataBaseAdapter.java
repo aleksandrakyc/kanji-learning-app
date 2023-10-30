@@ -125,31 +125,36 @@ public class DataBaseAdapter {
             throw mSQLException;
         }
     }
-//    public ArrayList<WordModel> getWordsByKanjiAndLevel(char character, Jlpt level){
-//        ArrayList<WordModel> returnList = new ArrayList<>();
-//        Map<String, String> tableNames =  new HashMap<String, String>() {{
-//            put("edict", "okurigana");
-//            put("jukugo", "jukugo");
-//            put("compverbs", "compverb");
-//        }};
-//        try {
-//            for(String tableName : tableNames.keySet()) {
-//                String sql = "SELECT id, kanji, "+tableNames.get(tableName)+", reading, meaning, jlpt FROM " + tableName + " WHERE kanji="+character+" AND jlpt LIKE '%" + level.name() + "%';";
-//                Cursor cursor = mDb.rawQuery(sql, null);
-//                if (cursor.moveToFirst()) {
-//                    do {
-//
-//                        WordModel newWord = new WordModel();
-//                        returnList.add(newWord);
-//                    } while (cursor.moveToNext());
-//                }
-//            }
-//            return returnList;
-//        } catch (SQLException mSQLException) {
-//            Log.e(TAG, "readDatabase >>" + mSQLException);
-//            throw mSQLException;
-//        }
-//    }
+    public ArrayList<WordModel> getWordsByKanjiAndLevel(char character, Jlpt level){
+        ArrayList<WordModel> returnList = new ArrayList<>();
+        Map<String, String> tableNames =  new HashMap<String, String>() {{
+            put("edict", "okurigana");
+            put("jukugo", "jukugo");
+            put("compverbs", "compverb");
+        }};
+        try {
+            for(String tableName : tableNames.keySet()) {
+                String sql = "SELECT id, kanji, "+tableNames.get(tableName)+", reading, meaning, jlpt FROM " + tableName + " WHERE kanji='"+character+"' AND jlpt LIKE '%" + level.name() + "%';";
+                Cursor cursor = mDb.rawQuery(sql, null);
+                if (cursor.moveToFirst()) {
+                    do {
+                        int id = cursor.getInt(0);
+                        String kanji = cursor.getString(1);
+                        String word = cursor.getString(2);
+                        String reading = cursor.getString(3);
+                        String meaning = cursor.getString(4);
+                        String jlpt = cursor.getString(5);
+                        WordModel newWord = new WordModel(id, kanji, word, reading, meaning, jlpt);
+                        returnList.add(newWord);
+                    } while (cursor.moveToNext());
+                }
+            }
+            return returnList;
+        } catch (SQLException mSQLException) {
+            Log.e(TAG, "readDatabase >>" + mSQLException);
+            throw mSQLException;
+        }
+    }
     public void close() {
         mDbHelper.close();
     }
