@@ -1,27 +1,31 @@
 package pl.polsl.kanjiapp.models;
 
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 import pl.polsl.kanjiapp.types.Jlpt;
 
-public class CharacterModel {
+public class CharacterModel extends KanjiDbObject{
     private String kanji;
-    private ArrayList<String> onyomi;
-    private ArrayList<String> kunyomi;
-    private ArrayList<String> meaning;
-    private String compact_meaning; //TODO
+    private List<String> onyomi;
+    private List<String> kunyomi;
+    private List<String> meaning;
+    private String compact_meaning;
     private String grade; //nullable
     private Jlpt jlpt; //nullable
     private int frequency; //nullable
 
-    public CharacterModel(String kanji, ArrayList<String> onyomi, ArrayList<String> kunyomi, ArrayList<String> meaning, String grade, String jlpt, int frequency) {
+    public CharacterModel(String kanji, String onyomi, String kunyomi, String meaning, String compact_meaning, String grade, String jlpt, String frequency) {
         this.kanji = kanji;
-        this.onyomi = onyomi;
-        this.kunyomi = kunyomi;
-        this.meaning = meaning;
+        this.onyomi = new ArrayList<String>(Arrays.asList(onyomi.split("、")));
+        this.kunyomi = new ArrayList<String>(Arrays.asList(kunyomi.split("、")));
+        this.meaning = new ArrayList<String>(Arrays.asList(meaning.split(";")));
+        this.compact_meaning = compact_meaning;
         this.grade = grade;
         this.jlpt = Jlpt.stringToJlpt(jlpt);
-        this.frequency = frequency;
+        this.frequency = Integer.parseInt(frequency);
+        this.cleanUpOnyomi();
     }
     public String getKanji() {
         return kanji;
@@ -31,27 +35,27 @@ public class CharacterModel {
         this.kanji = kanji;
     }
 
-    public ArrayList<String> getOnyomi() {
+    public List<String> getOnyomi() {
         return onyomi;
     }
 
-    public void setOnyomi(ArrayList<String> onyomi) {
+    public void setOnyomi(List<String> onyomi) {
         this.onyomi = onyomi;
     }
 
-    public ArrayList<String> getKunyomi() {
+    public List<String> getKunyomi() {
         return kunyomi;
     }
 
-    public void setKunyomi(ArrayList<String> kunyomi) {
+    public void setKunyomi(List<String> kunyomi) {
         this.kunyomi = kunyomi;
     }
 
-    public ArrayList<String> getMeaning() {
+    public List<String> getMeaning() {
         return meaning;
     }
 
-    public void setMeaning(ArrayList<String> meaning) {
+    public void setMeaning(List<String> meaning) {
         this.meaning = meaning;
     }
 
@@ -90,5 +94,18 @@ public class CharacterModel {
                 ", jlpt='" + jlpt + '\'' +
                 ", frequency=" + frequency +
                 '}';
+    }
+
+    private void cleanUpOnyomi(){
+        List<String> newList = new ArrayList<String>();
+        int index;
+        for (String reading : this.onyomi){
+            index = reading.indexOf('(');
+            if (index != -1)
+                newList.add(reading.substring(0,index));
+            else
+                newList.add(reading);
+        }
+        this.onyomi = newList;
     }
 }

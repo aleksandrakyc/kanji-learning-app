@@ -3,6 +3,7 @@ package pl.polsl.kanjiapp;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -39,11 +40,12 @@ public class MainActivity extends AppCompatActivity {
         meaningView.setText(String.join(", ", character.getMeaning()));
 
         wordView = findViewById(R.id.wordView);
-        wordView.setText(dataBaseAdapter.getWordsByKanjiAndLevel('来', Jlpt.N5).get(0).getWord());
+        wordView.setText(dataBaseAdapter.getWordsByKanjiAndLevel('来', Jlpt.N5).get(0).getWordAndMeaning());
 
         SentenceModel sentence = dataBaseAdapter.getSentencesByKanji(character.getKanji()).get(0);
         sentenceView = findViewById((R.id.exampleSentenceView));
         sentenceView.setText(sentence.getJapanese());
+        Log.d("hello", sentence.getJapanese());
 
     }
 }

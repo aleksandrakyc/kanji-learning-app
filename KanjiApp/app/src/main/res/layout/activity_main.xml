@@ -20,6 +20,14 @@
         android:layout_marginEnd="10dp">
 
         <TextView
+            android:id="@+id/kanjiView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="@string/kanji"
+            android:textSize="60sp" />
+
+        <TextView
             android:id="@+id/onyomiView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -33,14 +41,6 @@
             android:layout_height="wrap_content"
             android:gravity="center"
             android:text="@string/kunyomi" />
-
-        <TextView
-            android:id="@+id/kanjiView"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:gravity="center"
-            android:textSize="60sp"
-            android:text="@string/kanji"/>
 
         <TextView
             android:id="@+id/meaningView"

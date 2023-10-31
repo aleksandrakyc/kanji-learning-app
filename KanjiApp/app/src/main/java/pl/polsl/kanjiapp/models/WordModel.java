@@ -1,21 +1,24 @@
 package pl.polsl.kanjiapp.models;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import pl.polsl.kanjiapp.types.Jlpt;
 
-public class WordModel {
+public class WordModel extends KanjiDbObject{
     private int id;
     private String kanji;
     private String word; //okurigana in edict, jukugo in jukugo, compverb in compverbs
     private String reading;
-    private String meaning;
+    private List<String> meaning;
     private Jlpt jlpt;
 
-    public WordModel(int id, String kanji, String word, String reading, String meaning, String jlpt) {
-        this.id = id;
+    public WordModel(String id, String kanji, String word, String reading, String meaning, String jlpt) {
+        this.id = Integer.parseInt(id);
         this.kanji = kanji;
         this.word = word;
         this.reading = reading;
-        this.meaning = meaning;
+        this.meaning = this.extractMeaning(meaning);
         this.jlpt = Jlpt.stringToJlpt(jlpt);
     }
 
@@ -50,13 +53,6 @@ public class WordModel {
     public void setReading(String reading) {
         this.reading = reading;
     }
-    public String getMeaning() {
-        return meaning;
-    }
-
-    public void setMeaning(String meaning) {
-        this.meaning = meaning;
-    }
 
     public Jlpt getJlpt() {
         return jlpt;
@@ -64,6 +60,10 @@ public class WordModel {
 
     public void setJlpt(Jlpt jlpt) {
         this.jlpt = jlpt;
+    }
+
+    public String getWordAndMeaning(){
+        return this.word + " - " + this.meaning.get(0);
     }
 
     @Override
@@ -75,6 +75,21 @@ public class WordModel {
                 ", meaning='" + meaning + '\'' +
                 ", jlpt='" + jlpt + '\'' +
                 '}';
+    }
+
+    private List<String> extractMeaning(String meaning){
+        List<String> result = new ArrayList<>();
+        int index = meaning.indexOf('{');
+        int nextIndex = meaning.indexOf('{', index+1);
+        String toBeAdded;
+        while (nextIndex != -1) {
+            toBeAdded = meaning.substring(index+3, nextIndex-1);
+            toBeAdded = toBeAdded.replace(";",", ");
+            result.add(toBeAdded);
+            index = nextIndex;
+            nextIndex = meaning.indexOf('{', index+1);
+        }
+        return result;
     }
 
 }
