@@ -20,5 +20,5 @@
 - Podstawowa funkcjonalność aplikacji jest dostępna offline
 - System bezpiecznie przechowuje dane użytkowników w bazie danych hostowanej w chmurze
 - Aplikacja jest skierowana do osób operujących językiem angielskim
-- Aplikacja jest skierowana do użytkowników urządzeń mobilnych z systemem Android w wersji conajmniej 10.0
+- Aplikacja jest skierowana do użytkowników urządzeń mobilnych z systemem Android w wersji co najmniej 10.0
 - Interfejs użytkownika jest prosty i przyjemny w użytkowaniu
