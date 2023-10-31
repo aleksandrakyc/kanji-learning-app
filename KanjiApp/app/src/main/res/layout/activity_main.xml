@@ -12,28 +12,62 @@
         android:orientation="vertical"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="1.0"
+        android:layout_marginStart="10dp"
+        android:layout_marginEnd="10dp">
 
         <TextView
-            android:id="@+id/txt1"
+            android:id="@+id/kanjiView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/TitleText" />
+            android:gravity="center"
+            android:text="@string/kanji"
+            android:textSize="60sp" />
 
-        <Button
-            android:id="@+id/btn1"
+        <TextView
+            android:id="@+id/onyomiView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/TitleButton" />
+            android:layout_marginTop="16dp"
+            android:gravity="center"
+            android:text="@string/onyomi" />
 
-        <ScrollView
-            android:id="@+id/scrl1"
+        <TextView
+            android:id="@+id/kunyomiView"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:contentDescription="@string/ScrollviewDescription">
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="@string/kunyomi" />
 
-        </ScrollView>
+        <TextView
+            android:id="@+id/meaningView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:textSize="20sp"
+            android:text="@string/meaning" />
+
+        <TextView
+            android:id="@+id/wordView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:layout_marginTop="16dp"
+            android:textSize="18sp"
+            android:text="@string/word_view" />
+
+        <TextView
+            android:id="@+id/exampleSentenceView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:layout_marginTop="16dp"
+            android:textSize="18sp"
+            android:text="@string/example_sentence" />
+
     </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

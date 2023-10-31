@@ -127,7 +127,6 @@
 \usepackage{ifthen}
 
 
-
 \usepackage{ifxetex}
 
 \ifxetex
@@ -322,7 +321,8 @@
 
 % Tutaj proszę umieszczać swoje pakiety, makra, ustawienia itd.
 
-
+\usepackage{graphicx}
+\graphicspath{ {../Diagrams/} }
  
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % listingi i fragmentu kodu źródłowego 
@@ -575,7 +575,42 @@ jak i pojedyncze symbole $x$ i $y$  składa się w trybie matematycznym.
 
 \begin{itemize}
 \item wymagania funkcjonalne i niefunkcjonalne
+\label{id:tab:wyniki}
+\begin{table}[]
+\centering
+\begin{tabular}{ll}
+Przypadek użycia & Priorytet \\
+    &           \\
+                 &           \\
+                 &          
+\end{tabular}
+\end{table}
+
 \item przypadki użycia (diagramy UML) -- dla prac, w których mają zastosowanie
+\begin{figure}
+\centering
+\includegraphics[width=\textwidth]{Uczen}
+\caption{Podpis rysunku zawsze pod rysunkiem.}
+\label{fig:etykieta-rysunku}
+\end{figure}
+\begin{figure}
+\centering
+\includegraphics[width=\textwidth]{Nauczyciel}
+\caption{Podpis rysunku zawsze pod rysunkiem.}
+\label{fig:etykieta-rysunku}
+\end{figure}
+\begin{figure}
+\centering
+\includegraphics[width=\textwidth]{Admin}
+\caption{Podpis rysunku zawsze pod rysunkiem.}
+\label{fig:etykieta-rysunku}
+\end{figure}
+\begin{figure}
+\centering
+\includegraphics[width=\textwidth]{Gość}
+\caption{Podpis rysunku zawsze pod rysunkiem.}
+\label{fig:etykieta-rysunku}
+\end{figure}
 \item opis narzędzi, metod eksperymentalnych, metod modelowania itp.
 \item metodyka pracy nad projektowaniem i implementacją -- dla prac, w których ma to zastosowanie
 \end{itemize}

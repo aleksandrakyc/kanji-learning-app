@@ -1,51 +1,32 @@
 package pl.polsl.kanjiapp.models;
 
-public class CharacterModel {
-    private int id;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+
+import pl.polsl.kanjiapp.types.Jlpt;
+
+public class CharacterModel extends KanjiDbObject{
     private String kanji;
-    private String reading;
-    private String okurigana;
-    private String annotated_acc; //nullable
-    private String meaning;
+    private List<String> onyomi;
+    private List<String> kunyomi;
+    private List<String> meaning;
+    private String compact_meaning;
     private String grade; //nullable
-    private String jlpt; //nullable
-    private String frequency; //nullable
+    private Jlpt jlpt; //nullable
+    private int frequency; //nullable
 
-    public CharacterModel(int id, String kanji, String reading, String okurigana, String annotated_acc, String meaning, String grade, String jlpt, String frequency) {
-        this.id = id;
+    public CharacterModel(String kanji, String onyomi, String kunyomi, String meaning, String compact_meaning, String grade, String jlpt, String frequency) {
         this.kanji = kanji;
-        this.reading = reading;
-        this.okurigana = okurigana;
-        this.annotated_acc = annotated_acc;
-        this.meaning = meaning;
+        this.onyomi = new ArrayList<String>(Arrays.asList(onyomi.split("、")));
+        this.kunyomi = new ArrayList<String>(Arrays.asList(kunyomi.split("、")));
+        this.meaning = new ArrayList<String>(Arrays.asList(meaning.split(";")));
+        this.compact_meaning = compact_meaning;
         this.grade = grade;
-        this.jlpt = jlpt;
-        this.frequency = frequency;
+        this.jlpt = Jlpt.stringToJlpt(jlpt);
+        this.frequency = Integer.parseInt(frequency);
+        this.cleanUpOnyomi();
     }
-
-    @Override
-    public String toString() {
-        return "CharacterModel{" +
-                "id=" + id +
-                ", kanji='" + kanji + '\'' +
-                ", reading='" + reading + '\'' +
-                ", okurigana='" + okurigana + '\'' +
-                ", annotated_acc='" + annotated_acc + '\'' +
-                ", meaning='" + meaning + '\'' +
-                ", grade='" + grade + '\'' +
-                ", jlpt='" + jlpt + '\'' +
-                ", frequency='" + frequency + '\'' +
-                '}';
-    }
-
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
-    }
-
     public String getKanji() {
         return kanji;
     }
@@ -54,35 +35,27 @@ public class CharacterModel {
         this.kanji = kanji;
     }
 
-    public String getReading() {
-        return reading;
+    public List<String> getOnyomi() {
+        return onyomi;
     }
 
-    public void setReading(String reading) {
-        this.reading = reading;
+    public void setOnyomi(List<String> onyomi) {
+        this.onyomi = onyomi;
     }
 
-    public String getOkurigana() {
-        return okurigana;
+    public List<String> getKunyomi() {
+        return kunyomi;
     }
 
-    public void setOkurigana(String okurigana) {
-        this.okurigana = okurigana;
+    public void setKunyomi(List<String> kunyomi) {
+        this.kunyomi = kunyomi;
     }
 
-    public String getAnnotated_acc() {
-        return annotated_acc;
-    }
-
-    public void setAnnotated_acc(String annotated_acc) {
-        this.annotated_acc = annotated_acc;
-    }
-
-    public String getMeaning() {
+    public List<String> getMeaning() {
         return meaning;
     }
 
-    public void setMeaning(String meaning) {
+    public void setMeaning(List<String> meaning) {
         this.meaning = meaning;
     }
 
@@ -94,19 +67,45 @@ public class CharacterModel {
         this.grade = grade;
     }
 
-    public String getJlpt() {
+    public Jlpt getJlpt() {
         return jlpt;
     }
 
-    public void setJlpt(String jlpt) {
+    public void setJlpt(Jlpt jlpt) {
         this.jlpt = jlpt;
     }
 
-    public String getFrequency() {
+    public int getFrequency() {
         return frequency;
     }
 
-    public void setFrequency(String frequency) {
+    public void setFrequency(int frequency) {
         this.frequency = frequency;
+    }
+
+    @Override
+    public String toString() {
+        return "CharacterModel{" +
+                ", kanji='" + kanji + '\'' +
+                ", onyomi=" + onyomi +
+                ", kunyomi=" + kunyomi +
+                ", meaning=" + meaning +
+                ", grade='" + grade + '\'' +
+                ", jlpt='" + jlpt + '\'' +
+                ", frequency=" + frequency +
+                '}';
+    }
+
+    private void cleanUpOnyomi(){
+        List<String> newList = new ArrayList<String>();
+        int index;
+        for (String reading : this.onyomi){
+            index = reading.indexOf('(');
+            if (index != -1)
+                newList.add(reading.substring(0,index));
+            else
+                newList.add(reading);
+        }
+        this.onyomi = newList;
     }
 }

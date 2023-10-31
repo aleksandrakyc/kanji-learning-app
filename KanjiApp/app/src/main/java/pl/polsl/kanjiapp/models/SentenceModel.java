@@ -1,6 +1,6 @@
 package pl.polsl.kanjiapp.models;
 
-public class SentenceModel {
+public class SentenceModel extends KanjiDbObject{
     private int id;
     private String japanese;
     private String english;
@@ -10,8 +10,8 @@ public class SentenceModel {
     private String furigana;
     private String obi2;
 
-    public SentenceModel(int id, String japanese, String english, String particle, String word, String kanji, String furigana, String obi2) {
-        this.id = id;
+    public SentenceModel(String id, String japanese, String english, String particle, String word, String kanji, String furigana, String obi2) {
+        this.id = Integer.parseInt((id));
         this.japanese = japanese;
         this.english = english;
         this.particle = particle;
