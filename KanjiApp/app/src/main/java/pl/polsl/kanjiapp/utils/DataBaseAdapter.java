@@ -2,11 +2,9 @@ package pl.polsl.kanjiapp.utils;
 
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.stream.Stream;
 
 import android.content.Context;
 import android.database.Cursor;
@@ -15,7 +13,6 @@ import android.database.sqlite.SQLiteDatabase;
 import android.util.Log;
 
 import pl.polsl.kanjiapp.models.CharacterModel;
-import pl.polsl.kanjiapp.models.KanjiDbObject;
 import pl.polsl.kanjiapp.models.SentenceModel;
 import pl.polsl.kanjiapp.models.WordModel;
 import pl.polsl.kanjiapp.types.Jlpt;
@@ -81,10 +78,10 @@ public class DataBaseAdapter {
         }
     }
 
-    public List<CharacterModel> getKanjiByLevel(Jlpt level) {
-        List<CharacterModel> returnList = new ArrayList<>();
+    public ArrayList<CharacterModel> getKanjiByLevel(Jlpt level) {
+        ArrayList<CharacterModel> returnList = new ArrayList<>();
         try {
-            String sql = "SELECT kanji, onyomi, kunyomi, meaning, grade, compact_meaning, jlpt, frequency FROM kanjidict WHERE jlpt LIKE '%" + level.name() + "%';";
+            String sql = "SELECT kanji, onyomi, kunyomi, meaning, compact_meaning, grade, jlpt, frequency FROM kanjidict WHERE jlpt LIKE '%" + level.name() + "%';";
             Cursor cursor = mDb.rawQuery(sql, null);
             if (cursor.moveToFirst()) {
                 do {

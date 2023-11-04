@@ -5,10 +5,11 @@
     android:layout_height="match_parent"
     tools:context=".KanjiListView">
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
+    <GridView
+        android:id="@+id/gridKanjis"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:text="@string/kanji_list_view_text" />
-
+        android:horizontalSpacing="6dp"
+        android:numColumns="4"
+        android:verticalSpacing="6dp" />
 </FrameLayout>

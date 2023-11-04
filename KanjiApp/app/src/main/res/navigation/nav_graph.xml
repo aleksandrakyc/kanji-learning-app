@@ -18,10 +18,23 @@
         android:id="@+id/kanjiListView"
         android:name="pl.polsl.kanjiapp.KanjiListView"
         android:label="@string/kanji_list_view"
-        tools:layout="@layout/fragment_kanji_list_view" />
+        tools:layout="@layout/fragment_kanji_list_view" >
+        <action
+            android:id="@+id/action_kanjiListView_to_singleKanjiView"
+            app:destination="@id/singleKanjiView" >
+            <argument
+                android:name="@string/kanji"
+                android:defaultValue="来" />
+        </action>
+    </fragment>
     <fragment
         android:id="@+id/singleKanjiView"
         android:name="pl.polsl.kanjiapp.SingleKanjiView"
         android:label="fragment_single_kanji_view"
-        tools:layout="@layout/fragment_single_kanji_view" />
+        tools:layout="@layout/fragment_single_kanji_view" >
+        <argument
+            android:name="@string/kanji"
+            app:argType="string"
+            android:defaultValue="来" />
+    </fragment>
 </navigation>
