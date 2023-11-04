@@ -16,11 +16,6 @@ import pl.polsl.kanjiapp.utils.DataBaseAdapter;
 import pl.polsl.kanjiapp.models.*;
 import pl.polsl.kanjiapp.types.Jlpt;
 
-/**
- * A simple {@link Fragment} subclass.
- * Use the {@link SingleKanjiView#newInstance} factory method to
- * create an instance of this fragment.
- */
 public class SingleKanjiView extends Fragment {
 
     private String mCharacter;
@@ -52,7 +47,7 @@ public class SingleKanjiView extends Fragment {
         dataBaseAdapter = new DataBaseAdapter(getContext());
 //        dataBaseAdapter.createDatabase();
         dataBaseAdapter.open();
-
+        //TODO ADD CHECKS, SOMETIMES CRASHES
         CharacterModel character = dataBaseAdapter.getKanjiByCharacter(mCharacter.charAt(0));
 
         kanjiView = getView().findViewById(R.id.kanjiView);
@@ -68,8 +63,11 @@ public class SingleKanjiView extends Fragment {
         meaningView.setText(String.join(", ", character.getMeaning()));
 
         wordView = getView().findViewById(R.id.wordView);
-        wordView.setText(dataBaseAdapter.getWordsByKanjiAndLevel('来', Jlpt.N5).get(0).getWordAndMeaning());
-
+        Log.d("heyy", "onViewCreated: "+character.getKanji()+character.getJlpt().name());
+        if(character.getJlpt()!=Jlpt.invalid)
+            wordView.setText(dataBaseAdapter.getWordsByKanjiAndLevel(character.getKanji().charAt(0), character.getJlpt()).get(0).getWordAndMeaning());
+        else
+            wordView.setText(dataBaseAdapter.getWordsByKanjiAndLevel(character.getKanji().charAt(0), Jlpt.N5).get(0).getWordAndMeaning());
         SentenceModel sentence = dataBaseAdapter.getSentencesByKanji(character.getKanji()).get(0);
         sentenceView = getView().findViewById((R.id.exampleSentenceView));
         sentenceView.setText(sentence.getJapanese());

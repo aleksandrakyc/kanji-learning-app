@@ -18,9 +18,10 @@
             android:id="@+id/kanji_grid_element_kanji"
             android:layout_width="100dp"
             android:layout_height="100dp"
+            android:layout_gravity="center"
             android:text="@string/kanji"
-            android:textSize="30dp"
-            android:layout_gravity="center"/>
+            android:textSize="32sp"
+            android:textAlignment="center"/>
 
         <TextView
             android:id="@+id/kanji_grid_element_compact_meaning"

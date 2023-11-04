@@ -6,15 +6,14 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.GridView;
 
 import java.util.ArrayList;
-import java.util.List;
 
-import pl.polsl.kanjiapp.models.CharacterAdapter;
 import pl.polsl.kanjiapp.models.CharacterModel;
 import pl.polsl.kanjiapp.types.Jlpt;
 import pl.polsl.kanjiapp.utils.DataBaseAdapter;
@@ -25,10 +24,13 @@ import pl.polsl.kanjiapp.utils.DataBaseAdapter;
  */
 public class KanjiListView extends Fragment {
 
+    String mLevel;
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
+            mLevel = getArguments().getString("level");
+            Log.d("hewwo", "onCreate: "+mLevel);
         }
     }
     @Override
@@ -47,7 +49,7 @@ public class KanjiListView extends Fragment {
         dataBaseAdapter.open();
 
         kanjiGV = getView().findViewById(R.id.gridKanjis);
-        ArrayList<CharacterModel> characterModelArrayList = dataBaseAdapter.getKanjiByLevel(Jlpt.N5);
+        ArrayList<CharacterModel> characterModelArrayList = dataBaseAdapter.getKanjiByLevel(Jlpt.stringToJlpt("N"+mLevel));
 
         CharacterAdapter adapter = new CharacterAdapter(getContext(), characterModelArrayList);
         kanjiGV.setAdapter(adapter);

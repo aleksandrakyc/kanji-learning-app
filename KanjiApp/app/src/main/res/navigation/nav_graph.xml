@@ -7,9 +7,9 @@
 
     <fragment
         android:id="@+id/startMenu"
-        android:name="pl.polsl.kanjiapp.StartMenu"
+        android:name="pl.polsl.kanjiapp.CategoryList"
         android:label="@string/fragment_start_menu"
-        tools:layout="@layout/fragment_start_menu" >
+        tools:layout="@layout/fragment_category_list" >
         <action
             android:id="@+id/action_startMenu_to_kanjiListView"
             app:destination="@id/kanjiListView" />

@@ -1,4 +1,4 @@
-package pl.polsl.kanjiapp.models;
+package pl.polsl.kanjiapp;
 
 import android.content.Context;
 import android.os.Bundle;
@@ -14,6 +14,7 @@ import androidx.navigation.Navigation;
 import java.util.ArrayList;
 
 import pl.polsl.kanjiapp.R;
+import pl.polsl.kanjiapp.models.CharacterModel;
 
 public class CharacterAdapter extends ArrayAdapter<CharacterModel> {
 

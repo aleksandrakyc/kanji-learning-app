@@ -15,4 +15,7 @@
     <string name="kanji_list_view_text">Kanji List View!</string>
     <string name="start_menu">Start menu!</string>
     <string name="kanji_grid_element_meaning">meaning</string>
+    <string name="category_name">category name</string>
+    <string name="categories_jlpt">Jlpt</string>
+    <string name="categories_grade">Grade</string>
 </resources>
