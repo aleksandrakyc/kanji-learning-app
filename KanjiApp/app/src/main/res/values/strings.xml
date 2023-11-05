@@ -18,4 +18,5 @@
     <string name="category_name">category name</string>
     <string name="categories_jlpt">Jlpt</string>
     <string name="categories_grade">Grade</string>
+    <string name="custom_sets">Custom sets</string>
 </resources>

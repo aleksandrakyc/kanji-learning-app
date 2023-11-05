@@ -30,8 +30,6 @@ import pl.polsl.kanjiapp.types.Grade;
 public class CategoryList extends Fragment {
 
     //protected RecyclerView.LayoutManager mLayoutManager;
-    //RecyclerView jlptList;
-    //RecyclerView gradeList;
     protected static final String TAG = "CategoryList";
     ListView jlptList;
     ListView gradeList;
