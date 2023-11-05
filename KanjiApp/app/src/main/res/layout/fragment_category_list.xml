@@ -7,21 +7,37 @@
     tools:context=".CategoryList">
 
     <TextView
-        android:id="@+id/textViewGrade"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/categories_grade" />
-
-    <TextView
         android:id="@+id/textViewJlpt"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/categories_jlpt" />
 
+    <ListView
+        android:id="@+id/jlptListView"
+        android:layout_width="match_parent"
+        android:layout_height="190dp" />
+
+    <TextView
+        android:id="@+id/textViewGrade"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/categories_grade" />
+
+    <ListView
+        android:id="@+id/gradeListView"
+        android:layout_width="match_parent"
+        android:layout_height="190dp" />
+
+    <TextView
+        android:id="@+id/textView2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="TextView" />
+
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/customCategoryList"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="wrap_content">
 
     </androidx.recyclerview.widget.RecyclerView>
 

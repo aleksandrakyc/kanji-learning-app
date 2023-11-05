@@ -27,7 +27,12 @@ public class CharacterModel extends KanjiDbObject{
             this.compact_meaning = compact_meaning.replace(";", ", ");
         this.grade = grade;
         this.jlpt = Jlpt.stringToJlpt(jlpt);
-        this.frequency = Integer.parseInt(frequency);
+        try {
+            this.frequency = Integer.parseInt(frequency);
+        } catch (Exception e)
+        {
+            this.frequency = 0;
+        }
         this.cleanUpOnyomi();
     }
     public String getKanji() {

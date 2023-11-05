@@ -81,6 +81,10 @@ public class WordModel extends KanjiDbObject{
         List<String> result = new ArrayList<>();
         int index = meaning.indexOf('{');
         int nextIndex = meaning.indexOf('{', index+1);
+        if(index == -1){
+            result.add(meaning);
+            return result;
+        }
         String toBeAdded;
         while (nextIndex != -1) {
             toBeAdded = meaning.substring(index+3, nextIndex-1);

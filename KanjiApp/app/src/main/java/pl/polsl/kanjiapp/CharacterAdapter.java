@@ -17,6 +17,7 @@ import pl.polsl.kanjiapp.R;
 import pl.polsl.kanjiapp.models.CharacterModel;
 
 public class CharacterAdapter extends ArrayAdapter<CharacterModel> {
+    protected static final String TAG = "CharacterAdapter";
 
     public CharacterAdapter(@NonNull Context context, ArrayList<CharacterModel> charModelArrayList) {
         super(context, 0, charModelArrayList);

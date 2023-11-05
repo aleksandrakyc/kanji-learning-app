@@ -15,6 +15,8 @@ import android.widget.GridView;
 import java.util.ArrayList;
 
 import pl.polsl.kanjiapp.models.CharacterModel;
+import pl.polsl.kanjiapp.types.CategoryType;
+import pl.polsl.kanjiapp.types.Grade;
 import pl.polsl.kanjiapp.types.Jlpt;
 import pl.polsl.kanjiapp.utils.DataBaseAdapter;
 
@@ -23,13 +25,15 @@ import pl.polsl.kanjiapp.utils.DataBaseAdapter;
  * create an instance of this fragment.
  */
 public class KanjiListView extends Fragment {
-
-    String mLevel;
+    protected static final String TAG = "KanjiListView";
+    int mLevel;
+    CategoryType type;
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
-            mLevel = getArguments().getString("level");
+            mLevel = getArguments().getInt("level");
+            type = CategoryType.intToCategoryType(getArguments().getInt("categoryType"));
             Log.d("hewwo", "onCreate: "+mLevel);
         }
     }
@@ -49,7 +53,20 @@ public class KanjiListView extends Fragment {
         dataBaseAdapter.open();
 
         kanjiGV = getView().findViewById(R.id.gridKanjis);
-        ArrayList<CharacterModel> characterModelArrayList = dataBaseAdapter.getKanjiByLevel(Jlpt.stringToJlpt("N"+mLevel));
+        //todo trycatch
+        ArrayList<CharacterModel> characterModelArrayList = new ArrayList<>();
+        switch (type){
+            case Jlpt:
+                characterModelArrayList = dataBaseAdapter.getKanjiByLevel(Jlpt.stringToJlpt("N"+mLevel));
+                break;
+            case Grade:
+                characterModelArrayList = dataBaseAdapter.getKanjiByGrade(Grade.intToGrade(mLevel));
+                break;
+            case Custom:
+            case invalid:
+            default:
+                Log.d(TAG, "onViewCreated: unsupported type");
+        }
 
         CharacterAdapter adapter = new CharacterAdapter(getContext(), characterModelArrayList);
         kanjiGV.setAdapter(adapter);

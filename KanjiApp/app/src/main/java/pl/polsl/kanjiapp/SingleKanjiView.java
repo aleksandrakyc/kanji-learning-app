@@ -12,12 +12,14 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import java.util.List;
+
 import pl.polsl.kanjiapp.utils.DataBaseAdapter;
 import pl.polsl.kanjiapp.models.*;
 import pl.polsl.kanjiapp.types.Jlpt;
 
 public class SingleKanjiView extends Fragment {
-
+    protected static final String TAG = "SingleKanjiView";
     private String mCharacter;
 
     public SingleKanjiView() {
@@ -28,7 +30,6 @@ public class SingleKanjiView extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
-            Log.d("lalala", getArguments().getString("character"));
             mCharacter = getArguments().getString("character");
         }
     }
@@ -64,10 +65,9 @@ public class SingleKanjiView extends Fragment {
 
         wordView = getView().findViewById(R.id.wordView);
         Log.d("heyy", "onViewCreated: "+character.getKanji()+character.getJlpt().name());
-        if(character.getJlpt()!=Jlpt.invalid)
-            wordView.setText(dataBaseAdapter.getWordsByKanjiAndLevel(character.getKanji().charAt(0), character.getJlpt()).get(0).getWordAndMeaning());
-        else
-            wordView.setText(dataBaseAdapter.getWordsByKanjiAndLevel(character.getKanji().charAt(0), Jlpt.N5).get(0).getWordAndMeaning());
+        List<WordModel> wordModelList = dataBaseAdapter.getWordsByKanjiAndLevel(character.getKanji().charAt(0), character.getJlpt());
+        if(!wordModelList.isEmpty())
+            wordView.setText(wordModelList.get(0).getWordAndMeaning());
         SentenceModel sentence = dataBaseAdapter.getSentencesByKanji(character.getKanji()).get(0);
         sentenceView = getView().findViewById((R.id.exampleSentenceView));
         sentenceView.setText(sentence.getJapanese());
