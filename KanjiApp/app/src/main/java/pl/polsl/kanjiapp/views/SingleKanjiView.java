@@ -1,4 +1,4 @@
-package pl.polsl.kanjiapp;
+package pl.polsl.kanjiapp.views;
 
 import android.os.Bundle;
 
@@ -14,6 +14,7 @@ import android.widget.TextView;
 
 import java.util.List;
 
+import pl.polsl.kanjiapp.R;
 import pl.polsl.kanjiapp.utils.DataBaseAdapter;
 import pl.polsl.kanjiapp.models.*;
 import pl.polsl.kanjiapp.types.Jlpt;

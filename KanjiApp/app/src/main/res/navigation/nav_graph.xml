@@ -7,7 +7,7 @@
 
     <fragment
         android:id="@+id/startMenu"
-        android:name="pl.polsl.kanjiapp.CategoryList"
+        android:name="pl.polsl.kanjiapp.views.CategoryList"
         android:label="@string/fragment_start_menu"
         tools:layout="@layout/fragment_category_list" >
         <action
@@ -16,7 +16,7 @@
     </fragment>
     <fragment
         android:id="@+id/kanjiListView"
-        android:name="pl.polsl.kanjiapp.KanjiListView"
+        android:name="pl.polsl.kanjiapp.views.KanjiListView"
         android:label="@string/kanji_list_view"
         tools:layout="@layout/fragment_kanji_list_view" >
         <action
@@ -29,7 +29,7 @@
     </fragment>
     <fragment
         android:id="@+id/singleKanjiView"
-        android:name="pl.polsl.kanjiapp.SingleKanjiView"
+        android:name="pl.polsl.kanjiapp.views.SingleKanjiView"
         android:label="fragment_single_kanji_view"
         tools:layout="@layout/fragment_single_kanji_view" >
         <argument

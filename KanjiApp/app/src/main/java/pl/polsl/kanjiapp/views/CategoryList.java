@@ -1,4 +1,4 @@
-package pl.polsl.kanjiapp;
+package pl.polsl.kanjiapp.views;
 
 import android.os.Bundle;
 
@@ -20,6 +20,7 @@ import android.widget.Toast;
 import java.util.ArrayList;
 import java.util.Arrays;
 
+import pl.polsl.kanjiapp.R;
 import pl.polsl.kanjiapp.types.CategoryType;
 import pl.polsl.kanjiapp.types.Jlpt;
 import pl.polsl.kanjiapp.types.Grade;

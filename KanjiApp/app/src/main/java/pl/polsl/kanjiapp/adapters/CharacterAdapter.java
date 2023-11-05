@@ -1,4 +1,4 @@
-package pl.polsl.kanjiapp;
+package pl.polsl.kanjiapp.adapters;
 
 import android.content.Context;
 import android.os.Bundle;

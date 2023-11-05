@@ -1,4 +1,4 @@
-package pl.polsl.kanjiapp;
+package pl.polsl.kanjiapp.views;
 
 import android.os.Bundle;
 
@@ -14,6 +14,8 @@ import android.widget.GridView;
 
 import java.util.ArrayList;
 
+import pl.polsl.kanjiapp.R;
+import pl.polsl.kanjiapp.adapters.CharacterAdapter;
 import pl.polsl.kanjiapp.models.CharacterModel;
 import pl.polsl.kanjiapp.types.CategoryType;
 import pl.polsl.kanjiapp.types.Grade;
