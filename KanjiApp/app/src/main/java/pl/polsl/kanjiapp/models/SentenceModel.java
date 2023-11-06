@@ -7,7 +7,7 @@ public class SentenceModel extends KanjiDbObject{
     private String particle;
     private String word;
     private String kanji;
-    private String furigana;
+    private String furigana; //todo: display words and sentences with furigana
     private String obi2;
 
     public SentenceModel(String id, String japanese, String english, String particle, String word, String kanji, String furigana, String obi2) {

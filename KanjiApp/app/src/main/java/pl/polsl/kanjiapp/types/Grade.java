@@ -30,7 +30,7 @@ public enum Grade {
         String[] names = new String[levels.length];
 
         for (int i = 0; i < values().length; i++) {
-            names[i] = levels[i].name();
+            names[i] = levels[i].value;
         }
 
         return names;

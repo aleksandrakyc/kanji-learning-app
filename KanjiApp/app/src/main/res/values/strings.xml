@@ -19,4 +19,6 @@
     <string name="categories_jlpt">Jlpt</string>
     <string name="categories_grade">Grade</string>
     <string name="custom_sets">Custom sets</string>
+    <string name="word_header_text">Words:</string>
+    <string name="example_sentence_text">Example sentence:</string>
 </resources>

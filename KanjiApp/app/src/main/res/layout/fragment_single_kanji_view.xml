@@ -49,20 +49,30 @@
             android:text="@string/meaning" />
 
         <TextView
+            android:id="@+id/wordHeader"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/margin_medium"
+            android:text="@string/word_header_text" />
+
+        <TextView
             android:id="@+id/wordView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center"
-            android:layout_marginTop="16dp"
             android:textSize="18sp"
             android:text="@string/word_view" />
-
+        <TextView
+            android:id="@+id/sentenceHeader"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/margin_medium"
+            android:text="@string/example_sentence_text" />
         <TextView
             android:id="@+id/exampleSentenceView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center"
-            android:layout_marginTop="16dp"
             android:textSize="18sp"
             android:text="@string/example_sentence" />
 

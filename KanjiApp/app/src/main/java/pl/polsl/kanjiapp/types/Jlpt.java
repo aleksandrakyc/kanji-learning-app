@@ -15,6 +15,8 @@ public enum Jlpt {
     private static final Jlpt[] jlptValues = Jlpt.values();
     public static Jlpt stringToJlpt(String text) {
         int index = text.indexOf('N');
+        if (index == -1)
+            return invalid;
         int level = Character.getNumericValue(text.charAt(index+1));
         Jlpt jlpt = (0 < level && level < 6) ? jlptValues[level] : invalid;
         return jlpt;

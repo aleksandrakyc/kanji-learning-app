@@ -65,15 +65,18 @@ public class SingleKanjiView extends Fragment {
         meaningView.setText(String.join(", ", character.getMeaning()));
 
         wordView = getView().findViewById(R.id.wordView);
-        Log.d("heyy", "onViewCreated: "+character.getKanji()+character.getJlpt().name());
+        String wordText = "";
         List<WordModel> wordModelList = dataBaseAdapter.getWordsByKanjiAndLevel(character.getKanji().charAt(0), character.getJlpt());
         if(!wordModelList.isEmpty())
-            wordView.setText(wordModelList.get(0).getWordAndMeaning());
+            for (WordModel word: wordModelList){
+                wordText += (word.getWordAndMeaning() + "\n");
+            }
+        wordView.setText(wordText);
         List<SentenceModel> sentenceModelList = dataBaseAdapter.getSentencesByKanji(character.getKanji());
         if(!sentenceModelList.isEmpty()){
             SentenceModel sentence = sentenceModelList.get(0);
             sentenceView = getView().findViewById((R.id.exampleSentenceView));
-            sentenceView.setText(sentence.getJapanese());
+            sentenceView.setText(sentence.getJapanese()+"\n"+sentence.getEnglish());
         }
     }
 }
