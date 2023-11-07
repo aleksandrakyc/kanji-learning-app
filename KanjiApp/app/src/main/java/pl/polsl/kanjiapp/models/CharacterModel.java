@@ -21,10 +21,18 @@ public class CharacterModel extends KanjiDbObject{
         this.onyomi = new ArrayList<String>(Arrays.asList(onyomi.split("、")));
         this.kunyomi = new ArrayList<String>(Arrays.asList(kunyomi.split("、")));
         this.meaning = new ArrayList<String>(Arrays.asList(meaning.split(";")));
-        this.compact_meaning = compact_meaning;
+        if(compact_meaning == null || compact_meaning.trim().isEmpty())
+            this.compact_meaning = this.meaning.get(0);
+        else
+            this.compact_meaning = compact_meaning.replace(";", ", ");
         this.grade = grade;
         this.jlpt = Jlpt.stringToJlpt(jlpt);
-        this.frequency = Integer.parseInt(frequency);
+        try {
+            this.frequency = Integer.parseInt(frequency);
+        } catch (Exception e)
+        {
+            this.frequency = 0;
+        }
         this.cleanUpOnyomi();
     }
     public String getKanji() {
@@ -107,5 +115,13 @@ public class CharacterModel extends KanjiDbObject{
                 newList.add(reading);
         }
         this.onyomi = newList;
+    }
+
+    public String getCompact_meaning() {
+        return compact_meaning;
+    }
+
+    public void setCompact_meaning(String compact_meaning) {
+        this.compact_meaning = compact_meaning;
     }
 }

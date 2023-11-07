@@ -2,11 +2,9 @@ package pl.polsl.kanjiapp.utils;
 
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.stream.Stream;
 
 import android.content.Context;
 import android.database.Cursor;
@@ -15,9 +13,9 @@ import android.database.sqlite.SQLiteDatabase;
 import android.util.Log;
 
 import pl.polsl.kanjiapp.models.CharacterModel;
-import pl.polsl.kanjiapp.models.KanjiDbObject;
 import pl.polsl.kanjiapp.models.SentenceModel;
 import pl.polsl.kanjiapp.models.WordModel;
+import pl.polsl.kanjiapp.types.Grade;
 import pl.polsl.kanjiapp.types.Jlpt;
 
 public class DataBaseAdapter {
@@ -81,10 +79,37 @@ public class DataBaseAdapter {
         }
     }
 
-    public List<CharacterModel> getKanjiByLevel(Jlpt level) {
-        List<CharacterModel> returnList = new ArrayList<>();
+    public ArrayList<CharacterModel> getKanjiByLevel(Jlpt level) {
+        ArrayList<CharacterModel> returnList = new ArrayList<>();
         try {
-            String sql = "SELECT kanji, onyomi, kunyomi, meaning, grade, compact_meaning, jlpt, frequency FROM kanjidict WHERE jlpt LIKE '%" + level.name() + "%';";
+            String sql = "SELECT kanji, onyomi, kunyomi, meaning, compact_meaning, grade, jlpt, frequency FROM kanjidict WHERE jlpt LIKE '%" + level.name() + "%';";
+            Log.d(TAG, "getKanjiByLevel: " + sql);
+            Cursor cursor = mDb.rawQuery(sql, null);
+            if (cursor.moveToFirst()) {
+                do {
+                    String kanji = cursor.getString(0);
+                    String onyomi = cursor.getString(1);
+                    String kunyomi = cursor.getString(2);
+                    String meaning = cursor.getString(3);
+                    String compact_meaning = cursor.getString(4);
+                    String grade = cursor.getString(5);
+                    String jlpt = cursor.getString(6);
+                    String frequency = cursor.getString(7);
+                    CharacterModel newCharacter = new CharacterModel(kanji, onyomi, kunyomi, meaning, compact_meaning, grade, jlpt, frequency);
+                    returnList.add(newCharacter);
+                } while (cursor.moveToNext());
+            }
+            return returnList;
+        } catch (SQLException mSQLException) {
+            Log.e(TAG, "readDatabase >>" + mSQLException);
+            throw mSQLException;
+        }
+    }
+    public ArrayList<CharacterModel> getKanjiByGrade(Grade level) {
+        ArrayList<CharacterModel> returnList = new ArrayList<>();
+        try {
+            String sql = "SELECT kanji, onyomi, kunyomi, meaning, compact_meaning, grade, jlpt, frequency FROM kanjidict WHERE grade LIKE '%" + level.getValue() + "%';";
+            Log.d(TAG, "getKanjiByGrade: " + sql);
             Cursor cursor = mDb.rawQuery(sql, null);
             if (cursor.moveToFirst()) {
                 do {
@@ -130,6 +155,10 @@ public class DataBaseAdapter {
     }
     public ArrayList<WordModel> getWordsByKanjiAndLevel(char character, Jlpt level){
         ArrayList<WordModel> returnList = new ArrayList<>();
+        if (level == Jlpt.invalid) {
+            Log.e(TAG, "getWordsByKanjiAndLevel: invalid JLPT level for kanji: "+character);
+            return returnList;
+        }
         Map<String, String> tableNames =  new HashMap<String, String>() {{
             put("edict", "okurigana");
             put("jukugo", "jukugo");
@@ -138,6 +167,7 @@ public class DataBaseAdapter {
         try {
             for(String tableName : tableNames.keySet()) {
                 String sql = "SELECT id, kanji, "+tableNames.get(tableName)+", reading, meaning, jlpt FROM " + tableName + " WHERE kanji='"+character+"' AND jlpt LIKE '%" + level.name() + "%';";
+                Log.d(TAG, "getWordsByKanjiAndLevel: "+sql);
                 Cursor cursor = mDb.rawQuery(sql, null);
                 if (cursor.moveToFirst()) {
                     do {

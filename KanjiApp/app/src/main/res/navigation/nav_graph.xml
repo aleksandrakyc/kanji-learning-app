@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_graph"
+    app:startDestination="@id/startMenu">
+
+    <fragment
+        android:id="@+id/startMenu"
+        android:name="pl.polsl.kanjiapp.views.CategoryList"
+        android:label="@string/fragment_start_menu"
+        tools:layout="@layout/fragment_category_list" >
+        <action
+            android:id="@+id/action_startMenu_to_kanjiListView"
+            app:destination="@id/kanjiListView" />
+    </fragment>
+    <fragment
+        android:id="@+id/kanjiListView"
+        android:name="pl.polsl.kanjiapp.views.KanjiListView"
+        android:label="@string/kanji_list_view"
+        tools:layout="@layout/fragment_kanji_list_view" >
+        <action
+            android:id="@+id/action_kanjiListView_to_singleKanjiView"
+            app:destination="@id/singleKanjiView" >
+            <argument
+                android:name="@string/kanji"
+                android:defaultValue="来" />
+        </action>
+    </fragment>
+    <fragment
+        android:id="@+id/singleKanjiView"
+        android:name="pl.polsl.kanjiapp.views.SingleKanjiView"
+        android:label="fragment_single_kanji_view"
+        tools:layout="@layout/fragment_single_kanji_view" >
+        <argument
+            android:name="@string/kanji"
+            app:argType="string"
+            android:defaultValue="来" />
+    </fragment>
+</navigation>
