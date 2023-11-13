@@ -36,7 +36,7 @@ public class Learn extends Fragment {
     TextView questionNumber, questionType, questionDetails, evaluation;
     EditText answer;
     Button checkBtn;
-    int currentQ;
+    int currentQ, correctAnswrs = 0;
     DataBaseAdapter dataBaseAdapter;
     ArrayList<CharacterModel> characters;
     ArrayList<WordModel> words;
@@ -86,6 +86,10 @@ public class Learn extends Fragment {
 
         checkBtn = getView().findViewById(R.id.checkBtn);
 
+        //navigation
+        Bundle bundle = new Bundle();
+
+        //question handling
         currentQ = 1;
         question = new Question(characters.get(currentQ%characters.size()));
 
@@ -99,6 +103,7 @@ public class Learn extends Fragment {
                 //evaluate answer
                 if (question.checkAnswer(answer.getText().toString())){
                     evaluation.setText("Correct");
+                    correctAnswrs+=1;
                 }
                 else{
                     evaluation.setText("Incorrect. Correct answer: " + question.getAnswer());
@@ -109,7 +114,9 @@ public class Learn extends Fragment {
                     checkBtn.setText("Finish");
                 }
                 if(currentQ>turns){
-                    Navigation.findNavController(view).navigate(R.id.action_learn_to_learningStats);
+                    bundle.putInt("correctAnswrs", correctAnswrs);
+                    bundle.putInt("turns", turns);
+                    Navigation.findNavController(view).navigate(R.id.action_learn_to_learningStats, bundle);
                 }
                 else{
                     //generate next question

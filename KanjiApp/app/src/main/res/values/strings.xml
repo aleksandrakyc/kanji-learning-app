@@ -26,4 +26,5 @@
     <string name="questionNumber">1/10</string>
     <string name="button_check_answer">Check</string>
     <string name="questionType">Type on reading of kanji:</string>
+    <string name="stats1">Congrats! You answered %1$d questions out of %2$d correctly</string>
 </resources>

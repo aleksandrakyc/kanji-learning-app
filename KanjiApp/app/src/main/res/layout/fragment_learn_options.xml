@@ -43,7 +43,6 @@
         android:id="@+id/learnButton"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_gravity="bottom"
         android:backgroundTint="@color/medium"
         android:text="Study!" />
 

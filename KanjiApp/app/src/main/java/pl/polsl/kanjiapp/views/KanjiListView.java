@@ -4,6 +4,8 @@ import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.Navigation;
 
@@ -40,6 +42,9 @@ public class KanjiListView extends Fragment {
             type = CategoryType.intToCategoryType(getArguments().getInt("categoryType"));
             Log.d("hewwo", "onCreate: "+mLevel);
         }
+        Toolbar myToolbar = (Toolbar) getView().findViewById(R.id.my_toolbar);
+        ((AppCompatActivity)getActivity()).setSupportActionBar(myToolbar);
+
     }
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
