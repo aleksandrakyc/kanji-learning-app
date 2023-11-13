@@ -6,6 +6,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
+import android.text.method.ScrollingMovementMethod;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -65,8 +66,9 @@ public class SingleKanjiView extends Fragment {
         meaningView.setText(String.join(", ", character.getMeaning()));
 
         wordView = getView().findViewById(R.id.wordView);
+        wordView.setMovementMethod(new ScrollingMovementMethod());
         String wordText = "";
-        List<WordModel> wordModelList = dataBaseAdapter.getWordsByKanjiAndLevel(character.getKanji().charAt(0), character.getJlpt());
+        List<WordModel> wordModelList = dataBaseAdapter.getWordsByKanjiAndLevelOrLower(character.getKanji().charAt(0), character.getJlpt());
         if(!wordModelList.isEmpty())
             for (WordModel word: wordModelList){
                 wordText += (word.getWordAndMeaning() + "\n");

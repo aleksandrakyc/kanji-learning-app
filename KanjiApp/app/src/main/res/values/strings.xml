@@ -21,4 +21,9 @@
     <string name="custom_sets">Custom sets</string>
     <string name="word_header_text">Words:</string>
     <string name="example_sentence_text">Example sentence:</string>
+    <string name="app_label">search</string>
+    <string name="button_learn">learn!</string>
+    <string name="questionNumber">1/10</string>
+    <string name="button_check_answer">Check</string>
+    <string name="questionType">Type on reading of kanji:</string>
 </resources>

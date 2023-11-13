@@ -5,11 +5,13 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.navigation.Navigation;
 
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.GridView;
 
 import java.util.ArrayList;
@@ -47,9 +49,23 @@ public class KanjiListView extends Fragment {
     }
     GridView kanjiGV;
     DataBaseAdapter dataBaseAdapter;
+    Button btn;
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+
+        btn = getView().findViewById(R.id.button);
+
+        btn.setOnClickListener(new View.OnClickListener() {
+            Bundle bundle = new Bundle();;
+            @Override
+            public void onClick(View v) {
+                bundle.putInt("level", mLevel);
+                bundle.putInt("categoryType", type.getValue());
+                Navigation.findNavController(view).navigate(R.id.action_kanjiListView_to_learnOptions, bundle);
+            }
+        });
+
         dataBaseAdapter = new DataBaseAdapter(getContext());
         dataBaseAdapter.createDatabase();
         dataBaseAdapter.open();
@@ -59,7 +75,7 @@ public class KanjiListView extends Fragment {
         ArrayList<CharacterModel> characterModelArrayList = new ArrayList<>();
         switch (type){
             case Jlpt:
-                characterModelArrayList = dataBaseAdapter.getKanjiByLevel(Jlpt.stringToJlpt("N"+mLevel));
+                characterModelArrayList = dataBaseAdapter.getKanjiByJlpt(Jlpt.stringToJlpt("N"+mLevel));
                 break;
             case Grade:
                 characterModelArrayList = dataBaseAdapter.getKanjiByGrade(Grade.intToGrade(mLevel));

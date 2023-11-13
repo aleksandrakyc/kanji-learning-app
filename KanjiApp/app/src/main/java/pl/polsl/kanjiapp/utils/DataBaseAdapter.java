@@ -15,6 +15,7 @@ import android.util.Log;
 import pl.polsl.kanjiapp.models.CharacterModel;
 import pl.polsl.kanjiapp.models.SentenceModel;
 import pl.polsl.kanjiapp.models.WordModel;
+import pl.polsl.kanjiapp.types.CategoryType;
 import pl.polsl.kanjiapp.types.Grade;
 import pl.polsl.kanjiapp.types.Jlpt;
 
@@ -53,6 +54,7 @@ public class DataBaseAdapter {
         return this;
     }
 
+    //TODO: and level, n or lower
     public List<SentenceModel> getSentencesByKanji(String character) {
         List<SentenceModel> returnList = new ArrayList<>();
         try {
@@ -79,7 +81,7 @@ public class DataBaseAdapter {
         }
     }
 
-    public ArrayList<CharacterModel> getKanjiByLevel(Jlpt level) {
+    public ArrayList<CharacterModel> getKanjiByJlpt(Jlpt level) {
         ArrayList<CharacterModel> returnList = new ArrayList<>();
         try {
             String sql = "SELECT kanji, onyomi, kunyomi, meaning, compact_meaning, grade, jlpt, frequency FROM kanjidict WHERE jlpt LIKE '%" + level.name() + "%';";
@@ -131,6 +133,19 @@ public class DataBaseAdapter {
             throw mSQLException;
         }
     }
+
+    public ArrayList<CharacterModel> getKanjiByLevel(CategoryType type, int level){
+        ArrayList<CharacterModel> returnList = new ArrayList<>();
+        switch(type){
+            case Grade:
+                return getKanjiByGrade(Grade.intToGrade(level));
+            case Jlpt:
+                return getKanjiByJlpt(Jlpt.stringToJlpt("N"+level));
+            case Custom:
+            case invalid:
+        }
+        return returnList;
+    }
     public CharacterModel getKanjiByCharacter(char character) {
         try {
             String sql = "SELECT kanji, onyomi, kunyomi, meaning, compact_meaning, grade, jlpt, frequency FROM kanjidict WHERE kanji='" + character + "';";
@@ -153,6 +168,7 @@ public class DataBaseAdapter {
             throw mSQLException;
         }
     }
+
     public ArrayList<WordModel> getWordsByKanjiAndLevel(char character, Jlpt level){
         ArrayList<WordModel> returnList = new ArrayList<>();
         if (level == Jlpt.invalid) {
@@ -189,6 +205,16 @@ public class DataBaseAdapter {
         }
     }
 
+    public ArrayList<WordModel> getWordsByKanjiAndLevelOrLower(char character, Jlpt level){
+        ArrayList<WordModel> returnList = new ArrayList<>();
+        Jlpt[] levels = Jlpt.values();
+        int index = Jlpt.values().length - 1;
+        do{
+            returnList.addAll(getWordsByKanjiAndLevel(character, levels[index]));
+            index--;
+        }while(index>0 && level != levels[index+1]);
+        return returnList;
+    }
 //    private <T extends KanjiDbObject> ArrayList<T> runQuery(ArrayList<T> result, String query, int columns) {
 //        List<String> argumentList = new ArrayList<>();
 //        try {

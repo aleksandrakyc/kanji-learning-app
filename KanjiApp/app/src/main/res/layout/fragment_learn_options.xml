@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".views.LearnOptions"
+    android:layout_marginStart="@dimen/margin_large"
+    android:layout_marginEnd="@dimen/margin_large"
+    android:layout_marginTop="@dimen/margin_small"
+    android:layout_marginBottom="@dimen/margin_small">
+
+    <TextView
+        android:id="@+id/textViewKanjiSet"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textSize="20sp"
+        android:text="Learning kanji set unknown" />
+
+    <Switch
+        android:id="@+id/switchWords"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:text="Learn with words"
+        tools:ignore="UseSwitchCompatOrMaterialXml" />
+
+    <Switch
+        android:id="@+id/switchSentences"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:text="Learn with sentences"
+        tools:ignore="UseSwitchCompatOrMaterialXml" />
+
+    <EditText
+        android:id="@+id/editTextTurns"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:ems="10"
+        android:inputType="numberSigned"
+        android:text="20" />
+
+    <Button
+        android:id="@+id/learnButton"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom"
+        android:backgroundTint="@color/medium"
+        android:text="Study!" />
+
+
+</LinearLayout>
