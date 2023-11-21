@@ -31,4 +31,5 @@ public enum Jlpt {
 
         return names;
     }
+
 }

@@ -88,7 +88,7 @@
 \newcommand{\TitleAlt}{Mobile application for Kanji learning}                     % thesis title in English
 \newcommand{\Program}{Informatyka}            % kierunek studiów  (bez $\langle$ i $\rangle$)
 \newcommand{\Specialisation}{Grafika Komputerowa i Oprogramowanie}     % specjalność  (bez $\langle$ i $\rangle$)
-\newcommand{\Departament}{wpisać właściwą}        % katedra promotora  (bez $\langle$ i $\rangle$)
+\newcommand{\Departament}{Algorytmiki i Oprogramowania }        % katedra promotora  (bez $\langle$ i $\rangle$)
 
 % Jeżeli został wyznaczony promotor pomocniczy lub opiekun, proszę go/ją wpisać ...
 %\newcommand{\Consultant}{$\langle$stopień naukowy imię i nazwisko$\rangle$} % dane promotora pomocniczego, opiekuna (bez $\langle$ i $\rangle$)
@@ -453,7 +453,7 @@ escapeinside={@*}{*@},%
     
 	\vfill  \vfill  
 		
-    {\large\bfseries  Gliwice \the\year}
+    {\large\bfseries  Katowice \the\year}
 
    \end{center}	
        \ifxetex 
@@ -524,19 +524,14 @@ escapeinside={@*}{*@},%
 \chapter{Wstęp}
 \label{ch:wstep}
 
-\begin{itemize}
-\item wprowadzenie w problem/zagadnienie
-\item osadzenie problemu w dziedzinie
-\item cel pracy
-\item zakres pracy
-\item zwięzła charakterystyka rozdziałów
-\item jednoznaczne określenie wkładu autora, w przypadku prac wieloosobowych – tabela z autorstwem poszczególnych elementów pracy
-\end{itemize}
-
-
+\par Aby wyjaśnić cel tej pracy inżynierskiej, należy wspomnieć o kilku ważnych pojęciach związanych z językiem japońskim i jego nauką. Kanji razem z sylabariuszami hiragana i katakana oraz znanymi nam cyframi arabskimi i alfabetem romańskim tworzą całość japońskiego alfabetu. Są to znaki logograficzne, co oznacza że przeciwnie do alfabetów składających sie z głosek, każdy znak oznacza jakieś pojęcie. Kompleksowa lista wszystkich kanji nie istnieje, jednak ich liczbę szacuje się na około czterdziestu tysięcy. Jest to ogromna liczba, na którą składa się wiele znaków przestarzałych lub bardzo rzadko używanych. Zamiast niej częstym wskaźnikiem płynności językowej w kontekście kanji jest pojęcie \textit{jōyō kanji}, które oznacza zestaw znaków wymagany przez japoński system edukacji. Pod ukończeniu szkoły średniej Japończyk posługuje się 2136 znakami kanji. Podobna ilość potrzebna jest, aby zdać test znajomości języka japońskiego dla obcokrajowców \textit{(Nihongo nōryoku shiken)} na najwyższym poziomie oraz zawiera się w około 98 procentach tekstu pisanego.
+\par Zaznajomienie się ze znakami kanji to nieodłączna część nauki języka japońskiego. Co prawda uparty uczeń może zaprzestać na nauce gramatyki, wymowy i zromanizowanego zapisu \textit{rōmaji}, ale poskutkuje to wątpliwą płynnością językową, gdyż nie będzie w stanie przeczytać nawet książki lub restauracyjnego menu. Dla początkującego tak duża ilość materiału może być odrzucająca, dlatego na rynku pojawiło się wiele rozwiązań które pomagają użytkownikowi w nauce kanji. Jednym z takich rozwiązań jest aplikacja mobilna opracowana na rzecz tej pracy inżynierskiej.
+\par Celem pracy jest stworzenie rozwiązania wspomagającego ucznia w nauce kanji jako aplikacji mobilnej. Program powinien posiadać skuteczny tryb nauczania, który potrafi dostosować się do poziomu ucznia. Jako że regularna nauka, która w tym przypadku jest kluczowa, nie jest zawsze łatwa w utrzymaniu, aplikacja powinna motywować do kolejnych podejść i dostarczać różnorodne ćwiczenia. Ważnym zagadnieniem w rozwiązaniu tego rodzaju jest też odpowiedni rozrzut pytań w czasie. Ta praca stara się wziąć pod uwagę fakt, że niektóre znaki mogą przyjść uczniowi łatwo, a inne trudno i należy odpowiednio dostosować algorytm dostarczający zadania do wykonania.
+\par Rozwiązanie opisane w tej pracy to obok aplikacji mobilnej system wspomagający jej działanie. Na zakres pracy składa się sama aplikacja, baza danych dotyczących użytkowników oraz panel administracyjny jako aplikacja webowa. Rozwiązanie obsługuje trzy rodzaje użytkowników, którymi są uczeń, nauczyciel i administrator. Uczeń to użytkownik korzystający z takich funkcjonalności aplikacji jak przeglądanie słownika kanji, tworzenie zestawów znaków oraz tryb nauki. Nauczyciel to użytkownik, który może tworzyć grupy uczniów, zadawać im zadania domowe i sprawdzać ich postępy. Takie rozwiązanie ma pomagać w nauce w trybie zajęć grupowych, gdzie nauczyciel spotyka się z uczniami kilka razy w miesiącu i chce motywować do dalszej pracy w domu. 
+\par W tej pracy zostanie opracowana analiza tematu, porównanie i wybór narzędzi użytych do stworzenia systemu, specyfikacja zewnętrzna i wewnętrzna, informacje na temat testowania i weryfikacji poprawnego działania aplikacji. 
 
 % TODO
-\chapter{[Analiza tematu]}
+\chapter{Analiza tematu}
 
 \begin{itemize}
 \item sformułowanie problemu
@@ -545,11 +540,7 @@ escapeinside={@*}{*@},%
 \end{itemize}
 
 
-Wzory  
-\begin{align}
-y = \frac{\partial x}{\partial t}
-\end{align}
-jak i pojedyncze symbole $x$ i $y$  składa się w trybie matematycznym.
+
 
 
 %\begin{Definition}\label{def:1}

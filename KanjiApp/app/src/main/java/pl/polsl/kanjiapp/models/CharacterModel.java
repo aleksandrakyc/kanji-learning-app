@@ -63,6 +63,10 @@ public class CharacterModel extends KanjiDbObject{
         return meaning;
     }
 
+    public String getMeaningString() {
+        return String.join(", ", meaning);
+    }
+
     public void setMeaning(List<String> meaning) {
         this.meaning = meaning;
     }

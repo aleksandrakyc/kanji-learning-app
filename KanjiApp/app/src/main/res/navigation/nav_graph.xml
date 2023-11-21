@@ -26,6 +26,9 @@
                 android:name="@string/kanji"
                 android:defaultValue="来" />
         </action>
+        <action
+            android:id="@+id/action_kanjiListView_to_learnOptions"
+            app:destination="@id/learnOptions" />
     </fragment>
     <fragment
         android:id="@+id/singleKanjiView"
@@ -37,4 +40,27 @@
             app:argType="string"
             android:defaultValue="来" />
     </fragment>
+    <fragment
+        android:id="@+id/learnOptions"
+        android:name="pl.polsl.kanjiapp.views.LearnOptions"
+        android:label="fragment_learn_options"
+        tools:layout="@layout/fragment_learn_options" >
+        <action
+            android:id="@+id/action_learnOptions_to_learn"
+            app:destination="@id/learn" />
+    </fragment>
+    <fragment
+        android:id="@+id/learn"
+        android:name="pl.polsl.kanjiapp.views.Learn"
+        android:label="fragment_learn"
+        tools:layout="@layout/fragment_learn" >
+        <action
+            android:id="@+id/action_learn_to_learningStats"
+            app:destination="@id/learningStats" />
+    </fragment>
+    <fragment
+        android:id="@+id/learningStats"
+        android:name="pl.polsl.kanjiapp.views.LearningStats"
+        android:label="fragment_learning_stats"
+        tools:layout="@layout/fragment_learning_stats" />
 </navigation>
