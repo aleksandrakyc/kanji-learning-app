@@ -42,8 +42,8 @@ public class KanjiListView extends Fragment {
             type = CategoryType.intToCategoryType(getArguments().getInt("categoryType"));
             Log.d("hewwo", "onCreate: "+mLevel);
         }
-        Toolbar myToolbar = (Toolbar) getView().findViewById(R.id.my_toolbar);
-        ((AppCompatActivity)getActivity()).setSupportActionBar(myToolbar);
+        //Toolbar myToolbar = (Toolbar) getView().findViewById(R.id.my_toolbar);
+        //((AppCompatActivity)getActivity()).setSupportActionBar(myToolbar);
 
     }
     @Override

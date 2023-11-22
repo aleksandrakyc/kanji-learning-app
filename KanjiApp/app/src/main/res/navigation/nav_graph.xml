@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/nav_graph"
-    app:startDestination="@id/startMenu">
+    app:startDestination="@id/register">
 
     <fragment
         android:id="@+id/startMenu"
@@ -63,4 +63,22 @@
         android:name="pl.polsl.kanjiapp.views.LearningStats"
         android:label="fragment_learning_stats"
         tools:layout="@layout/fragment_learning_stats" />
+    <fragment
+        android:id="@+id/register"
+        android:name="pl.polsl.kanjiapp.views.Register"
+        android:label="fragment_login"
+        tools:layout="@layout/fragment_register" >
+        <action
+            android:id="@+id/action_register_to_startMenu"
+            app:destination="@id/startMenu" />
+    </fragment>
+    <fragment
+        android:id="@+id/login"
+        android:name="pl.polsl.kanjiapp.views.Login"
+        android:label="fragment_login"
+        tools:layout="@layout/fragment_login" >
+        <action
+            android:id="@+id/action_login_to_startMenu"
+            app:destination="@id/startMenu" />
+    </fragment>
 </navigation>
