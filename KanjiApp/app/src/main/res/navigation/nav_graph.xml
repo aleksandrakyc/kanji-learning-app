@@ -3,10 +3,10 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/nav_graph"
-    app:startDestination="@id/register">
+    app:startDestination="@id/startMenu">
 
     <fragment
-        android:id="@+id/startMenu"
+        android:id="@+id/CategoryList"
         android:name="pl.polsl.kanjiapp.views.CategoryList"
         android:label="@string/fragment_start_menu"
         tools:layout="@layout/fragment_category_list" >
@@ -69,8 +69,8 @@
         android:label="fragment_login"
         tools:layout="@layout/fragment_register" >
         <action
-            android:id="@+id/action_register_to_startMenu"
-            app:destination="@id/startMenu" />
+            android:id="@+id/action_register_to_login"
+            app:destination="@id/login" />
     </fragment>
     <fragment
         android:id="@+id/login"
@@ -78,7 +78,22 @@
         android:label="fragment_login"
         tools:layout="@layout/fragment_login" >
         <action
-            android:id="@+id/action_login_to_startMenu"
-            app:destination="@id/startMenu" />
+            android:id="@+id/action_login_to_category_list"
+            app:destination="@id/CategoryList" />
+    </fragment>
+    <fragment
+        android:id="@+id/startMenu"
+        android:name="pl.polsl.kanjiapp.views.StartMenu"
+        android:label="fragment_start_menu"
+        tools:layout="@layout/fragment_start_menu" >
+        <action
+            android:id="@+id/action_startMenu_to_register"
+            app:destination="@id/register" />
+        <action
+            android:id="@+id/action_startMenu_to_login"
+            app:destination="@id/login" />
+        <action
+            android:id="@+id/action_startMenu_to_CategoryList"
+            app:destination="@id/CategoryList" />
     </fragment>
 </navigation>

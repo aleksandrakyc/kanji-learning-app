@@ -42,6 +42,13 @@
         android:layout_weight="0"
         android:inputType="textPassword" />
 
+    <Switch
+        android:id="@+id/teacherSwitch"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="0"
+        android:text="Request teacher permissions" />
+
     <Space
         android:layout_weight="1"
         android:layout_height="wrap_content"

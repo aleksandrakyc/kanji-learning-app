@@ -54,6 +54,6 @@ tools:context=".views.Login">
     android:layout_height="50dp"
     android:layout_weight="0"
     android:backgroundTint="@color/medium"
-    android:text="Register" />
+    android:text="Log in" />
 
 </LinearLayout>
