@@ -5,6 +5,11 @@
         <item name="android:windowBackground">@color/light</item>
         <item name="android:textColor">@color/text</item>
         <item name="android:statusBarColor">@color/medium</item>
+        <item name="android:popupMenuStyle">@style/PopupMenu</item>
+    </style>
+
+    <style name="PopupMenu" parent="@android:style/Widget.PopupMenu">
+        <item name="android:popupBackground">@color/light</item>
     </style>
 
     <style name="Theme.KanjiApp" parent="Base.Theme.KanjiApp" />

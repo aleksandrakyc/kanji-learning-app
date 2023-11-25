@@ -96,4 +96,9 @@
             android:id="@+id/action_startMenu_to_CategoryList"
             app:destination="@id/CategoryList" />
     </fragment>
+    <fragment
+        android:id="@+id/createNewSet"
+        android:name="pl.polsl.kanjiapp.views.CreateNewSet"
+        android:label="fragment_create_new_set"
+        tools:layout="@layout/fragment_create_new_set" />
 </navigation>

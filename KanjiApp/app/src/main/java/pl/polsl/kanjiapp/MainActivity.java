@@ -1,16 +1,15 @@
 package pl.polsl.kanjiapp;
 
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.navigation.NavController;
+import androidx.navigation.Navigation;
 
 import android.os.Bundle;
 import android.util.Log;
-import android.widget.LinearLayout;
-import android.widget.TextView;
-
-import pl.polsl.kanjiapp.models.CharacterModel;
-import pl.polsl.kanjiapp.models.SentenceModel;
-import pl.polsl.kanjiapp.types.Jlpt;
-import pl.polsl.kanjiapp.utils.DataBaseAdapter;
+import android.view.Menu;
+import android.view.MenuItem;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -18,5 +17,24 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        setSupportActionBar(findViewById(R.id.my_toolbar));
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.menu, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+
+        int id = item.getItemId();
+        if (id == R.id.action_add){
+            NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment);
+            navController.navigate(R.id.createNewSet);
+            return true;
+        }
+        return true;
     }
 }

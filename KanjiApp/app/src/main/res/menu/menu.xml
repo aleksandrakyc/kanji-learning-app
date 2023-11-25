@@ -2,9 +2,21 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
     <item
-        android:id="@+id/action_favorite"
-        android:icon="@drawable/ic_launcher_foreground"
-        android:title="tf"
+        android:id="@+id/action_add"
+        android:icon="@drawable/baseline_add_24_white"
+        android:title="add"
         app:showAsAction="ifRoom"/>
+
+    <item android:id="@+id/action_logout"
+        android:title="Log out"
+        app:showAsAction="never"/>
+
+    <item android:id="@+id/action_settings"
+        android:title="Settings"
+        app:showAsAction="never"/>
+
+    <item android:id="@+id/action_about"
+        android:title="About KanjiApp"
+        app:showAsAction="never"/>
 
 </menu>
