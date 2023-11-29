@@ -17,6 +17,8 @@ import android.widget.Button;
 import android.widget.GridView;
 
 import java.util.ArrayList;
+import java.util.Set;
+import java.util.TreeSet;
 
 import pl.polsl.kanjiapp.R;
 import pl.polsl.kanjiapp.adapters.CharacterAdapter;
@@ -86,6 +88,9 @@ public class KanjiListView extends Fragment {
                 characterModelArrayList = dataBaseAdapter.getKanjiByGrade(Grade.intToGrade(mLevel));
                 break;
             case Custom:
+                //get kanji details from list of characters
+                Set<String> characterSet = new TreeSet<>();
+                characterModelArrayList = dataBaseAdapter.getKanjiDetailsFromSet(characterSet);
             case invalid:
             default:
                 Log.d(TAG, "onViewCreated: unsupported type");

@@ -1,12 +1,15 @@
 package pl.polsl.kanjiapp.models;
 
+import android.util.Log;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Objects;
 
 import pl.polsl.kanjiapp.types.Jlpt;
 
-public class CharacterModel extends KanjiDbObject{
+public class CharacterModel extends KanjiDbObject implements Comparable<CharacterModel>{
     private String kanji;
     private List<String> onyomi;
     private List<String> kunyomi;
@@ -127,5 +130,9 @@ public class CharacterModel extends KanjiDbObject{
 
     public void setCompact_meaning(String compact_meaning) {
         this.compact_meaning = compact_meaning;
+    }
+    @Override
+    public int compareTo(CharacterModel o) {
+        return (Objects.equals(this.getKanji(), o.getKanji())) ? 0:1;
     }
 }
