@@ -247,7 +247,11 @@ public class DataBaseAdapter {
 
     public ArrayList<CharacterModel> getKanjiDetailsFromSet(Set<String> characters){
         ArrayList<CharacterModel> returnList = new ArrayList<>();
-
+        Log.d(TAG, "getKanjiDetailsFromSet: "+characters);
+        for(String character : characters) {
+            Log.d(TAG, "getKanjiDetailsFromSet: "+character);
+            returnList.add(getKanjiByCharacter(character.charAt(0)));
+        }
         return returnList;
     }
 

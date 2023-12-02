@@ -15,8 +15,17 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.GridView;
+import android.widget.Toast;
+
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.util.ArrayList;
+import java.util.Map;
 import java.util.Set;
 import java.util.TreeSet;
 
@@ -35,18 +44,27 @@ import pl.polsl.kanjiapp.utils.DataBaseAdapter;
 public class KanjiListView extends Fragment {
     protected static final String TAG = "KanjiListView";
     int mLevel;
+    String setId;
     CategoryType type;
+    Set<String> characterSet;
+    private FirebaseFirestore mFstore;
+    private DocumentReference df;
+    private ArrayList<CharacterModel> characterModelArrayList;
+    CharacterAdapter adapter;
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        mFstore = FirebaseFirestore.getInstance();
         if (getArguments() != null) {
-            mLevel = getArguments().getInt("level");
+            Log.d(TAG, "onCreate: " + getArguments().getInt("categoryType"));
             type = CategoryType.intToCategoryType(getArguments().getInt("categoryType"));
-            Log.d("hewwo", "onCreate: "+mLevel);
+            if (type == CategoryType.Custom){
+                setId = getArguments().getString("level");
+            }
+            else
+                mLevel = getArguments().getInt("level");
         }
-        //Toolbar myToolbar = (Toolbar) getView().findViewById(R.id.my_toolbar);
-        //((AppCompatActivity)getActivity()).setSupportActionBar(myToolbar);
-
+        Log.d(TAG, "onCreate: " + type.name());
     }
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -79,25 +97,46 @@ public class KanjiListView extends Fragment {
 
         kanjiGV = getView().findViewById(R.id.gridKanjis);
         //todo trycatch
-        ArrayList<CharacterModel> characterModelArrayList = new ArrayList<>();
-        switch (type){
-            case Jlpt:
-                characterModelArrayList = dataBaseAdapter.getKanjiByJlpt(Jlpt.stringToJlpt("N"+mLevel));
-                break;
-            case Grade:
-                characterModelArrayList = dataBaseAdapter.getKanjiByGrade(Grade.intToGrade(mLevel));
-                break;
-            case Custom:
-                //get kanji details from list of characters
-                Set<String> characterSet = new TreeSet<>();
-                characterModelArrayList = dataBaseAdapter.getKanjiDetailsFromSet(characterSet);
-            case invalid:
-            default:
-                Log.d(TAG, "onViewCreated: unsupported type");
-        }
 
-        CharacterAdapter adapter = new CharacterAdapter(getContext(), characterModelArrayList);
-        kanjiGV.setAdapter(adapter);
+        if (type!=CategoryType.Custom){
+            switch (type){
+                case Jlpt:
+                    characterModelArrayList = dataBaseAdapter.getKanjiByJlpt(Jlpt.stringToJlpt("N"+mLevel));
+                    break;
+                case Grade:
+                    characterModelArrayList = dataBaseAdapter.getKanjiByGrade(Grade.intToGrade(mLevel));
+                    break;
+                case invalid:
+                default:
+                    Log.d(TAG, "onViewCreated: unsupported type");
+            }
+            adapter = new CharacterAdapter(getContext(), characterModelArrayList);
+            kanjiGV.setAdapter(adapter);
+        }
+        else {
+            //28 chars are user name, whole thing is set name
+            df = mFstore.collection("Users").document(setId.substring(0,28)).collection("Sets").document(setId);
+
+            //get kanji details from list of characters
+            characterSet = new TreeSet<>();
+            df.get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+                @Override
+                public void onSuccess(DocumentSnapshot documentSnapshot) {
+                    //TODO check this cast
+                    Map<String, Double> kanjiList = (Map<String, Double>) documentSnapshot.get("Kanji_list");
+                    kanjiList.forEach((key, value) -> characterSet.add(key));
+                    Log.d(TAG, "onSuccess: " + characterSet);
+                    characterModelArrayList = dataBaseAdapter.getKanjiDetailsFromSet(characterSet);
+                    adapter = new CharacterAdapter(getContext(), characterModelArrayList);
+                    kanjiGV.setAdapter(adapter);
+                }
+            }).addOnFailureListener(new OnFailureListener() {
+                @Override
+                public void onFailure(@NonNull Exception e) {
+                    Toast.makeText(getContext(), "No such set", Toast.LENGTH_SHORT).show();
+                }
+            });
+        }
 
     }
 

@@ -7,6 +7,7 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -34,6 +35,7 @@ import java.util.stream.Collectors;
 import pl.polsl.kanjiapp.R;
 import pl.polsl.kanjiapp.adapters.SelectCharactersAdapter;
 import pl.polsl.kanjiapp.models.CharacterModel;
+import pl.polsl.kanjiapp.types.CategoryType;
 import pl.polsl.kanjiapp.utils.DataBaseAdapter;
 
 public class CreateNewSet extends Fragment implements SelectCharactersAdapter.ItemClickListener {
@@ -113,13 +115,17 @@ public class CreateNewSet extends Fragment implements SelectCharactersAdapter.It
                         df.set(setInfo);
 
                         Toast.makeText(getContext(), "Created set " + setName, Toast.LENGTH_SHORT).show();
+
+                        //navigate to set view page
+                        Bundle bundle = new Bundle();
+                        bundle.putString("level", setId);
+                        bundle.putInt("categoryType", CategoryType.Custom.getValue());
+                        Navigation.findNavController(view).navigate(R.id.action_createNewSet_to_kanjiListView, bundle);
                     }
                 });
                 AlertDialog dialog = builder.create();
                 dialog.show();
-
-                //navigate to set view page
-            }
+}
         });
     }
 
