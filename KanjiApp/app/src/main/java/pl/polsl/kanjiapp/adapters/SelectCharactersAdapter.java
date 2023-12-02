@@ -45,6 +45,7 @@ public class SelectCharactersAdapter extends RecyclerView.Adapter<SelectCharacte
         CharacterModel character = charModelArrayList.get(position);
         holder.kanji.setText(character.getKanji());
         holder.meaning.setText(character.getCompact_meaning());
+        //todo doesnt work
         if(selectedCharacters.contains(character)){
             holder.itemView.setBackgroundColor(Color.parseColor("#A8DADC"));
         }

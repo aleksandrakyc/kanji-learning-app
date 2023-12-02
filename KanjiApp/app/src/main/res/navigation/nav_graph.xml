@@ -105,4 +105,19 @@
             android:id="@+id/action_createNewSet_to_kanjiListView"
             app:destination="@id/kanjiListView" />
     </fragment>
+    <fragment
+        android:id="@+id/categoryListPredefined"
+        android:name="pl.polsl.kanjiapp.views.CategoryListPredefined"
+        android:label="fragment_category_list_predefined"
+        tools:layout="@layout/fragment_category_list_predefined" />
+    <fragment
+        android:id="@+id/categoryListCustom"
+        android:name="pl.polsl.kanjiapp.views.CategoryListCustom"
+        android:label="fragment_category_list_custom"
+        tools:layout="@layout/fragment_category_list_custom" />
+    <fragment
+        android:id="@+id/categoryListHomework"
+        android:name="pl.polsl.kanjiapp.views.CategoryListHomework"
+        android:label="fragment_category_list_homework"
+        tools:layout="@layout/fragment_category_list_homework" />
 </navigation>

@@ -77,4 +77,20 @@
             android:textSize="18sp"
             android:text="@string/example_sentence" />
 
-    </LinearLayout>
+        <Space
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"/>
+
+        <Button
+            android:id="@+id/buttonSet"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:backgroundTint="@color/medium"
+            android:text="Add to set" />
+        <Space
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"/>
+
+</LinearLayout>

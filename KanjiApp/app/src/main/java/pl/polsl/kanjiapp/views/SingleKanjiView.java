@@ -1,5 +1,6 @@
 package pl.polsl.kanjiapp.views;
 
+import android.app.AlertDialog;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -11,8 +12,22 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.firestore.CollectionReference;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.FieldValue;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.QuerySnapshot;
+
+import java.util.ArrayList;
 import java.util.List;
 
 import pl.polsl.kanjiapp.R;
@@ -23,6 +38,12 @@ import pl.polsl.kanjiapp.types.Jlpt;
 public class SingleKanjiView extends Fragment {
     protected static final String TAG = "SingleKanjiView";
     private String mCharacter;
+    CharacterModel character;
+    private Button button;
+    private FirebaseAuth mAuth;
+    private FirebaseFirestore mFstore;
+    FirebaseUser user;
+    private ArrayList<String> setChoices;
 
     public SingleKanjiView() {
         // Required empty public constructor
@@ -31,6 +52,8 @@ public class SingleKanjiView extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        mAuth = FirebaseAuth.getInstance();
+        mFstore = FirebaseFirestore.getInstance();
         if (getArguments() != null) {
             mCharacter = getArguments().getString("character");
         }
@@ -47,11 +70,12 @@ public class SingleKanjiView extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        user = mAuth.getCurrentUser();
         dataBaseAdapter = new DataBaseAdapter(getContext());
 //        dataBaseAdapter.createDatabase();
         dataBaseAdapter.open();
         //TODO ADD CHECKS, SOMETIMES CRASHES
-        CharacterModel character = dataBaseAdapter.getKanjiByCharacter(mCharacter.charAt(0));
+        character = dataBaseAdapter.getKanjiByCharacter(mCharacter.charAt(0));
 
         kanjiView = getView().findViewById(R.id.kanjiView);
         kanjiView.setText(character.getKanji());
@@ -80,5 +104,58 @@ public class SingleKanjiView extends Fragment {
             sentenceView = getView().findViewById((R.id.exampleSentenceView));
             sentenceView.setText(sentence.getJapanese()+"\n"+sentence.getEnglish());
         }
+
+        //button
+        button = getView().findViewById(R.id.buttonSet);
+        button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                setChoices = new ArrayList<>();
+                CollectionReference cf = mFstore.collection("Users").document(user.getUid()).collection("Sets");
+                cf.get().addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
+                    @Override
+                    public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
+                        List<DocumentSnapshot> documents = queryDocumentSnapshots.getDocuments();
+                        documents.forEach(documentSnapshot -> setChoices.add(documentSnapshot.getId()));
+                        Log.d(TAG, "onSuccess: " + setChoices);
+
+                        String[] choices = new String[setChoices.size()];
+                        for (int i = 0; i<setChoices.size(); i++){
+                            choices[i] = setChoices.get(i).substring(28);
+                        }
+                        //choices = setChoices.toArray(choices);
+
+                        AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
+                        builder
+                                .setTitle("Add character to set")
+                                .setPositiveButton("Add", (dialog, which) -> {
+                                    int selectedPosition = ((AlertDialog)dialog).getListView().getCheckedItemPosition();
+                                    addCharacterToSet(setChoices.get(selectedPosition));
+                                })
+                                .setNegativeButton("Cancel", (dialog, which) -> {
+
+                                })
+                                .setSingleChoiceItems(choices, 0, (dialog, which) -> {
+
+                                });
+
+                        AlertDialog dialog = builder.create();
+                        dialog.show();
+                    }
+                }).addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+
+                    }
+                });
+            }
+        });
+    }
+    private void addCharacterToSet(String setId){
+        Log.d(TAG, "addCharacterToSet: "+setId);
+        DocumentReference df = mFstore.collection("Users").document(user.getUid()).collection("Sets").document(setId);
+        df.update(
+                "Kanji_list."+character.getKanji(), 2.5
+        );
     }
 }
