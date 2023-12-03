@@ -69,6 +69,7 @@ public class CharacterModel extends KanjiDbObject implements Comparable<Characte
     public String getMeaningString() {
         return String.join(", ", meaning);
     }
+    public String getReadingString() {return String.join(", ", onyomi)+String.join(", ", kunyomi);}
 
     public void setMeaning(List<String> meaning) {
         this.meaning = meaning;

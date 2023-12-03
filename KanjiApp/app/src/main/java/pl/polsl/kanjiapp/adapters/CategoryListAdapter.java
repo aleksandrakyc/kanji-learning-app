@@ -12,12 +12,13 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import java.lang.reflect.Array;
 import java.util.ArrayList;
+import java.util.Arrays;
 
 import pl.polsl.kanjiapp.R;
 
 public class CategoryListAdapter extends RecyclerView.Adapter<CategoryListAdapter.ViewHolder> {
 
-    private String[] localDataSet;
+    private ArrayList<String> localDataSet;
     private ItemClickListener mClickListener;
     private LayoutInflater mInflater;
 
@@ -57,7 +58,7 @@ public class CategoryListAdapter extends RecyclerView.Adapter<CategoryListAdapte
      * @param dataSet String[] containing the data to populate views to be used
      * by RecyclerView
      */
-    public CategoryListAdapter(Context context, String[] dataSet) {
+    public CategoryListAdapter(Context context, ArrayList<String> dataSet) {
         this.mInflater = LayoutInflater.from(context);
         localDataSet = dataSet;
     }
@@ -78,13 +79,13 @@ public class CategoryListAdapter extends RecyclerView.Adapter<CategoryListAdapte
 
         // Get element from your dataset at this position and replace the
         // contents of the view with that element
-        viewHolder.getTextView().setText(localDataSet[position]);
+        viewHolder.getTextView().setText(localDataSet.get(position));
     }
 
     // Return the size of your dataset (invoked by the layout manager)
     @Override
     public int getItemCount() {
-        return localDataSet.length;
+        return localDataSet.size();
     }
 
     // allows clicks events to be caught

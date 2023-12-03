@@ -25,7 +25,7 @@ import pl.polsl.kanjiapp.models.SentenceModel;
 import pl.polsl.kanjiapp.models.WordModel;
 import pl.polsl.kanjiapp.types.CategoryType;
 import pl.polsl.kanjiapp.utils.DataBaseAdapter;
-import pl.polsl.kanjiapp.utils.Question;
+import pl.polsl.kanjiapp.utils.QuestionGenerator;
 
 
 public class Learn extends Fragment {
@@ -41,7 +41,7 @@ public class Learn extends Fragment {
     ArrayList<CharacterModel> characters;
     ArrayList<WordModel> words;
     ArrayList<SentenceModel> sentences;
-    Question question;
+    QuestionGenerator questionGenerator;
 
     public Learn() {
         // Required empty public constructor
@@ -91,22 +91,22 @@ public class Learn extends Fragment {
 
         //question handling
         currentQ = 1;
-        question = new Question(characters.get(currentQ%characters.size()));
+        questionGenerator = new QuestionGenerator(characters.get(currentQ%characters.size()), wordEnabled, sentenceEnabled);
 
         questionNumber.setText(currentQ+"/"+turns);
 
-        questionType.setText(question.getQuestion());
-        questionDetails.setText(question.getQuestionDetails());
+        questionType.setText(questionGenerator.getQuestion());
+        questionDetails.setText(questionGenerator.getQuestionDetails());
         checkBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 //evaluate answer
-                if (question.checkAnswer(answer.getText().toString())){
+                if (questionGenerator.checkAnswer(answer.getText().toString())){
                     evaluation.setText("Correct");
                     correctAnswrs+=1;
                 }
                 else{
-                    evaluation.setText("Incorrect. Correct answer: " + question.getAnswer());
+                    evaluation.setText("Incorrect. Correct answer: " + questionGenerator.getAnswer());
                 }
                 //check if last question
                 currentQ+=1;
@@ -120,9 +120,9 @@ public class Learn extends Fragment {
                 }
                 else{
                     //generate next question
-                    question = new Question(characters.get(currentQ%characters.size()));
-                    questionType.setText(question.getQuestion());
-                    questionDetails.setText(question.getQuestionDetails());
+                    questionGenerator = new QuestionGenerator(characters.get(currentQ%characters.size()), wordEnabled, sentenceEnabled);
+                    questionType.setText(questionGenerator.getQuestion());
+                    questionDetails.setText(questionGenerator.getQuestionDetails());
                     questionNumber.setText(currentQ+"/"+turns);
                 }
 

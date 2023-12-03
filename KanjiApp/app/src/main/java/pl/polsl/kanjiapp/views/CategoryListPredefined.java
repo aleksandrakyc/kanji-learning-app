@@ -14,6 +14,7 @@ import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.stream.Stream;
 
@@ -52,8 +53,9 @@ public class CategoryListPredefined extends Fragment implements CategoryListAdap
 
         String[] jlptValues = Arrays.copyOfRange(Jlpt.names(), 1, Jlpt.names().length);
         String[] gradeValues = Arrays.copyOfRange(Grade.names(), 1, Grade.names().length);
-        String[] categoryValues = Stream.concat(Arrays.stream(jlptValues), Arrays.stream(gradeValues))
-                .toArray(String[]::new);
+
+        ArrayList<String> categoryValues = new ArrayList<String>(Arrays.asList(jlptValues));
+        categoryValues.addAll(Arrays.asList(gradeValues));
         categoryList = getView().findViewById(R.id.recyclerJlpt);
         categoryList.setLayoutManager(new LinearLayoutManager(getContext()));
         CategoryListAdapter categoryListAdapter = new CategoryListAdapter(getContext(), categoryValues);
