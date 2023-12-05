@@ -85,8 +85,11 @@ public class KanjiListView extends Fragment {
             Bundle bundle = new Bundle();;
             @Override
             public void onClick(View v) {
-                bundle.putInt("level", mLevel);
                 bundle.putInt("categoryType", type.getValue());
+                if (type == CategoryType.Custom)
+                    bundle.putString("level", setId);
+                else
+                    bundle.putInt("level", mLevel);
                 Navigation.findNavController(view).navigate(R.id.action_kanjiListView_to_learnOptions, bundle);
             }
         });

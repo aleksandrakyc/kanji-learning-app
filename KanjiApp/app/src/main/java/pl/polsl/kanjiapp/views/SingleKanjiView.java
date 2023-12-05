@@ -123,7 +123,6 @@ public class SingleKanjiView extends Fragment {
                         for (int i = 0; i<setChoices.size(); i++){
                             choices[i] = setChoices.get(i).substring(28);
                         }
-                        //choices = setChoices.toArray(choices);
 
                         AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
                         builder

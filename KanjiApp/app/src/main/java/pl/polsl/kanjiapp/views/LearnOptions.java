@@ -27,6 +27,7 @@ public class LearnOptions extends Fragment {
     protected static final String TAG = "LearnOptions";
 
     int mLevel;
+    String setId;
     CategoryType type;
     TextView textView;
     Switch words, sentences;
@@ -42,8 +43,11 @@ public class LearnOptions extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
-            mLevel = getArguments().getInt("level");
             type = intToCategoryType(getArguments().getInt("categoryType"));
+            if (type == CategoryType.Custom)
+                setId = getArguments().getString("level");
+            else
+                mLevel = getArguments().getInt("level");
         }
     }
 
@@ -59,12 +63,11 @@ public class LearnOptions extends Fragment {
         super.onViewCreated(view, savedInstanceState);
 
         textView = getView().findViewById(R.id.textViewKanjiSet);
-        textView.setText("Learning kanji set: " + type.name() + " " + mLevel);
+        textView.setText("Learning kanji set: " + type.name() + " " + (mLevel != 0? mLevel : setId.substring(28)));
 
         learn = getView().findViewById(R.id.learnButton);
-        //c style! none = 0, words = 1, sentences = 2, all = 3
-        words = getView().findViewById(R.id.switchWords);//1
-        sentences = getView().findViewById(R.id.switchSentences);//2\
+        words = getView().findViewById(R.id.switchWords);
+        sentences = getView().findViewById(R.id.switchSentences);
 
         words.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
@@ -96,8 +99,10 @@ public class LearnOptions extends Fragment {
             public void onClick(View v) {
                 //todo trycatch
                 int turnsValue = Integer.parseInt(turns.getText().toString());
-
-                bundle.putInt("level", mLevel);
+                if (type == CategoryType.Custom)
+                    bundle.putString("level", setId);
+                else
+                    bundle.putInt("level", mLevel);
                 bundle.putInt("categoryType", type.getValue());
                 bundle.putInt("wordEnabled", wordEnabled);
                 bundle.putInt("sentenceEnabled", sentenceEnabled);

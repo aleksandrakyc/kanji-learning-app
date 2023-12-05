@@ -1,7 +1,5 @@
 package pl.polsl.kanjiapp.models;
 
-import android.util.Log;
-
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -22,6 +20,7 @@ public class CharacterModel extends KanjiDbObject implements Comparable<Characte
     public CharacterModel(String kanji, String onyomi, String kunyomi, String meaning, String compact_meaning, String grade, String jlpt, String frequency) {
         this.kanji = kanji;
         this.onyomi = new ArrayList<String>(Arrays.asList(onyomi.split("、")));
+        this.onyomi = cleanUpReadings(this.onyomi);
         this.kunyomi = new ArrayList<String>(Arrays.asList(kunyomi.split("、")));
         this.meaning = new ArrayList<String>(Arrays.asList(meaning.split(";")));
         if(compact_meaning == null || compact_meaning.trim().isEmpty())
@@ -36,7 +35,6 @@ public class CharacterModel extends KanjiDbObject implements Comparable<Characte
         {
             this.frequency = 0;
         }
-        this.cleanUpOnyomi();
     }
     public String getKanji() {
         return kanji;
@@ -69,7 +67,10 @@ public class CharacterModel extends KanjiDbObject implements Comparable<Characte
     public String getMeaningString() {
         return String.join(", ", meaning);
     }
-    public String getReadingString() {return String.join(", ", onyomi)+String.join(", ", kunyomi);}
+    public String getReadingString() {
+        String readings = String.join(", ", onyomi)+((onyomi.size()>0) ? ", ": "")+String.join(", ", kunyomi);
+        return readings;
+    }
 
     public void setMeaning(List<String> meaning) {
         this.meaning = meaning;
@@ -112,17 +113,17 @@ public class CharacterModel extends KanjiDbObject implements Comparable<Characte
                 '}';
     }
 
-    private void cleanUpOnyomi(){
-        List<String> newList = new ArrayList<String>();
+    private List<String> cleanUpReadings(List<String> list){
+        List<String> newList = new ArrayList<>();
         int index;
-        for (String reading : this.onyomi){
+        for (String reading : list){
             index = reading.indexOf('(');
             if (index != -1)
                 newList.add(reading.substring(0,index));
             else
                 newList.add(reading);
         }
-        this.onyomi = newList;
+        return newList;
     }
 
     public String getCompact_meaning() {
