@@ -8,8 +8,10 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.navigation.Navigation;
 
 import android.util.Log;
+import android.util.Pair;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -28,6 +30,7 @@ import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
@@ -50,10 +53,10 @@ public class Learn extends Fragment {
     TextView questionNumber, questionType, questionDetails, evaluation;
     EditText answer;
     Button checkBtn;
-    int currentQ, correctAnswrs = 0;
     DataBaseAdapter dataBaseAdapter;
     ArrayList<CharacterModel> characters;
     ArrayList<Question> questions;
+    HashMap<String, Pair<Integer, Integer>> scores;
     Question question;
     private FirebaseAuth mAuth;
     private FirebaseFirestore mFstore;
@@ -102,9 +105,6 @@ public class Learn extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        //new idea:
-        //generate all questions at the beginning and store them so that the random questions make sense
-        //sample 10 kanjis for 10 questions for example
 
         //findViewById
         questionNumber = getView().findViewById(R.id.questionNumber);
@@ -118,8 +118,7 @@ public class Learn extends Fragment {
 
         progressBar = getView().findViewById(R.id.progressBar);
 
-        //navigation
-        Bundle bundle = new Bundle();
+        scores = new HashMap<>();
         //question handling
         if (type == Custom){
             answer.setVisibility(View.GONE);
@@ -134,22 +133,27 @@ public class Learn extends Fragment {
             int n = 0;
             @Override
             public void onClick(View v) {
-                //evaluate answer
+
                 checkAnswer();
+                //evaluate answer
+                if(n==turns-1){
+                    evaluate();
+                    Log.d(TAG, "onClick: bye");
+                    Bundle bundle = new Bundle();
+                    bundle.putInt("turns", turns);
+                    //bundle.putInt("correctAnswrs", Collections.frequency(answers, Boolean.TRUE));
+                    Navigation.findNavController(view).navigate(R.id.action_learn_to_learningStats, bundle);
+                }
                 n++;
-                loadQuestion(n);
+                if (n==turns-1){
+                    checkBtn.setText("Finish");
+                    Log.d(TAG, "onClick: finish" + n);
+                }
+                if (n<=turns-1)
+                    loadQuestion(n);
             }
         });
 
-    }
-
-    private void updateEasinessFactors(String kanji){
-        DocumentReference df = mFstore.collection("Users").document(user.getUid()).collection("Sets").document(setId);
-        double EF = 0;
-
-        df.update(
-                "Kanji_list."+kanji, EF
-        );
     }
 
     private void getCharactersCustomSet(){
@@ -195,12 +199,51 @@ public class Learn extends Fragment {
 
     private void checkAnswer(){
         String userAnswer = answer.getText().toString();
+        int correct;
         if(question.checkAnswer(userAnswer)){
             evaluation.setText("Correct");
+            correct = 1;
         }
         else{
             evaluation.setText("Incorrect. Correct answers: " + question.getAnswer());
+            correct = 0;
         }
+        Pair<Integer, Integer> pair = scores.get(question.getKanji());
+        if (pair == null)
+            scores.put(question.getKanji(), new Pair<>(1,correct));
+        else
+            scores.put(question.getKanji(), new Pair<>(pair.first+1,pair.second+correct));
+
     }
 
+    private void updateEasinessFactors(String kanji, double EF){
+        DocumentReference df = mFstore.collection("Users").document(user.getUid()).collection("Sets").document(setId);
+
+        df.get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+            @Override
+            public void onSuccess(DocumentSnapshot documentSnapshot) {
+                double oldEF = (double) documentSnapshot.get("Kanji_list."+kanji);
+                Log.d(TAG, "onSuccess: "+oldEF);
+                double newEF = oldEF + EF;
+                if(newEF<1.3)
+                    newEF = 1.3;
+                df.update(
+                        "Kanji_list."+kanji, newEF
+                );
+            }
+        }).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception e) {
+
+            }
+        });
+    }
+    private void evaluate(){
+        scores.forEach((kanji, pair) -> {
+            double q = ((double) pair.second/(double) pair.first)*5;
+            Log.d(TAG, "evaluate: " + q);
+            double newValue = 0.1 - (5-q)*(0.08+(5-q)*0.02);
+            updateEasinessFactors(kanji, newValue);
+        });
+    }
 }

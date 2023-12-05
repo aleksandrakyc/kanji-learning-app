@@ -62,4 +62,5 @@ public class Question {
     public String getAnswer() {
         return answer;
     }
+    public String getKanji(){ return mCharacterModel.getKanji(); }
 }

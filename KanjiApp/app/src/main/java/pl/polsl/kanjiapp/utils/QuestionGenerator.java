@@ -6,7 +6,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 import pl.polsl.kanjiapp.models.CharacterModel;
 import pl.polsl.kanjiapp.types.QuestionType;
@@ -43,7 +42,8 @@ public class QuestionGenerator {
     }
     public ArrayList<Question> generateQuestions() {
         questions = new ArrayList<>();
-        int turnsPerChar = turns/characters.size();
+        int turnsPerChar = turns/characters.size()+1;
+        int left = characters.size() - turns%characters.size();
         //change if word/sentence enabled
         QuestionType[] types = QuestionType.values();
         characters.forEach(characterModel -> {
@@ -51,7 +51,10 @@ public class QuestionGenerator {
                 questions.add(new Question(characterModel, types[i%types.length]));
             }
         });
+        for (int i = 0; i<left; i++){
 
+            questions.remove(questions.size()-1-i);
+        }
         return questions;
     }
 
