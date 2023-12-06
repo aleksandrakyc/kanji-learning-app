@@ -323,6 +323,7 @@
 
 \usepackage{graphicx}
 \graphicspath{ {../Diagrams/} }
+\usepackage{float}
 %\newcommand{\japanese}[1]{{\selectlanguage{japanese}\obcy{#1}}} 
  
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -524,6 +525,7 @@ escapeinside={@*}{*@},%
 \chapter{Wstęp}
 \label{ch:wstep}
 
+
 Aby wyjaśnić cel tej pracy inżynierskiej, należy wspomnieć o kilku ważnych pojęciach związanych z językiem japońskim i jego nauką. Kanji razem z sylabariuszami hiragana i katakana oraz znanymi nam cyframi arabskimi i alfabetem romańskim tworzą całość japońskiego alfabetu. Są to znaki logograficzne, co oznacza że przeciwnie do alfabetów składających sie z głosek, każdy znak oznacza jakieś pojęcie. Kompleksowa lista wszystkich kanji nie istnieje, jednak ich liczbę szacuje się na około czterdziestu tysięcy. Jest to ogromna liczba, na którą składa się wiele znaków przestarzałych lub bardzo rzadko używanych. Zamiast niej częstym wskaźnikiem płynności językowej w kontekście kanji jest pojęcie \textit{jōyō kanji}, które oznacza zestaw znaków wymagany przez japoński system edukacji. Po ukończeniu szkoły średniej Japończyk posługuje się 2136 znakami kanji. Podobna liczba potrzebna jest, aby zdać test znajomości języka japońskiego dla obcokrajowców (jap. \textit{Nihongo nōryoku shiken}) na najwyższym poziomie oraz zawiera się w około 98 procentach tekstu pisanego.
 
 Zaznajomienie się ze znakami kanji to nieodłączna część nauki języka japońskiego. Co prawda uparty uczeń może zaprzestać na nauce gramatyki, wymowy i zromanizowanego zapisu \textit{rōmaji}, ale poskutkuje to wątpliwą płynnością językową, gdyż nie będzie w stanie przeczytać nawet książki lub restauracyjnego menu. Dla początkującego tak duża ilość materiału może być odrzucająca, dlatego na rynku pojawiło się wiele rozwiązań, które pomagają użytkownikowi w nauce kanji. Jednym z takich rozwiązań jest aplikacja mobilna opracowana na rzecz tej pracy inżynierskiej.
@@ -535,10 +537,11 @@ Rozwiązanie opisane w tej pracy to obok aplikacji mobilnej system wspomagający
 % TODO
 \chapter{Analiza tematu}
 
+\section{Nauka języków obcych wspomagana komputerowo}
 %\begin{itemize}
 %\item sformułowanie problemu
-%\item osadzenie tematu w kontekście aktualnego stanu wiedzy (\english{state of the art}) o poruszanym problemie
-%\item  studia literaturowe \cite{bib:artykul,bib:ksiazka,bib:konferencja,bib:internet} -  opis znanych rozwiązań (także opisanych naukowo, jeżeli problem jest poruszany w publikacjach naukowych), algorytmów, 
+%\item osadzenie tematu w kontekśceeie aktualnego stanu wiedzy (\english{state of the art}) o poruszanym problemie
+%\item  studia literaturowe e e%\cite{bib:artykul,bib:ksiazka,bib:konferencja,bib:internet} -  opis znanych rozwiązań (także opisanych naukowo, jeżeli problem jest poruszany w publikacjach naukowych), algorytmów, 
 %\end{itemize}
 
 %sformulowanie problemu 
@@ -554,27 +557,36 @@ Rozwiązanie opisane w tej pracy to obok aplikacji mobilnej system wspomagający
 Próby usystematyzowania nauki, szczególnie gdy materiał wymaga od nas więcej zapamiętywania niż analizy problemów, są naturalnie występującym skutkiem konieczności żmudnego, wielokrotnego powtarzania. Uczniowie wykazujący się większym sprytem niż pracowitością szukają drogi na skróty, aby tą samą ilość materiału przyswoić w krótszym czasie. Tak powstały pierwsze metody technik zapamiętywania, na przykład fiszki, czyli niewielkie kawałki papieru z pytaniem na jednej stronie i odpowiedzią na drugiej. Taki system pozwala na kompaktowe przechowywanie materiału, co pozwala uczyć się również w krótkich chwilach czasu i daleko od domu, na przykład w autobusie. 
 
 Dziennikarz Sebastian Leitner w 1972 wymyślił sposób na dalsze usprawnienie nauki za pomocą fiszek. W metodzie Leitnera, fiszki są podzielone na grupy względem tego, jak dobrze uczeń zna dany materiał. Jeżeli uczeń odpowie dobrze na dane pytanie, przenosi fiszkę do następnego pudełka. Jeśli odpowie źle, fiszka wraca na początek. Grupy różni to, jak często użytkownik jest zobowiązany powtarzać dany materiał. Im materiał lepiej znany, tym rzadziej uczeń musi go powtarzać. 
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.5\textwidth]{leitner_system}
+\caption{Ilustracja reprezentująca system wykorzystujący fiszki.}
+\label{fig:etykieta-rysunku}
+\end{figure}
+%https://en.wikipedia.org/wiki/Spaced_repetition#/media/File:Leitner_system_alternative.svg
 
-%--ilustracja 
+Sposób Leitnera, mimo że skuteczny, jest żmudny do implementacji. Uczeń musi napisać ręcznie wszystkie fiszki, zrobić lub zakupić kilka pudełek o podobnym rozmiarze, rozkladać ten obszerny zestaw za każdym razem, gdy chce powtórzyć materiał. Tym samym traci mobilność, która jest dużą zaletą fiszek. W tym miejscu z pomocą przychodzi nauka języków wspomagana komputerowo (ang. Computer-Assisted Language Learning, skrót: CALL). Jest to rozwijana od lat pięćdziesiątych dwudziestego wieku dziedzina wykorzystująca komputery do poprawiania umiejętności językowych. Ten sposób podejścia do problemu zrzuca z barków uczniów część problemów z tworzeniem fiszek, a wraz z popularyzacją urządzeń takich jak smartfony czy tablety zwraca mobilność nauki. 
 
-Sposób Leitnera, mimo że skuteczny, jest żmudny do implementacji. Uczeń musi napisać ręcznie wszystkie fiszki, zrobić lub zakupić kilka pudełek o podobnym rozmiarze, rozkladać ten obszerny zestaw za każdym razem, gdy chce powtórzyć materiał. Tym samym traci mobilność, która jest dużą zaletą fiszek. W tym miejscu z pomocą przychodzi nauka języków wspomagana komputerowo (ang. Computer-Assisted Language Learning, skrót: CALL). Jest to rozwijana od lat pięćdziesiątych dwudziestego wieku dziedzina wykorzystująca komputery do poprawiania umiejętności językowych ucznia. Ten sposób podejścia do problemu zrzuca z barków uczniów część problemów z tworzeniem fiszek, a wraz z popularyzacją urządzeń takich jak smartfony czy tablety zwraca mobilność nauki. 
+Algorytm powtórek w interwałach (eng. \textit{spaced repetition}), którego papierową implementacją jest wyżej wspomniany system Leitnera, został poddany wielokrotnym badaniom. Wskazują one nie tylko na poprawę jakości zapamiętywania danego materiału, ale też na ogólną poprawę pamięci, szczególnie u osób chorujących na Alzheimera lub inne schorzenia związane z pogorszeniem umiejętności zapamiętywania\cite{bib:artykul}. Metoda \textit{spaced repetition} jest szczególnie użyteczna w nauce słownictwa języków obcych. Jest to spowodowane faktem, że informacje do przyswojenia są liczne, lecz małe. Tę samą zasadę można wykorzystać przy nauce znaków kanji. 
 
-Algorytm powtórek w interwałach (eng. \textit{spaced repetition}), którego papierową implementacją jest wyżej wspomniany system Leitnera, został poddany wielokrotnym badaniom. Wskazują one nie tylko na poprawę jakości zapamiętywania danego materiału, ale też na ogólną poprawę pamięci, szczególnie u osób chorujących na Alzheimera lub inne schorzenia związane z pogorszeniem umiejętności zapamiętywania. (przypis!) Metoda \textit{spaced repetition} jest szczególnie użyteczna w nauce słownictwa języków obcych. Jest to spowodowane faktem, że informacje do przyswojenia są liczne, lecz małe. Tę samą zasadę można wykorzystać przy nauce znaków kanji. 
+Analiza rozwiązań dostępnych na rynku i badań wskazuje na komercyjny i naukowy sukces metody \textit{spaced repetition}. To zdroworozsądkowe podejście ma realny wpływ na szybkość i jakość przyswajania wiedzy. Przez ostatnie kilkadziesiąt lat próbowano udoskonalić ten względnie prosty algorytm z użyciem np. metod sztucznej inteligencji do wyliczania interwałów. Takie podejście ma mieszane rezultaty według badań, nie jest jasne jak realny jest wpływ optymalizacji długości po pewnym marginesie osiągalnym przez konwencjonalne algorytmy.
+
+\section{Analiza rozwiązań dostępnych na rynku}
 
 Aktualnie nauczanie wspierane komputerowo jest szeroko rozpowszechnione. Największą popularnością cieszy się aplikacja Duolingo, która umożliwia naukę pokaźniej listy języków (aż czterdziestu-trzech na czas pisania tej pracy) z urządzenia mobilnego lub strony internetowej. Jednym z powodów dobrego przyjęcia Duolingo przez uczniów języków obcych jest podejście bogate w gry i zabawy, motywujące użytkownika przez punkty, nagrody i rankingi. Aplikacja nie wymaga od użytkownika dużego zaangażowania. Tworzenie własnych zestawów fiszek nie jest konieczne, wystarczy codziennie wykonać kilkanaście zadań wygenerowanych przez system. 
 
 Innym, bardziej angażującym użytkownika programem chętnie wykorzystywanym do nauki jest Anki. Jest to aplikacja oferująca większą możliwość dostosowania jej do własnych potrzeb, z tego powodu nie jest ograniczona do nauki języków obcych. Użytkownik ma możliwość stworzenie własnego zestawu do nauki złożonego z fiszek, który jest później przyswajany w interwałach zgodnie z zasadą \textit{spaced repetition}. Zaletą Anki jest opcja eksportowania i dzielenia się zestawami między użytkownikami. 
 
-Wyżej wspomniane programy są często używane przez uczniów języka japońskiego i znaków kanji, jednak nie są wyspecjalizowane pod ich potrzeby. Przykładem aplikacji dostosowanej do amatorów japońskiego alfabetu jest WaniKani. Ta aplikacja webowa i mobilna gwarantuje uczniom nauczenie się 2000 znaków kanji i 6000 słów w nieco dłużej niż rok. Używa metody \textit{spaced repetition} w swojej implementacji ustrukturyzowanego kursu, który jest przeznaczony dla początkujących i pozwala rozwinąć się do biegłego posługiwania się kanji. Aplikacja jest gorzej dostosowana do uczniów o zaawansowanym lub średniozaawansowanym poziomie, ponieważ nie da się dostosować jej pod własne potrzeby językowe. 
+Wyżej wspomniane programy są często używane przez uczniów języka japońskiego i znaków kanji, jednak nie są wyspecjalizowane pod ich potrzeby. Przykładem aplikacji dostosowanej do amatorów japońskiego alfabetu jest WaniKani. Ta aplikacja webowa i mobilna gwarantuje uczniom nauczenie się 2000 znaków kanji i 6000 słów w nieco dłużej niż rok. Używa metody \textit{spaced repetition} w swojej implementacji ustrukturyzowanego kursu, który jest przeznaczony dla początkujących i pozwala rozwinąć się do biegłego posługiwania się kanji. Aplikacja jest gorzej dostosowana do uczniów o zaawansowanym lub średniozaawansowanym poziomie, ponieważ nie da się dopasować jej pod własne potrzeby językowe. 
+
+\section{Nauka języka japońskiego i znaków kanji}
 
 Ważną kwestią przy nauce kanji, zarówno metodami tradycyjnymi jak i z wykorzystaniem komputerowego wspomagania, jest podejście do przyswajanego materiału. Najważniejszą i obowiązkową kwestią jest zapamiętanie wyglądu i pisowni znaku. Aby wspomóc ten proces, można użyć wskazówek mnemonicznych, czyli pewnego skojarzenia między znaczeniem znaku a jego wyglądem.
 %obrazek z mnemonika
 Kolejną wskazówką do nauki mogą być klucze, czyli elementy znaku dzielące ich zbiór na podkategorie. Ten podział został stworzony na potrzeby słowników i charakteryzuje znaki na podstawie ich najważniejszgo elementu (podznaku). 
 %obrazek?
-Wraz z opanowaniem pisowni należy zaznajomić się z czytaniem chińskim (jap. \textit{onyōmi}) i natywnym japońskim (jap. \textit{kunyōmi}). Na nieszczęście uczniów j. japońskiego znaki kanji nie są czytane jednoznacznie i większość z nich ma przynajmniej wyżej wspomniane dwa czytania (wiele z nich ma kilka w ramach \textit{onyōmi} lub \textit{kunyōmi}). Aby urozmaicić naukę czytania znaków kanji można połączyć ją z nauką słów, w których ów znak występuje. Takie podejście wzbogaca zasób słownictwa ucznia i ułatwia zapamiętanie czytań danego znaku przez różnorodne przykłady. Kolejnym możliwym sposobem na połączenie nauki znaków z nauką ogólnie rozumianego języka japońskiego jest załączenie ćwiczeń zawierających całe zdania. Umożliwi to użytkownikom o bardziej zaawansowanym poziomie powtarzać różne znaki w jednym ćwiczeniu oraz rozwinie ich ogólne umiejętności językowe.
 
-Analiza rozwiązań dostępnych na rynku i badań wskazuje na komercyjny i naukowy sukces metody \textit{spaced repetition}. To zdroworozsądkowe podejście ma realny wpływ na szybkość i jakość przyswajania wiedzy. Przez ostatnie kilkadziesiąt lat próbowano udoskonalić ten względnie prosty algorytm z użyciem np. metod sztucznej inteligencji do wyliczania interwałów. Takie podejście ma mieszane rezultaty według badań, nie jest jasne jak realny jest wpływ optymalizacji długości po pewnym marginesie osiągalnym przez konwencjonalne algorytmy.
-
+Wraz z opanowaniem pisowni należy zaznajomić się z czytaniem chińskim (jap. \textit{onyōmi}) i natywnym japońskim (jap. \textit{kunyōmi}). Na nieszczęście uczniów j. japońskiego, znaki kanji nie są czytane jednoznacznie i większość z nich ma przynajmniej wyżej wspomniane dwa czytania (wiele z nich ma kilka w ramach \textit{onyōmi} lub \textit{kunyōmi}). Aby urozmaicić naukę czytania znaków kanji można połączyć ją z nauką słów, w których ów znak występuje. Takie podejście wzbogaca zasób słownictwa ucznia i ułatwia zapamiętanie czytań danego znaku przez różnorodne przykłady. Kolejnym możliwym sposobem na połączenie nauki znaków z nauką ogólnie rozumianego języka japońskiego jest załączenie ćwiczeń zawierających całe zdania. Umożliwi to użytkownikom o bardziej zaawansowanym poziomie powtarzać różne znaki w jednym ćwiczeniu oraz rozwinie ich ogólne umiejętności językowe.
 
 %%%%%%%%%%%%%%%%%%%%%%%%
 
