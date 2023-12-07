@@ -21,8 +21,10 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.DocumentReference;
@@ -30,7 +32,6 @@ import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
@@ -87,7 +88,7 @@ public class Learn extends Fragment {
             }
             else{
                 mLevel = getArguments().getInt("level");
-                characters = dataBaseAdapter.getKanjiByLevel(type, mLevel);
+                //characters = dataBaseAdapter.getKanjiByLevel(type, mLevel);
             }
             turns = getArguments().getInt("turns");
             wordEnabled = (getArguments().getInt("wordEnabled")==1);
@@ -119,17 +120,17 @@ public class Learn extends Fragment {
         progressBar = getView().findViewById(R.id.progressBar);
 
         scores = new HashMap<>();
+
+        answer.setVisibility(View.GONE);
+        checkBtn.setVisibility(View.GONE);
         //question handling
         if (type == Custom){
-            answer.setVisibility(View.GONE);
-            checkBtn.setVisibility(View.GONE);
             getCharactersCustomSet();
         }
         else{
-            loadQuestion(0);
+            getPredefinedSetUserData();
         }
         checkBtn.setOnClickListener(new View.OnClickListener() {
-
             int n = 0;
             @Override
             public void onClick(View v) {
@@ -165,22 +166,7 @@ public class Learn extends Fragment {
         df.get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
             @Override
             public void onSuccess(DocumentSnapshot documentSnapshot) {
-                //TODO check this cast
-                HashMap<String, Double> kanjiList = (HashMap<String, Double>) documentSnapshot.get("Kanji_list");
-
-                kanjiList.forEach((key, value) -> {
-                    characterSet.add(key);
-                    Log.d(TAG, "onSuccess: " + value);
-                });
-                Log.d(TAG, "onSuccess: " + characterSet);
-
-                answer.setVisibility(View.VISIBLE);
-                checkBtn.setVisibility(View.VISIBLE);
-                characters = dataBaseAdapter.getKanjiDetailsFromSet(characterSet);
-                QuestionGenerator generator = new QuestionGenerator(characters, kanjiList, turns, wordEnabled, sentenceEnabled);
-                questions = generator.generateQuestions();
-                turns = generator.getTurns();
-                loadQuestion(0);
+                getSetDataFromFstore(documentSnapshot);
             }
         }).addOnFailureListener(new OnFailureListener() {
             @Override
@@ -217,20 +203,27 @@ public class Learn extends Fragment {
 
     }
 
-    private void updateEasinessFactors(String kanji, double EF){
-        DocumentReference df = mFstore.collection("Users").document(user.getUid()).collection("Sets").document(setId);
-
+    private void updateEasinessFactors(HashMap<String, Double> kanjiEFMap){
+        DocumentReference df;
+        if(type == Custom)
+            df = mFstore.collection("Users").document(user.getUid()).collection("Sets").document(setId);
+        else{
+            df = mFstore.collection("Users").document(user.getUid()).collection("Predefined").document(type.name()+mLevel);
+        }
         df.get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
             @Override
             public void onSuccess(DocumentSnapshot documentSnapshot) {
-                double oldEF = (double) documentSnapshot.get("Kanji_list."+kanji);
-                Log.d(TAG, "onSuccess: "+oldEF);
-                double newEF = oldEF + EF;
-                if(newEF<1.3)
-                    newEF = 1.3;
-                df.update(
-                        "Kanji_list."+kanji, newEF
-                );
+                //foreach
+                kanjiEFMap.forEach((kanji, EF) -> {
+                    double oldEF = (double) documentSnapshot.get("Kanji_list."+kanji);
+                    Log.d(TAG, "onSuccess: "+oldEF);
+                    double newEF = oldEF + EF;
+                    if(newEF<1.3)
+                        newEF = 1.3;
+                    df.update(
+                            "Kanji_list."+kanji, newEF
+                    );
+                });
             }
         }).addOnFailureListener(new OnFailureListener() {
             @Override
@@ -240,11 +233,85 @@ public class Learn extends Fragment {
         });
     }
     private void evaluate(){
+        HashMap<String, Double> kanjiEFMap = new HashMap<>();
         scores.forEach((kanji, pair) -> {
             double q = ((double) pair.second/(double) pair.first)*5;
-            Log.d(TAG, "evaluate: " + q);
             double newValue = 0.1 - (5-q)*(0.08+(5-q)*0.02);
-            updateEasinessFactors(kanji, newValue);
+            Log.d(TAG, "evaluate: " + q);
+            kanjiEFMap.put(kanji, newValue);
         });
+        //change this so that updates all at once
+        updateEasinessFactors(kanjiEFMap);
+    }
+    private void createPredefinedSetUserData(){
+        //create set
+        String docId = type.name()+mLevel;
+        characters = dataBaseAdapter.getKanjiByLevel(type, mLevel);
+        DocumentReference df = mFstore.collection("Users").document(user.getUid()).collection("Predefined").document(docId);
+
+        Map<String, Object> setInfo = new HashMap<>();
+        Map<String, Double> kanjiInfo = new HashMap<>();
+        characters.forEach(c->kanjiInfo.put(c.getKanji(), 2.5));
+
+        setInfo.put("Owner", user.getUid());
+        setInfo.put("Kanji_list", kanjiInfo);
+        setInfo.put("Set_name", docId);
+        df.set(setInfo);
+
+        //proceed to learning
+        QuestionGenerator generator = new QuestionGenerator(characters, kanjiInfo, turns, wordEnabled, sentenceEnabled);
+        questions = generator.generateQuestions();
+        turns = generator.getTurns();
+        answer.setVisibility(View.VISIBLE);
+        checkBtn.setVisibility(View.VISIBLE);
+        loadQuestion(0);
+    }
+
+    private void getSetDataFromFstore(DocumentSnapshot document){
+        Set<String> characterSet = new TreeSet<>();
+        HashMap<String, Double> kanjiList = (HashMap<String, Double>) document.get("Kanji_list");
+
+        kanjiList.forEach((key, value) -> {
+            characterSet.add(key);
+            Log.d(TAG, "onSuccess: " + value);
+        });
+        Log.d(TAG, "onSuccess: " + characterSet);
+
+        answer.setVisibility(View.VISIBLE);
+        checkBtn.setVisibility(View.VISIBLE);
+        if(type == Custom)
+            characters = dataBaseAdapter.getKanjiDetailsFromSet(characterSet);
+        else{
+            characters = dataBaseAdapter.getKanjiByLevel(type, mLevel);
+        }
+        QuestionGenerator generator = new QuestionGenerator(characters, kanjiList, turns, wordEnabled, sentenceEnabled);
+        questions = generator.generateQuestions();
+        turns = generator.getTurns();
+        loadQuestion(0);
+    }
+
+    private void getPredefinedSetUserData(){
+        String docId = type.name()+mLevel;
+        DocumentReference df = mFstore.collection("Users").document(user.getUid()).collection("Predefined").document(docId);
+        df.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                if (task.isSuccessful()) {
+                    DocumentSnapshot document = task.getResult();
+                    if (document.exists()) {
+                        Log.d(TAG, "Document exists!");
+                        //get data
+                        getSetDataFromFstore(document);
+                    } else {
+                        Log.d(TAG, "Document does not exist!");
+                        //create new document
+                        createPredefinedSetUserData();
+                    }
+                } else {
+                    Log.d(TAG, "Failed with: ", task.getException());
+                }
+            }
+        });
+
     }
 }
