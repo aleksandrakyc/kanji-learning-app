@@ -1,10 +1,13 @@
 package pl.polsl.kanjiapp.utils;
 
+import static java.lang.Math.min;
+
 import android.util.Log;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.TreeSet;
 import java.util.stream.Collectors;
 
 import pl.polsl.kanjiapp.models.CharacterModel;
@@ -16,7 +19,7 @@ public class QuestionGenerator {
     ArrayList<Question> questions;
     HashMap<String, Double> kanjiEFmap;
     ArrayList<CharacterModel> characters;
-    int turns;
+    int turns, maxUniqueQs;
     boolean wordEnabled, sentenceEnabled;
     public QuestionGenerator(ArrayList<CharacterModel> characters, Map<String, Double> kanjiEFmap, int turns, boolean wordEnabled, boolean sentenceEnabled) {
 
@@ -27,6 +30,7 @@ public class QuestionGenerator {
         int n = (turns>characters.size())? characters.size():turns;
         this.characters = new ArrayList<>();
 
+        maxUniqueQs = characters.size() * QuestionType.numOfAvailQuestions(wordEnabled, sentenceEnabled);
         //find lowest EF scores and choose these characters
         this.kanjiEFmap = kanjiEFmap.entrySet()
                 .stream()
@@ -41,24 +45,26 @@ public class QuestionGenerator {
         this.characters.forEach(character -> Log.d(TAG, "QuestionGenerator: " + character));
     }
     public ArrayList<Question> generateQuestions() {
-        questions = new ArrayList<>();
-        int turnsPerChar = turns/characters.size()+1;
-        int left = characters.size() - turns%characters.size();
-        //change if word/sentence enabled
-        QuestionType[] types = QuestionType.values();
-        characters.forEach(characterModel -> {
-            for (int i = 0; i<turnsPerChar; i++){
-                questions.add(new Question(characterModel, types[i%types.length]));
-            }
-        });
-        for (int i = 0; i<left; i++){
+        TreeSet<Question> questionsSet = new TreeSet<>();
 
-            questions.remove(questions.size()-1-i);
+        int index = 0, size;
+        while (questionsSet.size()<maxUniqueQs&&questionsSet.size()<turns){
+            size = questionsSet.size();
+            questionsSet.add(new Question(characters.get(index%characters.size()), QuestionType.randomQuestion(wordEnabled, sentenceEnabled)));
+            if (questionsSet.size() > size)
+                index++;
         }
+
+        questions = new ArrayList<>();
+        questions.addAll(questionsSet);
         return questions;
     }
 
     public ArrayList<Question> getQuestions() {
         return questions;
+    }
+
+    public int getTurns() {
+        return min(maxUniqueQs, turns);
     }
 }

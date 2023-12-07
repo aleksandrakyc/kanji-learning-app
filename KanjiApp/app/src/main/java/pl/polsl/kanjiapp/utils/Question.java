@@ -1,9 +1,11 @@
 package pl.polsl.kanjiapp.utils;
 
+import java.util.Objects;
+
 import pl.polsl.kanjiapp.models.CharacterModel;
 import pl.polsl.kanjiapp.types.QuestionType;
 
-public class Question {
+public class Question implements Comparable<Question>{
     private CharacterModel mCharacterModel;
     private QuestionType question;
     private String questionDetails;
@@ -63,4 +65,9 @@ public class Question {
         return answer;
     }
     public String getKanji(){ return mCharacterModel.getKanji(); }
+
+    @Override
+    public int compareTo(Question o) {
+        return (Objects.equals(this.getKanji(), o.getKanji()) && Objects.equals(this.question.getValue(), o.question.getValue())) ? 0:1;
+    }
 }

@@ -179,6 +179,7 @@ public class Learn extends Fragment {
                 characters = dataBaseAdapter.getKanjiDetailsFromSet(characterSet);
                 QuestionGenerator generator = new QuestionGenerator(characters, kanjiList, turns, wordEnabled, sentenceEnabled);
                 questions = generator.generateQuestions();
+                turns = generator.getTurns();
                 loadQuestion(0);
             }
         }).addOnFailureListener(new OnFailureListener() {
