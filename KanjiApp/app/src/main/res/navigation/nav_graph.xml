@@ -120,4 +120,9 @@
         android:name="pl.polsl.kanjiapp.views.CategoryListHomework"
         android:label="fragment_category_list_homework"
         tools:layout="@layout/fragment_category_list_homework" />
+    <fragment
+        android:id="@+id/teacherGroupManagement"
+        android:name="pl.polsl.kanjiapp.views.TeacherGroupManagement"
+        android:label="fragment_teacher_group_management"
+        tools:layout="@layout/fragment_teacher_group_management" />
 </navigation>

@@ -7,6 +7,12 @@
         android:title="add"
         app:showAsAction="ifRoom"/>
 
+    <item
+        android:id="@+id/action_group"
+        android:icon="@drawable/baseline_group_24"
+        android:title="add"
+        app:showAsAction="ifRoom"/>
+
     <item android:id="@+id/action_logout"
         android:title="Log out"
         app:showAsAction="never"/>

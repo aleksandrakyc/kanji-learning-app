@@ -10,14 +10,20 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.Toast;
+
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 
 public class MainActivity extends AppCompatActivity {
+    private FirebaseAuth mAuth;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         setSupportActionBar(findViewById(R.id.my_toolbar));
+        mAuth = FirebaseAuth.getInstance();
     }
 
     @Override
@@ -29,11 +35,24 @@ public class MainActivity extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
 
+        FirebaseUser user = mAuth.getCurrentUser();
         int id = item.getItemId();
         if (id == R.id.action_add){
-            NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment);
-            navController.navigate(R.id.createNewSet);
-            return true;
+            if (user == null) {
+                Toast.makeText(this, "log in to create custom sets!", Toast.LENGTH_SHORT).show();
+            }
+            else {
+                NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment);
+                navController.navigate(R.id.createNewSet);
+            }
+        }
+        if (id == R.id.action_logout) {
+
+            if (user != null){
+                Toast.makeText(this, "logging out user "+ user.getEmail(), Toast.LENGTH_SHORT).show();
+                mAuth.signOut();
+            }
+            Toast.makeText(this, "you are not logged in.", Toast.LENGTH_SHORT).show();
         }
         return true;
     }

@@ -7,6 +7,7 @@ import android.util.Log;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Random;
 import java.util.TreeSet;
 import java.util.stream.Collectors;
 
@@ -43,6 +44,21 @@ public class QuestionGenerator {
 
         this.kanjiEFmap.forEach((key, value) -> { this.characters.add(characters.stream().filter(character -> character.getKanji().equals(key)).findFirst().orElse(null));});
         this.characters.forEach(character -> Log.d(TAG, "QuestionGenerator: " + character));
+    }
+    public QuestionGenerator(ArrayList<CharacterModel> characters, int turns, boolean wordEnabled, boolean sentenceEnabled) {
+
+        Log.d(TAG, "QuestionGenerator: Constructor");
+        Random RANDOM = new Random();
+        this.turns = turns;
+        this.maxUniqueQs = turns;
+        this.wordEnabled = wordEnabled;
+        this.sentenceEnabled = sentenceEnabled;
+        this.characters = new ArrayList<>();
+        //get random
+        for (int i = 0; i<turns; i++){
+            this.characters.add(characters.get(RANDOM.nextInt(characters.size())));
+            Log.d(TAG, "QuestionGenerator: " + this.characters.get(i));
+        }
     }
     public ArrayList<Question> generateQuestions() {
         TreeSet<Question> questionsSet = new TreeSet<>();

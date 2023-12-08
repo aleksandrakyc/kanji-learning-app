@@ -62,6 +62,10 @@ public class Register extends Fragment {
         password = getView().findViewById(R.id.editTextPasswordRegister);
         isTeacher = getView().findViewById(R.id.teacherSwitch);
 
+        if (mAuth.getCurrentUser() != null){
+            Toast.makeText(getContext(),"log out first to create a new account.",Toast.LENGTH_SHORT).show();
+            Navigation.findNavController(view).navigate(R.id.action_startMenu_to_CategoryList);
+        }
         isTeacher.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 if (isChecked) {

@@ -29,15 +29,74 @@
         android:gravity="center"
         android:textSize="60sp" />
 
-    <EditText
-        android:id="@+id/editTextAnswer"
+    <ViewFlipper
+        android:id="@+id/viewFlipper"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:ems="10"
-        android:inputType="text"
-        android:layout_marginStart="@dimen/margin_large"
-        android:layout_marginEnd="@dimen/margin_large"
-        android:hint="Answer" />
+        android:layout_height="wrap_content">
+
+        <TableLayout
+            android:id="@+id/choiceBtns"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:stretchColumns="*">
+
+            <TableRow>
+                <Button
+                    android:id="@+id/choiceBtn1"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/margin_small"
+                    android:layout_marginStart="@dimen/margin_large"
+                    android:layout_marginEnd="@dimen/margin_small"
+                    android:backgroundTint="@color/medium">
+
+                </Button>
+                <Button
+                    android:id="@+id/choiceBtn2"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/margin_small"
+                    android:layout_marginStart="@dimen/margin_small"
+                    android:layout_marginEnd="@dimen/margin_large"
+                    android:backgroundTint="@color/medium">
+
+                </Button>
+            </TableRow>
+            <TableRow>
+                <Button
+                    android:id="@+id/choiceBtn3"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/margin_small"
+                    android:layout_marginStart="@dimen/margin_large"
+                    android:layout_marginEnd="@dimen/margin_small"
+                    android:backgroundTint="@color/medium">
+
+                </Button>
+                <Button
+                    android:id="@+id/choiceBtn4"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/margin_small"
+                    android:layout_marginStart="@dimen/margin_small"
+                    android:layout_marginEnd="@dimen/margin_large"
+                    android:backgroundTint="@color/medium">
+
+                </Button>
+            </TableRow>
+        </TableLayout>
+
+        <EditText
+            android:id="@+id/editTextAnswer"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:inputType="text"
+            android:layout_marginStart="@dimen/margin_large"
+            android:layout_marginEnd="@dimen/margin_large"
+            android:hint="Answer" />
+    </ViewFlipper>
+
 
     <TextView
         android:id="@+id/textViewAnswer"

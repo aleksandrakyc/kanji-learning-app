@@ -11,11 +11,15 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.Toast;
+
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 
 import pl.polsl.kanjiapp.R;
 
 public class StartMenu extends Fragment {
-
+    private FirebaseAuth mAuth;
     Button login, register, guest;
     public StartMenu() {
         // Required empty public constructor
@@ -36,6 +40,12 @@ public class StartMenu extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        mAuth = FirebaseAuth.getInstance();
+        FirebaseUser user = mAuth.getCurrentUser();
+        if (user != null){
+            Toast.makeText(getContext(),"you are logged in as: " + mAuth.getCurrentUser().getEmail(),Toast.LENGTH_SHORT).show();
+            Navigation.findNavController(view).navigate(R.id.action_startMenu_to_CategoryList);
+        }
         login = getView().findViewById(R.id.buttonLogin);
         register = getView().findViewById(R.id.buttonRegister);
         guest = getView().findViewById(R.id.buttonGuest);

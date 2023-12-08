@@ -2,6 +2,7 @@ package pl.polsl.kanjiapp.views;
 
 import static pl.polsl.kanjiapp.types.CategoryType.Custom;
 import static pl.polsl.kanjiapp.types.CategoryType.intToCategoryType;
+import static pl.polsl.kanjiapp.types.QuestionType.CHAR_ONE_OFF;
 
 import android.os.Bundle;
 
@@ -20,6 +21,7 @@ import android.widget.EditText;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
+import android.widget.ViewFlipper;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
@@ -49,7 +51,7 @@ public class Learn extends Fragment {
     protected static final String TAG = "Learn";
     int mLevel, turns;
     String setId;
-    boolean wordEnabled, sentenceEnabled, contentLoaded;
+    boolean wordEnabled, sentenceEnabled;
     CategoryType type;
     TextView questionNumber, questionType, questionDetails, evaluation;
     EditText answer;
@@ -74,7 +76,6 @@ public class Learn extends Fragment {
         mAuth = FirebaseAuth.getInstance();
         mFstore = FirebaseFirestore.getInstance();
         user = mAuth.getCurrentUser();
-        contentLoaded = false;
         if (getArguments() != null) {
             //get data for session
             dataBaseAdapter = new DataBaseAdapter(getContext());
@@ -176,12 +177,28 @@ public class Learn extends Fragment {
         });
     }
 
+    private void changeView() {
+
+        ViewFlipper viewFlipper = getView().findViewById(R.id.viewFlipper);
+        switch (question.getQuestionType()) {
+            case CHAR_ONE_OFF:
+                Log.d(TAG, "changeView: changing to buttons");
+                viewFlipper.setDisplayedChild(viewFlipper.indexOfChild(getView().findViewById(R.id.choiceBtns)));
+
+                break;
+            default:
+                Log.d(TAG, "changeView: changing to edittext");
+                viewFlipper.setDisplayedChild(viewFlipper.indexOfChild(getView().findViewById(R.id.editTextAnswer)));
+        }
+    }
     private void loadQuestion(int n){
         Log.d(TAG, "loadQuestion: "+n);
         question = questions.get(n);
         questionNumber.setText((n+1)+"/"+turns);
         questionType.setText(question.getQuestion());
         questionDetails.setText(question.getQuestionDetails());
+
+        changeView();
     }
 
     private void checkAnswer(){
@@ -241,25 +258,33 @@ public class Learn extends Fragment {
             kanjiEFMap.put(kanji, newValue);
         });
         //change this so that updates all at once
-        updateEasinessFactors(kanjiEFMap);
+        if(user!=null){
+            updateEasinessFactors(kanjiEFMap);
+        }
     }
     private void createPredefinedSetUserData(){
         //create set
-        String docId = type.name()+mLevel;
         characters = dataBaseAdapter.getKanjiByLevel(type, mLevel);
-        DocumentReference df = mFstore.collection("Users").document(user.getUid()).collection("Predefined").document(docId);
+        QuestionGenerator generator;
+        if (user != null) {
+            String docId = type.name()+mLevel;
+            DocumentReference df = mFstore.collection("Users").document(user.getUid()).collection("Predefined").document(docId);
 
-        Map<String, Object> setInfo = new HashMap<>();
-        Map<String, Double> kanjiInfo = new HashMap<>();
-        characters.forEach(c->kanjiInfo.put(c.getKanji(), 2.5));
+            Map<String, Object> setInfo = new HashMap<>();
+            Map<String, Double> kanjiInfo = new HashMap<>();
+            characters.forEach(c->kanjiInfo.put(c.getKanji(), 2.5));
 
-        setInfo.put("Owner", user.getUid());
-        setInfo.put("Kanji_list", kanjiInfo);
-        setInfo.put("Set_name", docId);
-        df.set(setInfo);
+            setInfo.put("Owner", user.getUid());
+            setInfo.put("Kanji_list", kanjiInfo);
+            setInfo.put("Set_name", docId);
+            df.set(setInfo);
+            generator = new QuestionGenerator(characters, kanjiInfo, turns, wordEnabled, sentenceEnabled);
 
+        }
+        else {
+            generator = new QuestionGenerator(characters, turns, wordEnabled, sentenceEnabled);
+        }
         //proceed to learning
-        QuestionGenerator generator = new QuestionGenerator(characters, kanjiInfo, turns, wordEnabled, sentenceEnabled);
         questions = generator.generateQuestions();
         turns = generator.getTurns();
         answer.setVisibility(View.VISIBLE);
@@ -291,27 +316,33 @@ public class Learn extends Fragment {
     }
 
     private void getPredefinedSetUserData(){
-        String docId = type.name()+mLevel;
-        DocumentReference df = mFstore.collection("Users").document(user.getUid()).collection("Predefined").document(docId);
-        df.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
-            @Override
-            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
-                if (task.isSuccessful()) {
-                    DocumentSnapshot document = task.getResult();
-                    if (document.exists()) {
-                        Log.d(TAG, "Document exists!");
-                        //get data
-                        getSetDataFromFstore(document);
+        if (user == null){
+            createPredefinedSetUserData();
+        }
+        else {
+            String docId = type.name()+mLevel;
+            DocumentReference df = mFstore.collection("Users").document(user.getUid()).collection("Predefined").document(docId);
+            df.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+                @Override
+                public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                    if (task.isSuccessful()) {
+                        DocumentSnapshot document = task.getResult();
+                        if (document.exists()) {
+                            Log.d(TAG, "Document exists!");
+                            //get data
+                            getSetDataFromFstore(document);
+                        } else {
+                            Log.d(TAG, "Document does not exist!");
+                            //create new document
+                            createPredefinedSetUserData();
+                        }
                     } else {
-                        Log.d(TAG, "Document does not exist!");
-                        //create new document
-                        createPredefinedSetUserData();
+                        Log.d(TAG, "Failed with: ", task.getException());
                     }
-                } else {
-                    Log.d(TAG, "Failed with: ", task.getException());
                 }
-            }
-        });
+            });
+        }
+
 
     }
 }

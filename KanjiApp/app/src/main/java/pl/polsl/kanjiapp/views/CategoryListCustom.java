@@ -75,27 +75,34 @@ public class CategoryListCustom extends Fragment implements CategoryListAdapter.
         recyclerView = getView().findViewById(R.id.customRecycler);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
 
-        CollectionReference cf = mFstore.collection("Users").document(user.getUid()).collection("Sets");
-        setChoices = new ArrayList<>();
-        categoryListAdapter = new CategoryListAdapter(getContext(), setChoices);
-        categoryListAdapter.setClickListener(this);
-        recyclerView.setAdapter(categoryListAdapter);
-        cf.get().addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
-            @Override
-            public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
-                List<DocumentSnapshot> documents = queryDocumentSnapshots.getDocuments();
-                documents.forEach(documentSnapshot -> setChoices.add(documentSnapshot.getId().substring(28)));
-                progressBar.setVisibility(View.GONE);
-                categoryListAdapter.notifyDataSetChanged();
+        if (user == null) {
+            progressBar.setVisibility(View.GONE);
+            Toast.makeText(getContext(), "log in to see custom sets!", Toast.LENGTH_SHORT).show();
+        }
+        else {
 
-            }
-        }).addOnFailureListener(new OnFailureListener() {
-            @Override
-            public void onFailure(@NonNull Exception e) {
+            CollectionReference cf = mFstore.collection("Users").document(user.getUid()).collection("Sets");
+            setChoices = new ArrayList<>();
+            categoryListAdapter = new CategoryListAdapter(getContext(), setChoices);
+            categoryListAdapter.setClickListener(this);
+            recyclerView.setAdapter(categoryListAdapter);
+            cf.get().addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
+                @Override
+                public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
+                    List<DocumentSnapshot> documents = queryDocumentSnapshots.getDocuments();
+                    documents.forEach(documentSnapshot -> setChoices.add(documentSnapshot.getId().substring(28)));
+                    progressBar.setVisibility(View.GONE);
+                    categoryListAdapter.notifyDataSetChanged();
 
-            }
-        });
-;
+                }
+            }).addOnFailureListener(new OnFailureListener() {
+                @Override
+                public void onFailure(@NonNull Exception e) {
+
+                }
+            });
+    ;
+        }
     }
 
     @Override

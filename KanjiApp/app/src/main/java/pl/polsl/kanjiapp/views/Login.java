@@ -49,6 +49,10 @@ public class Login extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        if (mAuth.getCurrentUser() != null) {
+            Navigation.findNavController(view).navigate(R.id.action_login_to_category_list);
+            Toast.makeText(getContext(),"you are already logged in as: " + mAuth.getCurrentUser().getEmail(),Toast.LENGTH_SHORT).show();
+        }
         login = getView().findViewById(R.id.editTextLogin);
         password = getView().findViewById(R.id.editTextPassword);
         btn = getView().findViewById(R.id.loginBtn);
@@ -56,6 +60,7 @@ public class Login extends Fragment {
         btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
                 if (checkField(login)&&checkField(password)) {
                     mAuth.signInWithEmailAndPassword(login.getText().toString(), password.getText().toString())
                       .addOnSuccessListener(new OnSuccessListener<AuthResult>() {
