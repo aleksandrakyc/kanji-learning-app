@@ -594,6 +594,8 @@ Inną kwestią, często lekceważoną przez samouków, jest kolejność stawiani
 Podobnie jak inne języki, japoński posiada swój własny system egzaminów przeznaczonych dla obcokrajowców. Egzaminy JLPT \textit{(ang. Japanese Language Proficiency Test)} wydzielają pewne poziomy, które określają umiejętności językowe ucznia. W języku japońskim te poziomy oznacza się literą N oraz cyfrą od 1 do 5, gdzie N5 to najniższy, a N1 najbardziej biegły. Do zdania każdego z tych egzaminów potrzebny jest rosnący z poziomu na poziom zasób kanji. Zaczynając od niewielkich liczb jak około sto dla N5 i trzysta dla N4, kończymy na ponad dwu tysiącach dla pełnej biegłości w pisaniu i czytaniu według egzaminatorów.
 
 Podział znaków kanji według trudności wygląda inaczej dla rodzimych mieszkańców Japoni. Jest on ułożony względem systemu szkolnictwa publicznego, podzielony na klasy w których uczniowie poznają dane znaki. Do zestawu dwu tysięcy znaków wymaganych w szkole, czyli \textit{jōyō kanji} dochodzi 846 znaków \textit{jinmeiyō}, które są używane tylko w imionach i nazwiskach.
+
+Podsumowując, nauka znaków kanji to wieloetapowy proces. Aplikacje i inne pomoce naukowe przeznaczone do tego celu mogą być wysoko wyspecjalizowane, aby jak najbardziej ułatwić przyswajanie informacji.
 %%%%%%%%%%%%%%%%%%%%%%%%
 
 
@@ -601,49 +603,97 @@ Podział znaków kanji według trudności wygląda inaczej dla rodzimych mieszka
 \chapter{Wymagania i narzędzia}
 \label{ch:wymagania-i-narzedzia}
 
-\begin{itemize}
-\item wymagania funkcjonalne i niefunkcjonalne
-\label{id:tab:wyniki}
-\begin{table}[]
+
+%\begin{itemize}
+%\item wymagania funkcjonalne i niefunkcjonalne
+%\item przypadki użycia (diagramy UML) -- dla prac, w których mają %zastosowanie
+%\item opis narzędzi, metod eksperymentalnych, metod modelowania %itp.
+%\item metodyka pracy nad projektowaniem i implementacją -- dla %prac, w których ma to zastosowanie
+%\end{itemize}
+
+\section{Wymagania funkcjonalne i niefunkcjonalne}
+\subsection{Wymagania funkcjonalne}
+
+\begin{table}[h] 
 \centering
-\begin{tabular}{ll}
-Przypadek użycia & Priorytet \\
-    &           \\
-                 &           \\
-                 &          
+\caption{Tabela przedstawiająca wymagania funkcjonalne zestawione z priorytetami.}
+\label{id:tab:wymagania}
+\begin{tabular}{p{0.8\textwidth}|p{0.2\textwidth}}
+Przypadek użycia & Priorytet \\ \hline
+Użytkownik może przeglądać listę znaków kanji podzielonych na predefiniowane kategorie  &  Krytyczny   \\
+Użytkownik może uczyć się wybranego zestawu znaków według metody \textit{spaced repetition}, w której najtrudniejsze dla niego znaki będą się pojawiały w najkrótszych interwałach & Ważny \\
+Użytkownik ma dostęp do statystyk danego podejścia & Nice to have \\
+Użytkownik może zalogować się loginem i hasłem jako uczeń lub nauczyciel & Ważny \\
+Użytkownik może się zarejestrować & Ważny \\
+Użytkownik może poprosić przy rejestracji o uprawnienia nauczyciela & Nice to have \\
+Zalogowany użytkownik może tworzyć własne zestawy znaków & Ważny \\
+Nauczyciel może tworzyć grupy użytkowników, którzy uczą się razem & Ważny \\
+Nauczyciel może zadać zadanie domowe wybranej grupie użytkowników & Ważny \\
+Nauczyciel może sprawdzać postępy uczniów i komentować ich podejścia & Nice to have \\
+Administrator ma dostęp do osobnego panelu administracyjnego, na którym może zarządzać uprawnieniami użytkowników & Ważny \\
+Zalogowany użytkownik może dzielić się swoimi zestawami znaków \\za pomocą linku & Opcjonalny \\
+W trakcie nauki uczeń może ćwiczyć pisanie rysując na telefonie & Nice to have \\
 \end{tabular}
 \end{table}
 
-\item przypadki użycia (diagramy UML) -- dla prac, w których mają zastosowanie
-\begin{figure}
-\centering
-\includegraphics[width=\textwidth]{Uczen}
-\caption{Podpis rysunku zawsze pod rysunkiem.}
-\label{fig:etykieta-rysunku}
-\end{figure}
-\begin{figure}
-\centering
-\includegraphics[width=\textwidth]{Nauczyciel}
-\caption{Podpis rysunku zawsze pod rysunkiem.}
-\label{fig:etykieta-rysunku}
-\end{figure}
-\begin{figure}
-\centering
-\includegraphics[width=\textwidth]{Admin}
-\caption{Podpis rysunku zawsze pod rysunkiem.}
-\label{fig:etykieta-rysunku}
-\end{figure}
-\begin{figure}
-\centering
-\includegraphics[width=\textwidth]{Gość}
-\caption{Podpis rysunku zawsze pod rysunkiem.}
-\label{fig:etykieta-rysunku}
-\end{figure}
-\item opis narzędzi, metod eksperymentalnych, metod modelowania itp.
-\item metodyka pracy nad projektowaniem i implementacją -- dla prac, w których ma to zastosowanie
+\subsection{Wymagania niefunkcjonalne}
+\begin{itemize}
+\item Aplikacja posiada lokalną bazę danych ze znakami kanji, ich złożeniami i przykładowymi zdaniami nie przekraczającą 15MB
+\item Podstawowa funkcjonalność aplikacji jest dostępna offline
+\item System bezpiecznie przechowuje dane użytkowników w bazie danych hostowanej w chmurze
+\item Aplikacja jest skierowana do osób operujących językiem angielskim
+\item Aplikacja jest skierowana do użytkowników urządzeń mobilnych z systemem Android w wersji co najmniej 10.0
 \end{itemize}
 
+\section{Diagramy przypadków użycia}
+Przypadki użycia zostały zaprezentowane jako osobne diagramy UML dla każdego z aktorów.
+\begin{figure}[h]
+\centering
+\includegraphics[width=\textwidth]{Uczen}
+\caption{Diagram przypadków użycia dla Ucznia.}
+\label{fig:etykieta-rysunku}
+\end{figure}
+\begin{figure}[h]
+\centering
+\includegraphics[width=\textwidth]{Nauczyciel}
+\caption{Diagram przypadków użycia dla Nauczyciela.}
+\label{fig:etykieta-rysunku}
+\end{figure}
+\begin{figure}[h]
+\centering
+\includegraphics[width=\textwidth]{Admin}
+\caption{Diagram przypadków użycia dla Administratora.}
+\label{fig:etykieta-rysunku}
+\end{figure}
+\begin{figure}[h]
+\centering
+\includegraphics[width=\textwidth]{Gość}
+\caption{Diagram przypadków użycia dla Gościa.}
+\label{fig:etykieta-rysunku}
+\end{figure}
 
+\section{Opis narzędzi}
+
+%
+\subsection{Aplikacja mobilna}
+%android 10, java, androidstudio, emulator pixel7
+%sqlite3
+Aplikacja została napisana w języku programowania Java na platformę Android w wersji 10 lub wyższej. 
+
+Do tworzenia aplikacji użyto środowiska Android Studio Giraffe.
+
+Aplikacja byla uruchamiana na emulatorze dostarczonym przez Android Studio modelu Pixel 7.
+
+Dane na temat znaków kanji tylko do odczytu są przechowywane lokalnie jako plik bazy danych sqlite3.
+
+\subsection{Autoryzacja użytkowników i baza danych}
+%firebase auth, firestore
+Do zaimplementowania autoryzacji oraz bazy danych zawierającej informacje na temat zalogowanych użytkowników wykorzystano rozwiązanie Firebase. Jest to komplet funkcjonalności oferowanych developerom aplikacji mobilnych, webowych, gier i innych. W aplikacji opisywanej w tej pracy z kompletu narzędzi wykorzystano mechanizm autoryzacji użytkowników i Firestore, czyli bazę danych NoSQL. 
+
+
+\subsection{Panel administratora}
+%???
+\section{Metodyka pracy}
 % TODO
 \chapter{[Właściwy dla kierunku -- np. Specyfikacja zewnętrzna]}
 \label{ch:04}
