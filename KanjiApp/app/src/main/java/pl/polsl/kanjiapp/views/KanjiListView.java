@@ -37,10 +37,6 @@ import pl.polsl.kanjiapp.types.Grade;
 import pl.polsl.kanjiapp.types.Jlpt;
 import pl.polsl.kanjiapp.utils.DataBaseAdapter;
 
-/**
- * A simple {@link Fragment} subclass.
- * create an instance of this fragment.
- */
 public class KanjiListView extends Fragment {
     protected static final String TAG = "KanjiListView";
     int mLevel;

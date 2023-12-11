@@ -4,23 +4,24 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context=".views.TeacherGroupManagement"
+    tools:context=".views.GroupManagement"
     android:layout_marginStart="@dimen/margin_large"
     android:layout_marginEnd="@dimen/margin_large"
     android:layout_marginTop="@dimen/margin_small"
-    android:layout_marginBottom="@dimen/margin_small"
-    >
-
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/groupRecycler"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+    android:layout_marginBottom="@dimen/margin_small">
 
     <Button
         android:id="@+id/buttonAddGroup"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:backgroundTint="@color/medium"
-        android:text="Create new group" />
+        android:text="Create new group"/>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/groupRecycler"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+
+
 
 </LinearLayout>

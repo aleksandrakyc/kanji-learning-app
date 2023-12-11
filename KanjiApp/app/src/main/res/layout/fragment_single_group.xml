@@ -1,14 +1,65 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".SingleGroup">
+    android:orientation="vertical"
+    android:layout_marginStart="@dimen/margin_medium"
+    android:layout_marginEnd="@dimen/margin_medium"
+    android:layout_marginTop="@dimen/margin_small"
+    android:layout_marginBottom="@dimen/margin_small"
+    tools:context=".views.SingleGroup">
 
-    <!-- TODO: Update blank fragment layout -->
     <TextView
+        android:id="@+id/textViewGroupName"
+        android:layout_marginTop="@dimen/margin_small"
+        android:textSize="16sp"
+        android:layout_marginBottom="@dimen/margin_small"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="@string/hello_blank_fragment" />
+        android:layout_height="wrap_content" />
 
-</FrameLayout>
+    <TextView
+        android:id="@+id/textViewMembers"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textAlignment="center"
+        android:textSize="16sp"
+        android:text="Group Members" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/membersRecycler"
+        android:layout_marginTop="@dimen/margin_small"
+        android:layout_marginBottom="@dimen/margin_small"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+    <Button
+        android:id="@+id/buttonAddMember"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:backgroundTint="@color/medium"
+        android:text="Add new member" />
+
+    <TextView
+        android:id="@+id/textViewSets"
+        android:textAlignment="center"
+        android:textSize="16sp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Homework for this group" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/setsRecycler"
+        android:layout_marginTop="@dimen/margin_small"
+        android:layout_marginBottom="@dimen/margin_small"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+    <Button
+        android:id="@+id/buttonAddSet"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:backgroundTint="@color/medium"
+        android:text="Add homework" />
+
+</LinearLayout>

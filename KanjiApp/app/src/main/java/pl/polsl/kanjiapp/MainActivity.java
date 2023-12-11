@@ -54,6 +54,15 @@ public class MainActivity extends AppCompatActivity {
             }
             Toast.makeText(this, "you are not logged in.", Toast.LENGTH_SHORT).show();
         }
+        if (id == R.id.action_group) {
+            if (user == null) {
+                Toast.makeText(this, "log in to browse groups!", Toast.LENGTH_SHORT).show();
+            }
+            else {
+                NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment);
+                navController.navigate(R.id.GroupManagement);
+            }
+        }
         return true;
     }
 }

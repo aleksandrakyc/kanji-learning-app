@@ -121,8 +121,17 @@
         android:label="fragment_category_list_homework"
         tools:layout="@layout/fragment_category_list_homework" />
     <fragment
-        android:id="@+id/teacherGroupManagement"
-        android:name="pl.polsl.kanjiapp.views.TeacherGroupManagement"
+        android:id="@+id/GroupManagement"
+        android:name="pl.polsl.kanjiapp.views.GroupManagement"
         android:label="fragment_teacher_group_management"
-        tools:layout="@layout/fragment_teacher_group_management" />
+        tools:layout="@layout/fragment_group_management" >
+        <action
+            android:id="@+id/action_GroupManagement_to_singleGroup"
+            app:destination="@id/singleGroup" />
+    </fragment>
+    <fragment
+        android:id="@+id/singleGroup"
+        android:name="pl.polsl.kanjiapp.views.SingleGroup"
+        android:label="fragment_single_group"
+        tools:layout="@layout/fragment_single_group" />
 </navigation>

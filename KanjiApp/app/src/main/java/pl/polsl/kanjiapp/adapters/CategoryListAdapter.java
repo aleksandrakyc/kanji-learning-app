@@ -20,7 +20,6 @@ public class CategoryListAdapter extends RecyclerView.Adapter<CategoryListAdapte
 
     private ArrayList<String> localDataSet;
     private ItemClickListener mClickListener;
-    private LayoutInflater mInflater;
 
     /**
      * Provide a reference to the type of views that you are using
@@ -59,7 +58,6 @@ public class CategoryListAdapter extends RecyclerView.Adapter<CategoryListAdapte
      * by RecyclerView
      */
     public CategoryListAdapter(Context context, ArrayList<String> dataSet) {
-        this.mInflater = LayoutInflater.from(context);
         localDataSet = dataSet;
     }
 
