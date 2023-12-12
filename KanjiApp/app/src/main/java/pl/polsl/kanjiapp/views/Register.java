@@ -90,6 +90,7 @@ public class Register extends Fragment {
                             DocumentReference df = mFstore.collection("Users").document(user.getUid());
                             Map<String, Object> userInfo = new HashMap<>();
                             userInfo.put("isTeacher", ""+isTeacherValue);
+                            userInfo.put("email", login.getText().toString());
                             df.set(userInfo);
                             Navigation.findNavController(view).navigate(R.id.action_register_to_login);
                         }

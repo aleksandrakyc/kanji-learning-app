@@ -75,7 +75,7 @@ public class GroupManagement extends Fragment implements CategoryListAdapter.Ite
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
 
         groupChoices = new ArrayList<>();
-        adapter = new CategoryListAdapter(getContext(), groupChoices);
+        adapter = new CategoryListAdapter(getContext(), groupChoices, 1);
         adapter.setClickListener(this);
         recyclerView.setAdapter(adapter);
 
@@ -140,19 +140,28 @@ public class GroupManagement extends Fragment implements CategoryListAdapter.Ite
     private void getGroups(boolean isTeacher){
         //get all groups where owner = userid
         //
-        CollectionReference cf = mFstore.collection("Groups");
         if (isTeacher){
+            CollectionReference cf = mFstore.collection("Groups");
             cf.whereEqualTo("Owner", user.getUid()).get()
                     .addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
                 @Override
                 public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
                     groupChoices.clear();
                     queryDocumentSnapshots.getDocuments().forEach(document -> {
-                        String docuName = (String) document.get("Name");
+                        String docuName = (String) document.getId();
                         groupChoices.add(docuName);
-                        Log.d(TAG, "onSuccess: " + document.get("Name"));
                         adapter.notifyItemChanged(groupChoices.indexOf(docuName));
                     });
+                }
+            });
+        }
+        else {
+            DocumentReference df = mFstore.collection("Users").document(user.getUid());
+            df.get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+                @Override
+                public void onSuccess(DocumentSnapshot documentSnapshot) {
+                    groupChoices = (ArrayList<String>) documentSnapshot.get("Groups");
+                    adapter.notifyDataSetChanged();
                 }
             });
         }
@@ -164,7 +173,7 @@ public class GroupManagement extends Fragment implements CategoryListAdapter.Ite
         Log.d(TAG, "onItemClick: " + position);
         Bundle bundle = new Bundle();
         //change to id?
-        bundle.putString("id", user.getUid() + groupChoices.get(position));
+        bundle.putString("id", groupChoices.get(position));
         Navigation.findNavController(view).navigate(R.id.action_GroupManagement_to_singleGroup, bundle);
     }
 }

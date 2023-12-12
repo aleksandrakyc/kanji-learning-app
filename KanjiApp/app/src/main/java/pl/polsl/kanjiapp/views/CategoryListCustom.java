@@ -55,8 +55,6 @@ public class CategoryListCustom extends Fragment implements CategoryListAdapter.
         mAuth = FirebaseAuth.getInstance();
         user = mAuth.getCurrentUser();
         mFstore = FirebaseFirestore.getInstance();
-        if (getArguments() != null) {
-        }
     }
 
     @Override
@@ -83,21 +81,16 @@ public class CategoryListCustom extends Fragment implements CategoryListAdapter.
 
             CollectionReference cf = mFstore.collection("Users").document(user.getUid()).collection("Sets");
             setChoices = new ArrayList<>();
-            categoryListAdapter = new CategoryListAdapter(getContext(), setChoices);
+            categoryListAdapter = new CategoryListAdapter(getContext(), setChoices, 1);
             categoryListAdapter.setClickListener(this);
             recyclerView.setAdapter(categoryListAdapter);
             cf.get().addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
                 @Override
                 public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
                     List<DocumentSnapshot> documents = queryDocumentSnapshots.getDocuments();
-                    documents.forEach(documentSnapshot -> setChoices.add(documentSnapshot.getId().substring(28)));
+                    documents.forEach(documentSnapshot -> setChoices.add(documentSnapshot.getId()));
                     progressBar.setVisibility(View.GONE);
                     categoryListAdapter.notifyDataSetChanged();
-
-                }
-            }).addOnFailureListener(new OnFailureListener() {
-                @Override
-                public void onFailure(@NonNull Exception e) {
 
                 }
             });
@@ -110,8 +103,8 @@ public class CategoryListCustom extends Fragment implements CategoryListAdapter.
         Log.d(TAG, "onItemClick: " + position);
         Bundle bundle = new Bundle();
 
-        bundle.putString("level", user.getUid()+setChoices.get(position));
-        Log.d(TAG, "onItemClick: " + user.getUid()+setChoices.get(position));
+        bundle.putString("level", setChoices.get(position));
+        Log.d(TAG, "onItemClick: " + setChoices.get(position));
         bundle.putInt("categoryType", CategoryType.Custom.getValue());
 
         Toast.makeText(view.getContext(), "Recycle Click" + position, Toast.LENGTH_SHORT).show();

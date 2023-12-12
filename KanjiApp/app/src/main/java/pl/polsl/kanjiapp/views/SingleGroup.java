@@ -19,8 +19,10 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.CollectionReference;
@@ -31,7 +33,11 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.TreeSet;
 
 import pl.polsl.kanjiapp.R;
 import pl.polsl.kanjiapp.adapters.CategoryListAdapter;
@@ -79,12 +85,12 @@ public class SingleGroup extends Fragment implements CategoryListAdapter.ItemCli
         recyclerViewSets.setLayoutManager(new LinearLayoutManager(getContext()));
 
         sets = new ArrayList<>();
-        adapterHomework = new CategoryListAdapter(getContext(), sets);
-        recyclerView.setAdapter(adapterHomework);
+        adapterHomework = new CategoryListAdapter(getContext(), sets, 0);
+        recyclerViewSets.setAdapter(adapterHomework);
         getHomework();
 
         members = new ArrayList<>();
-        adapterMembers = new CategoryListAdapter(getContext(), members);
+        adapterMembers = new CategoryListAdapter(getContext(), members, 0);
         adapterMembers.setClickListener(this);
         recyclerView.setAdapter(adapterMembers);
         getMembers();
@@ -134,7 +140,7 @@ public class SingleGroup extends Fragment implements CategoryListAdapter.ItemCli
                                     int selectedPosition = ((AlertDialog)dialog).getListView().getCheckedItemPosition();
                                     Log.d(TAG, "onSuccess: " + customSets.get(selectedPosition));
 
-
+                                    addHomework(customSets.get(selectedPosition));
                                 })
                                 .setNegativeButton("Cancel", (dialog, which) -> {
 
@@ -163,13 +169,54 @@ public class SingleGroup extends Fragment implements CategoryListAdapter.ItemCli
         df.update("Members", FieldValue.arrayUnion(email)).addOnSuccessListener(new OnSuccessListener<Void>() {
             @Override
             public void onSuccess(Void unused) {
+                getMembers();
                 Toast.makeText(getContext(), "Added user with email: "+ email, Toast.LENGTH_SHORT).show();
+            }
+        });
+
+        //get user-member where email is email (XD)
+        CollectionReference cf = mFstore.collection("Users");
+        cf.whereEqualTo("email", email).get().addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
+            @Override
+            public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
+                //update "groups" array with this group id
+                List<DocumentSnapshot> documents = queryDocumentSnapshots.getDocuments();
+                documents.forEach(document -> {
+                    String userId = document.getId();
+                    DocumentReference df = mFstore.collection("Users").document(userId);
+                    df.update("Groups", FieldValue.arrayUnion(groupId));
+                });
             }
         });
     }
 
     private void addHomework(String setId){
         //copy set data from teacher and put it in group
+        String owner = setId.substring(0,28); //owner id
+
+        DocumentReference df = mFstore.collection("Users").document(owner).collection("Sets").document(setId);
+        df.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                if (task.isSuccessful()){
+                    DocumentSnapshot document = task.getResult();
+                    //todo make a model
+                    Map<String, Double> kanjiInfo = (Map<String, Double>) document.get("Kanji_list");
+                    if (kanjiInfo != null && kanjiInfo.size()>0)
+                        kanjiInfo.replaceAll((key, value)->2.5);
+
+                    DocumentReference df = mFstore.collection("Groups").document(groupId).collection("Sets").document(groupId+setId.substring(28));
+
+                    Map<String, Object> setInfo = new HashMap<>();
+                    setInfo.put("Owner", owner);
+                    setInfo.put("Kanji_list", kanjiInfo);
+                    setInfo.put("Set_name", setId.substring(28));
+                    df.set(setInfo);
+
+                    getHomework();
+                }
+            }
+        });
     }
 
     private void getMembers(){
@@ -179,7 +226,7 @@ public class SingleGroup extends Fragment implements CategoryListAdapter.ItemCli
             @Override
             public void onSuccess(DocumentSnapshot documentSnapshot) {
                 ArrayList<String> members_ = (ArrayList<String>) documentSnapshot.get("Members");
-                if (members_.size()>0){
+                if (members_!=null && members_.size()>0){
                     members_.forEach(member -> {
                         members.add(member);
                         adapterMembers.notifyItemChanged(members_.indexOf(member));
@@ -191,19 +238,19 @@ public class SingleGroup extends Fragment implements CategoryListAdapter.ItemCli
     }
 
     private void getHomework(){
-        DocumentReference df = mFstore.collection("Groups").document(groupId);
+        CollectionReference cf = mFstore.collection("Groups").document(groupId).collection("Sets");
         sets.clear();
-        df.get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+        cf.get().addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
             @Override
-            public void onSuccess(DocumentSnapshot documentSnapshot) {
-                ArrayList<String> sets_ = (ArrayList<String>) documentSnapshot.get("Sets");
-                if (sets_!=null){
-                    sets_.forEach(set -> {
-                        sets.add(set);
-                        adapterHomework.notifyItemChanged(sets_.indexOf(set));
-                    });
-                }
-                Log.d(TAG, "onSuccess: "+ sets);
+            public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
+                List<DocumentSnapshot> documents = queryDocumentSnapshots.getDocuments();
+                documents.forEach(documentSnapshot -> {
+                    String setName = documentSnapshot.getId().substring(28);
+                    sets.add(setName);
+                    adapterHomework.notifyItemChanged(sets.indexOf(setName));
+                });
+                //progressBar.setVisibility(View.GONE);
+                Log.d(TAG, "onSuccess: "+sets);
             }
         });
     }

@@ -58,7 +58,7 @@ public class CategoryListPredefined extends Fragment implements CategoryListAdap
         categoryValues.addAll(Arrays.asList(gradeValues));
         categoryList = getView().findViewById(R.id.recyclerJlpt);
         categoryList.setLayoutManager(new LinearLayoutManager(getContext()));
-        CategoryListAdapter categoryListAdapter = new CategoryListAdapter(getContext(), categoryValues);
+        CategoryListAdapter categoryListAdapter = new CategoryListAdapter(getContext(), categoryValues, 0);
         categoryListAdapter.setClickListener(this);
         categoryList.setAdapter(categoryListAdapter);
 

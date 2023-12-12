@@ -23,7 +23,6 @@ import pl.polsl.kanjiapp.types.Jlpt;
 public class DataBaseAdapter {
 
     protected static final String TAG = "DataAdapter";
-
     private final Context mContext;
     private SQLiteDatabase mDb;
     private DataBaseHelper mDbHelper;
