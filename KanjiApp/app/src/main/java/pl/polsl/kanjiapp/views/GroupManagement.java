@@ -122,15 +122,16 @@ public class GroupManagement extends Fragment implements CategoryListAdapter.Ite
                 if (task.isSuccessful()){
                     DocumentSnapshot document = task.getResult();
                     if (document.exists()){
-                        button.setVisibility(View.VISIBLE);
-                        Log.d(TAG, "onComplete: teacher");
-                        getGroups(true);
-                        isTeacher = true;
-                    }
-                    else{
-                        Log.d(TAG, "onComplete: student");
-                        getGroups(false);
-                        isTeacher = false;
+                        isTeacher = document.getBoolean("isTeacher");
+                        if(isTeacher){
+                            button.setVisibility(View.VISIBLE);
+                            Log.d(TAG, "onComplete: teacher");
+                            getGroups(true);
+                        }
+                        else{
+                            Log.d(TAG, "onComplete: student");
+                            getGroups(false);
+                        }
                     }
                 }
             }
@@ -160,8 +161,13 @@ public class GroupManagement extends Fragment implements CategoryListAdapter.Ite
             df.get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
                 @Override
                 public void onSuccess(DocumentSnapshot documentSnapshot) {
-                    groupChoices = (ArrayList<String>) documentSnapshot.get("Groups");
-                    adapter.notifyDataSetChanged();
+                    groupChoices.clear();
+                    groupChoices.addAll((ArrayList<String>) documentSnapshot.get("Groups"));
+                    Log.d(TAG, "onSuccess: " + groupChoices);
+                    groupChoices.forEach(group -> {
+                        adapter.notifyItemChanged(groupChoices.indexOf(group));
+                        Log.d(TAG, "onSuccess: " + group);
+                    });
                 }
             });
         }
@@ -172,7 +178,6 @@ public class GroupManagement extends Fragment implements CategoryListAdapter.Ite
         //go to details of that group
         Log.d(TAG, "onItemClick: " + position);
         Bundle bundle = new Bundle();
-        //change to id?
         bundle.putString("id", groupChoices.get(position));
         Navigation.findNavController(view).navigate(R.id.action_GroupManagement_to_singleGroup, bundle);
     }

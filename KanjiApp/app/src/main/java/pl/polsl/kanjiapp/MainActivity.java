@@ -36,13 +36,13 @@ public class MainActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
 
         FirebaseUser user = mAuth.getCurrentUser();
+        NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment);
         int id = item.getItemId();
         if (id == R.id.action_add){
             if (user == null) {
                 Toast.makeText(this, "log in to create custom sets!", Toast.LENGTH_SHORT).show();
             }
             else {
-                NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment);
                 navController.navigate(R.id.createNewSet);
             }
         }
@@ -53,13 +53,13 @@ public class MainActivity extends AppCompatActivity {
                 mAuth.signOut();
             }
             Toast.makeText(this, "you are not logged in.", Toast.LENGTH_SHORT).show();
+            navController.navigate(R.id.startMenu);
         }
         if (id == R.id.action_group) {
             if (user == null) {
                 Toast.makeText(this, "log in to browse groups!", Toast.LENGTH_SHORT).show();
             }
             else {
-                NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment);
                 navController.navigate(R.id.GroupManagement);
             }
         }

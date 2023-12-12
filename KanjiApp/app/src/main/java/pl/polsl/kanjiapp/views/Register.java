@@ -35,7 +35,7 @@ public class Register extends Fragment {
     Button btn;
     EditText login, password;
     Switch isTeacher;
-    int isTeacherValue = 0;
+    boolean isTeacherValue = false;
     private FirebaseAuth mAuth;
     private FirebaseFirestore mFstore;
     public Register() {    }
@@ -69,9 +69,9 @@ public class Register extends Fragment {
         isTeacher.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 if (isChecked) {
-                    isTeacherValue = 1;
+                    isTeacherValue = true;
                 } else {
-                    isTeacherValue = 0;
+                    isTeacherValue = false;
                 }
             }
         });
@@ -89,7 +89,7 @@ public class Register extends Fragment {
                             FirebaseUser user = mAuth.getCurrentUser();
                             DocumentReference df = mFstore.collection("Users").document(user.getUid());
                             Map<String, Object> userInfo = new HashMap<>();
-                            userInfo.put("isTeacher", ""+isTeacherValue);
+                            userInfo.put("isTeacher", isTeacherValue);
                             userInfo.put("email", login.getText().toString());
                             df.set(userInfo);
                             Navigation.findNavController(view).navigate(R.id.action_register_to_login);
@@ -105,7 +105,6 @@ public class Register extends Fragment {
                 } else {
                     Toast.makeText(getContext(),"please enter email and password",Toast.LENGTH_SHORT).show();
                 }
-
             }
         });
     }
