@@ -120,7 +120,7 @@
 \usepackage[utf8]{inputenc}                                      
 \usepackage[T1]{fontenc}  
 \usepackage{amsmath,amsfonts,amssymb,amsthm}
-\usepackage[british,polish]{babel} 
+\usepackage[japanese,british,polish]{babel} 
 \usepackage{indentfirst}
 \usepackage{xurl}
 \usepackage{xstring}
@@ -129,11 +129,23 @@
 
 \usepackage{ifxetex}
 
-\ifxetex
+\ifxetex	
 	\usepackage{fontspec}
 	\defaultfontfeatures{Mapping=tex—text} % to support TeX conventions like ``——-''
 	\usepackage{xunicode} % Unicode support for LaTeX character names (accents, European chars, etc)
 	\usepackage{xltxtra} % Extra customizations for XeLaTeX
+
+   	\defaultfontfeatures{Mapping=tex--text}   % to support TeX conventions like dashes etc
+   	\usepackage{xltxtra} % extra customisation for XeLaTeX
+   	\setsansfont{Linux Biolinum O}
+   	\setmainfont[Ligatures={Common,TeX}, Numbers={OldStyle}]{Linux Libertine O}
+	\usepackage[%
+	  boldfont,
+	  CJKnumber,
+	  CJKchecksingle
+	]{xeCJK}
+
+	\setCJKmainfont[Script=CJK]{Noto Serif CJK TC}
 \else
 	\usepackage{lmodern}
 \fi
@@ -265,6 +277,7 @@
 %%%%%%%%%%%%% OBCE WTRETY  
 \newcommand{\obcy}[1]{\emph{#1}}
 \newcommand{\english}[1]{{\selectlanguage{british}\obcy{#1}}}
+\newcommand{\japanese}[1]{{\selectlanguage{japanese}\obcy{#1}}} 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 % polskie oznaczenia funkcji matematycznych
@@ -526,7 +539,7 @@ escapeinside={@*}{*@},%
 \label{ch:wstep}
 
 \ksremark{Wstępem zajmiemy się na końcu.}
-Aby wyjaśnić cel tej pracy inżynierskiej, należy wspomnieć o kilku ważnych pojęciach związanych z językiem japońskim i jego nauką. Kanji razem z sylabariuszami hiragana i katakana oraz znanymi nam cyframi arabskimi i alfabetem romańskim tworzą całość japońskiego alfabetu. Są to znaki logograficzne, co oznacza że przeciwnie do alfabetów składających się z głosek, każdy znak oznacza jakieś pojęcie. Kompleksowa lista wszystkich kanji nie istnieje, jednak ich liczbę szacuje się na około czterdziestu tysięcy. Jest to ogromna liczba, na którą składa się wiele znaków przestarzałych lub bardzo rzadko używanych. Zamiast niej częstym wskaźnikiem płynności językowej w kontekście kanji jest pojęcie \textit{jōyō kanji}, które oznacza zestaw znaków wymagany przez japoński system edukacji. Po ukończeniu szkoły średniej Japończyk posługuje się 2136 znakami kanji. Podobna liczba potrzebna jest, aby zdać test znajomości języka japońskiego dla obcokrajowców (jap. \textit{Nihongo nōryoku shiken}) na najwyższym poziomie oraz zawiera się w około 98 procentach tekstu pisanego.
+Aby wyjaśnić cel tej pracy inżynierskiej, należy wspomnieć o kilku ważnych pojęciach związanych z językiem japońskim i jego nauką. Kanji razem z sylabariuszami hiragana i katakana oraz znanymi nam cyframi arabskimi i alfabetem romańskim tworzą całość japońskiego alfabetu. Są to znaki logograficzne, co oznacza że przeciwnie do alfabetów składających się z głosek, każdy znak oznacza jakieś pojęcie. Kompleksowa lista wszystkich kanji nie istnieje, jednak ich liczbę szacuje się na około czterdziestu tysięcy. Jest to ogromna liczba, na którą składa się wiele znaków przestarzałych lub bardzo rzadko używanych. Zamiast niej częstym wskaźnikiem płynności językowej w kontekście kanji jest pojęcie \textit{jōyō kanji}, które oznacza zestaw znaków wymagany przez japoński system edukacji. Po ukończeniu szkoły średniej Japończyk posługuje się 2136 znakami kanji. Podobna liczba potrzebna jest, aby zdać test znajomości języka japońskiego dla obcokrajowców (jap. \japanese{日本語能力試験} ang. \textit{Japanese Language Proficiency Test}) na najwyższym poziomie oraz zawiera się w około 98 procentach tekstu pisanego.
 
 Zaznajomienie się ze znakami kanji to nieodłączna część nauki języka japońskiego. Co prawda uparty uczeń może zaprzestać na nauce gramatyki, wymowy i zromanizowanego zapisu \textit{rōmaji}, ale poskutkuje to wątpliwą płynnością językową, gdyż nie będzie w stanie przeczytać nawet książki lub restauracyjnego menu. Dla początkującego tak duża ilość materiału może być odrzucająca, dlatego na rynku pojawiło się wiele rozwiązań, które pomagają użytkownikowi w nauce kanji. Jednym z takich rozwiązań jest aplikacja mobilna opracowana na rzecz tej pracy inżynierskiej.
 
@@ -591,7 +604,7 @@ Wraz z opanowaniem pisowni należy zaznajomić się z czytaniem chińskim (jap. 
 
 Inną kwestią, często lekceważoną przez samouków, jest kolejność stawiania kresek przy pisaniu znaku. Ten sam znak w teorii może w praktyce wyglądać zupełnie inaczej, jeżeli nieumiejętnie postawimy kolejne linie, z których się składa. Dlatego istotnym jest, żeby w swoją naukę wkomponować dużo pisania ręcznie, nawet jeśli w naszych czasach jest to coraz mniej popularne. Na wprost użytkownikom wychodzą tutaj też aplikacje, które umożliwiają ćwiczenie pisania przez na przykład rysowanie na ekranie. Uważnie wodząc palec lub długopis po ekranie według instrukcji można wyrobić dobre nawyki, które potem należy utrwalić na kartce.
 
-Podobnie jak inne języki, japoński posiada swój własny system egzaminów przeznaczonych dla obcokrajowców. Egzaminy JLPT \textit{(ang. Japanese Language Proficiency Test)} wydzielają pewne poziomy, które określają umiejętności językowe ucznia. W języku japońskim te poziomy oznacza się literą N oraz cyfrą od 1 do 5, gdzie N5 to najniższy, a N1 najbardziej biegły. Do zdania każdego z tych egzaminów potrzebny jest rosnący z poziomu na poziom zasób kanji. Zaczynając od niewielkich liczb jak około sto dla N5 i trzysta dla N4, kończymy na ponad dwu tysiącach dla pełnej biegłości w pisaniu i czytaniu według egzaminatorów.
+Podobnie jak inne języki, japoński posiada swój własny system egzaminów przeznaczonych dla obcokrajowców. Egzaminy JLPT (jap. \japanese{日本語能力試験} ang. \textit{Japanese Language Proficiency Test}) wydzielają pewne poziomy, które określają umiejętności językowe ucznia. W języku japońskim te poziomy oznacza się literą N oraz cyfrą od 1 do 5, gdzie N5 to najniższy, a N1 najbardziej biegły. Do zdania każdego z tych egzaminów potrzebny jest rosnący z poziomu na poziom zasób kanji. Zaczynając od niewielkich liczb jak około sto dla N5 i trzysta dla N4, kończymy na ponad dwu tysiącach dla pełnej biegłości w pisaniu i czytaniu według egzaminatorów.
 
 Podział znaków kanji według trudności wygląda inaczej dla rodzimych mieszkańców Japoni. Jest on ułożony względem systemu szkolnictwa publicznego, podzielony na klasy w których uczniowie poznają dane znaki. Do zestawu dwu tysięcy znaków wymaganych w szkole, czyli \textit{jōyō kanji} dochodzi 846 znaków \textit{jinmeiyō}, które są używane tylko w imionach i nazwiskach.
 
@@ -603,25 +616,20 @@ Podsumowując, nauka znaków kanji to wieloetapowy proces. Aplikacje i inne pomo
 \chapter{Wymagania i narzędzia}
 \label{ch:wymagania-i-narzedzia}
 
-
-%\begin{itemize}
-%\item wymagania funkcjonalne i niefunkcjonalne
-%\item przypadki użycia (diagramy UML) -- dla prac, w których mają %zastosowanie
-%\item opis narzędzi, metod eksperymentalnych, metod modelowania %itp.
-%\item metodyka pracy nad projektowaniem i implementacją -- dla %prac, w których ma to zastosowanie
-%\end{itemize}
-
 \section{Wymagania funkcjonalne i niefunkcjonalne}
+
 \subsection{Wymagania funkcjonalne}
 
-\begin{table}[h] 
+Wymagania funkcjonalne zostały określone jako lista funkcjonalności z przypisanymi priorytetami. Najważniejsze są wymagania określone priorytetem Krytyczny, potem Ważny, następnie Nice to have, najmniejszą wagę mają te z oznacznikiem Opcjonalny. 
+
+\begin{table}[] 
 \centering
 \caption{Tabela przedstawiająca wymagania funkcjonalne zestawione z priorytetami.}
 \label{id:tab:wymagania}
 \begin{tabular}{p{0.8\textwidth}|p{0.2\textwidth}}
 Przypadek użycia & Priorytet \\ \hline
 Użytkownik może przeglądać listę znaków kanji podzielonych na predefiniowane kategorie  &  Krytyczny   \\
-Użytkownik może uczyć się wybranego zestawu znaków według metody \textit{spaced repetition}, w której najtrudniejsze dla niego znaki będą się pojawiały w najkrótszych interwałach & Ważny \\
+Użytkownik może uczyć się wybranego zestawu znaków według metody powtórek w interwałach, w której najtrudniejsze dla niego znaki będą się pojawiały w najkrótszych interwałach & Ważny \\
 Użytkownik ma dostęp do statystyk danego podejścia & Nice to have \\
 Użytkownik może zalogować się loginem i hasłem jako uczeń lub nauczyciel & Ważny \\
 Użytkownik może się zarejestrować & Ważny \\
@@ -637,6 +645,7 @@ W trakcie nauki uczeń może ćwiczyć pisanie rysując na telefonie & Nice to h
 \end{table}
 
 \subsection{Wymagania niefunkcjonalne}
+Wymagania niefunkcjonalne, w odróżeniu od funkcjonalnych, nie opisują konkretnych zachowań systemu a pewne cechy, które określają ogólne zachowanie systemu. Dla aplikacji stworzonej na potrzeby tej pracy wymagania niefunkcjonalne zostały określone w formie listy cech. 
 \begin{itemize}
 \item Aplikacja posiada lokalną bazę danych ze znakami kanji, ich złożeniami i przykładowymi zdaniami nie przekraczającą 15MB
 \item Podstawowa funkcjonalność aplikacji jest dostępna offline
@@ -646,31 +655,39 @@ W trakcie nauki uczeń może ćwiczyć pisanie rysując na telefonie & Nice to h
 \end{itemize}
 
 \section{Diagramy przypadków użycia}
-Przypadki użycia zostały zaprezentowane jako osobne diagramy UML dla każdego z aktorów.
-\begin{figure}[h]
+Ze względu na dość dużą ilość przypadków użycia, zostały one zaprezentowane jako osobne diagramy UML dla każdego z aktorów. 
+\begin{figure}[]
 \centering
 \includegraphics[width=\textwidth]{Uczen}
 \caption{Diagram przypadków użycia dla Ucznia.}
 \label{fig:etykieta-rysunku}
 \end{figure}
-\begin{figure}[h]
+\begin{figure}[]
 \centering
 \includegraphics[width=\textwidth]{Nauczyciel}
 \caption{Diagram przypadków użycia dla Nauczyciela.}
 \label{fig:etykieta-rysunku}
 \end{figure}
-\begin{figure}[h]
+\begin{figure}[]
 \centering
 \includegraphics[width=\textwidth]{Admin}
 \caption{Diagram przypadków użycia dla Administratora.}
 \label{fig:etykieta-rysunku}
 \end{figure}
-\begin{figure}[h]
+\begin{figure}[]
 \centering
 \includegraphics[width=\textwidth]{Gość}
 \caption{Diagram przypadków użycia dla Gościa.}
 \label{fig:etykieta-rysunku}
 \end{figure}
+
+
+%\begin{itemize}
+%\item wymagania funkcjonalne i niefunkcjonalne
+%\item przypadki użycia (diagramy UML) -- dla prac, w których mają %zastosowanie
+%\item opis narzędzi, metod eksperymentalnych, metod modelowania %itp.
+%\item metodyka pracy nad projektowaniem i implementacją -- dla %prac, w których ma to zastosowanie
+%\end{itemize}
 
 \section{Opis narzędzi}
 
@@ -678,22 +695,46 @@ Przypadki użycia zostały zaprezentowane jako osobne diagramy UML dla każdego 
 \subsection{Aplikacja mobilna}
 %android 10, java, androidstudio, emulator pixel7
 %sqlite3
-Aplikacja została napisana w języku programowania Java na platformę Android w wersji 10 lub wyższej. 
+Aplikacja została napisana w języku programowania Java na platformę Android w wersji 10 lub wyższej. Programiści aplikacji przeznaczonych na Androida zwykle wybierają między językami Java i Kotlin (chociaż są interoperacyjne, więc można je łączyć). Kotlin jest językiem stworzonym przez firmę JetBrains, który działa na maszynie wirtualnej Javy. Język ten powstał między innymi aby wyeliminować niektóre problemy Javy, takie jak błędy odwołania (ang. \textit{null pointer exceptions}). Kotlin w aplikacjach na Androida ma rosnącą popularność. W 2017 został ogłoszony przez firmę Google jako oficjalny język oprogramowania na ten system \cite{bib:internetKotlin17}, a w 2019 jako język preferowany \cite{bib:internetKotlin19}. Według dokumentacji ponad 60 procent profesjonalnych developerów w dziedzinie aplikacji mobilnych na Androida wybiera Kotlina \cite{bib:internetKotlin19}.
 
-Do tworzenia aplikacji użyto środowiska Android Studio Giraffe.
+Mimo zalet tego nowocześniejszego języka, w aplikacji opisywanej w tej pracy postawiono na Javę. Jest to głównie spowodowane osobistymi pobudkami, takimi jak większa pewność w tym języku i sytuacja na rynku pracy. Dużą zaletą Kotlina i środowiska programistycznego Android Studio jest możliwość konwersji kodu w Javie na kod w Kotlinie. Ta cecha, wraz z interoperacyjnością tych dwóch języków, umożliwia dalszy rozwój aplikacji lub całkowitą migrację na Kotlina w przyszłości. 
 
-Aplikacja byla uruchamiana na emulatorze dostarczonym przez Android Studio modelu Pixel 7.
+%api version 33 - min ver 29 - java 8 support
+Przy tworzeniu aplikacji na platformę Android należy wybrać minimalną oraz docelową wersję zestawu narzędzi dla programistów (ang. \textit{software development kit, SDK}). W aplikacji opisywanej w tej pracy minimalna wersja to 29 (Android 10), a docelowa 33 (Android 13). Wybór minimalnej wersji zestawu narzędzi jest uzasadniony tym, że 81,9 procent użytkowników tego systemu posiada minimalnie Androida 10. Docelowa wersja jest narzucona przez sklep Google Play. 
 
-Dane na temat znaków kanji tylko do odczytu są przechowywane lokalnie jako plik bazy danych sqlite3.
+Do tworzenia aplikacji użyto środowiska Android Studio Giraffe. Android Studio to oficjalnie wspierane środowisko programistyczne dla developerów na platformę Android rozwijane przez firmę JetBrains. Zaprezentowane w 2013 roku, niedługo później zastąpiło wcześniej dominujące Eclipse. Android Studio oferuje bogaty wachlarz udogodnień dla programistów, takich jak:
+\begin{itemize}
+\item sugestie poprawek kodu dostosowane do Androida
+\item graficzny edytor wyglądu aplikacji z dynamicznym podglądem 
+\item wbudowany emulator urządzenia umożliwiający uruchomienie i debugowanie aplikacji
+\end{itemize}
+
+\subsection{Lokalna baza danych z informacjami dotyczącymi języka japońskiego}
+
+Do zrealizowania aplikacji opisywanej w tej pracy kluczowym elementem było znalezienie odpowiedniego źródla wiedzy na temat kanji, słów i zdań w języku japońskim. Aby zachować najważniejszą funkcjonalność aplikacji (przeglądanie znaków, uczenie się zestawów) w trybie offline, zdecydowano się na bazę danych przechowywaną lokalnie na urządzeniu każdego z użytkowników. 
+
+Stworzenie tej aplikacji i pracy inżynierskiej jest możliwe dzięki projektowi \href{https://github.com/mifunetoshiro/kanjium}{Kanjium}. Jest to darmowa baza danych złożona z kilku plików (EDICT, KANJIDIC, KRADFILE) należących do Electronic Dictionary Research and Development Group (EDRDG). Informacje na temat partykuł, fonetyki, homonimów, akcentu tonicznego i inne modyfikacje do wyżej wspomnianych plików są autorstwa Urosa Ozvatic. Na potrzeby aplikacji opisywanej w tej pracy baza została jedynie okrojona z pewnych niepotrzebnych części, aby jej rozmiar umożliwiał lokalne przechowywanie na urządzeniach użytkowników. Baza danych Kanjium została wykorzystana w tej pracy zgodnie z licencjami grupy EDRDG oraz autora poprawek Urosa Ozvatic.
+%https://github.com/mifunetoshiro/kanjium
+%https://www.edrdg.org/edrdg/licence.html
+%https://creativecommons.org/licenses/by-sa/4.0/
+
+Ponieważ wyżej opisana baza danych zawiera pewne niezmieniające się informacje, jest dostępna dla aplikacji w trybie tylko do odczytu. W przypadku znaczących zmian w standardzie języka japońskiego wymuszających zmiany w bazie, należałoby ją zaaktualizować w formie nowej wersji aplikacji.
 
 \subsection{Autoryzacja użytkowników i baza danych}
 %firebase auth, firestore
 Do zaimplementowania autoryzacji oraz bazy danych zawierającej informacje na temat zalogowanych użytkowników wykorzystano rozwiązanie Firebase. Jest to komplet funkcjonalności oferowanych developerom aplikacji mobilnych, webowych, gier i innych. W aplikacji opisywanej w tej pracy z kompletu narzędzi wykorzystano mechanizm autoryzacji użytkowników i Firestore, czyli bazę danych NoSQL. 
 
+Autoryzacja użytkowników z użyciem Firebase dostarcza programistom łatwe w użyciu metody, które umożliwiają logowanie się użytkowników przez email i hasło lub konto na wybranych portalach społecznościowych. W celu dalszego ułatwienia implementacji Firebase oferuje gotowy interfejs użytkownika przeznaczony do logowania, jednak w tej pracy nie wykorzystano tej możliwości. Autoryzacja użytkownika oferowana przez Firebase została wybrana dla aplikacji opisywanej w tej pracy, ponieważ gotowe, bezpieczne rozwiązanie pozwoliło na poświęcenie cennego czasu na implementację bardziej kluczowych funkcjonalności. Warto zauważyć, że Firebase jest płatne od pewnych progów zużycia zasobów, jednak są one praktycznie nieosiągalne dla aplikacji niedostępnej dla szerokiej publiki.
+
+Firestore, czyli baza danych oferowana jako część zestawu narzędzi Firebase, to baza NoSQL zorientowana na dokumenty. Oznacza to że dane są przechowywane w dokumentach podobnych do formatu JSON. Różnice między bazami danych SQL i NoSQL leżą w ustrukturyzowaniu przechowywanych danych. SQL było rozwijane w czasach, gdy przechowywanie danych było bardzo drogie. Z tego powodu SQL zwraca dużą uwagę na unikanie duplikacji rekordów. Nowocześniejsze rozwiązania NoSQL mogą zajmować więcej miejsca, jednak są wygodniejsze w użyciu dla programistów. Nie mają stale ustalonych kolumn i nie są relacyjne. Ponieważ istnieje wiele rodzajów baz danych NoSQL, należy uważnie wybrać dystrybucję w zależności od potrzeb. Dla aplikacji rozwijanej na potrzeby tej pracy wybrano bazę danych NoSQL zorientowaną na dokumenty, ponieważ jest to najpopularniejsza alternatywa dla klasycznych, tabularycznych baz danych. Dodatkowym atutem jest łatwość użytku z perspektywy programisty, szczególnie we wczesnych fazach rozwoju aplikacji, gdy często zmienia się pomysł na zapisywanie i wykorzystywanie danych. 
 
 \subsection{Panel administratora}
+%będzie jak zrobię panel administratora:)
+
+
+
 %???
-\section{Metodyka pracy}
+%\section{Metodyka pracy}
 % TODO
 \chapter{[Właściwy dla kierunku -- np. Specyfikacja zewnętrzna]}
 \label{ch:04}
