@@ -18,7 +18,6 @@ export class LoginComponent implements OnInit {
 
   login() {
 
-
     if(this.email == '') {
       alert('Please enter email');
       return;

@@ -14,7 +14,7 @@ export class AuthService {
     this.fireauth.signInWithEmailAndPassword(email,password).then( res => {
         localStorage.setItem('token','true');
         //check if user isAdmin
-        this.userDetails()
+        console.log("login successful for user " + res?.user?.email)
     }, err => {
         alert(err.message);
         this.router.navigate(['/login']);
@@ -22,8 +22,21 @@ export class AuthService {
   }
 
   userDetails() {
-    this.fireauth.user.subscribe(
-      (res) => console.info(res?.email)
-      )
+    return this.fireauth.user
+  }
+
+
+  logoutUser() {
+    return new Promise<void>(async (resolve, reject) => {
+      if (await this.fireauth.currentUser) {
+        this.fireauth.signOut()
+          .then(() => {
+            console.log("log out");
+            resolve();
+          }).catch((error) => {
+            reject();
+          });
+      }
+    })
   }
 }
