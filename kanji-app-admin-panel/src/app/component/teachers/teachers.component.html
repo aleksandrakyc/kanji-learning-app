@@ -1,0 +1,16 @@
+<ul class="list-group">
+    <div *ngIf="teacherRequests.length == 0" class="card">
+        <div class="card-body">
+        There are no requests right now.
+        </div>
+      </div>
+    <li *ngFor="let req of teacherRequests" class="list-group-item container-fluid">
+        <div class="row">        
+            <div class="col-sm-8"> {{req.email}} </div>
+            <div class="col d-grid gap-2 d-md-flex justify-content-md-end">
+                <button type="button" class="btn btn-success" (click)="acceptClick(req.id)"> Accept </button>
+                <button type="button" class="btn btn-danger" (click)="rejectClick(req.id)"> Reject </button>
+            </div>
+        </div>
+    </li>
+  </ul>
