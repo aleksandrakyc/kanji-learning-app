@@ -1,1 +1,11 @@
-<p>dashboard works!</p>
+<ul class="list-group">
+    <li *ngFor="let user of users" class="list-group-item">
+        <div class="row">        
+            <div class="col"> {{user.email}} </div>
+            <div *ngIf="user.isTeacher" class="col"> teacher </div>
+            <div class="col d-grid gap-2 d-md-flex justify-content-md-end">
+                <button type="button" class="btn btn-danger" (click)="deleteUser(user.id)"> Delete </button>
+            </div>
+        </div>
+    </li>
+  </ul>
