@@ -22,7 +22,7 @@ export class DataService {
 
   //todo get all users requesting teacher permissions
   getAllTeacherRequests() {
-    return this.fireStore.collection('/Users', ref => ref.where('teacherRequest', '==', true).where('isTeacher', '==', false)).snapshotChanges()
+    return this.fireStore.collection('/Users', ref => ref.where('teacherRequest', '==', true)).snapshotChanges()
   }
 
   //todo grant (or not) teacher permisions
