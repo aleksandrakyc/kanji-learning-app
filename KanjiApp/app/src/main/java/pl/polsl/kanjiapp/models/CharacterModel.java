@@ -7,7 +7,7 @@ import java.util.Objects;
 
 import pl.polsl.kanjiapp.types.Jlpt;
 
-public class CharacterModel extends KanjiDbObject implements Comparable<CharacterModel>{
+public class CharacterModel implements Comparable<CharacterModel>{
     private String kanji;
     private List<String> onyomi;
     private List<String> kunyomi;
@@ -48,16 +48,8 @@ public class CharacterModel extends KanjiDbObject implements Comparable<Characte
         return onyomi;
     }
 
-    public void setOnyomi(List<String> onyomi) {
-        this.onyomi = onyomi;
-    }
-
     public List<String> getKunyomi() {
         return kunyomi;
-    }
-
-    public void setKunyomi(List<String> kunyomi) {
-        this.kunyomi = kunyomi;
     }
 
     public List<String> getMeaning() {
@@ -71,35 +63,9 @@ public class CharacterModel extends KanjiDbObject implements Comparable<Characte
         String readings = String.join(", ", onyomi)+((onyomi.size()>0) ? ", ": "")+String.join(", ", kunyomi);
         return readings;
     }
-
-    public void setMeaning(List<String> meaning) {
-        this.meaning = meaning;
-    }
-
-    public String getGrade() {
-        return grade;
-    }
-
-    public void setGrade(String grade) {
-        this.grade = grade;
-    }
-
     public Jlpt getJlpt() {
         return jlpt;
     }
-
-    public void setJlpt(Jlpt jlpt) {
-        this.jlpt = jlpt;
-    }
-
-    public int getFrequency() {
-        return frequency;
-    }
-
-    public void setFrequency(int frequency) {
-        this.frequency = frequency;
-    }
-
     @Override
     public String toString() {
         return "CharacterModel{" +
@@ -130,9 +96,6 @@ public class CharacterModel extends KanjiDbObject implements Comparable<Characte
         return compact_meaning;
     }
 
-    public void setCompact_meaning(String compact_meaning) {
-        this.compact_meaning = compact_meaning;
-    }
     @Override
     public int compareTo(CharacterModel o) {
         return (Objects.equals(this.getKanji(), o.getKanji())) ? 0:1;
