@@ -342,7 +342,5 @@ public class Learn extends Fragment {
                 }
             });
         }
-
-
     }
 }

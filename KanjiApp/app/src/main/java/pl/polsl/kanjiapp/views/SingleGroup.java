@@ -41,12 +41,12 @@ import java.util.TreeSet;
 
 import pl.polsl.kanjiapp.R;
 import pl.polsl.kanjiapp.adapters.CategoryListAdapter;
+import pl.polsl.kanjiapp.models.SetModel;
+import pl.polsl.kanjiapp.utils.FirestoreAdapter;
 
 public class SingleGroup extends Fragment implements CategoryListAdapter.ItemClickListener {
     protected static final String TAG = "SingleGroup";
-    private FirebaseAuth mAuth;
-    private FirebaseFirestore mFstore;
-    private FirebaseUser user;
+    private FirestoreAdapter firestore;
     private String groupId;
     TextView groupNameTextView;
     Button addMemberBtn, addSetBtn;
@@ -61,9 +61,7 @@ public class SingleGroup extends Fragment implements CategoryListAdapter.ItemCli
         if (getArguments() != null) {
             groupId = getArguments().getString("id");
         }
-        mAuth = FirebaseAuth.getInstance();
-        mFstore = FirebaseFirestore.getInstance();
-        user = mAuth.getCurrentUser();
+        firestore = new FirestoreAdapter();
     }
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -120,7 +118,7 @@ public class SingleGroup extends Fragment implements CategoryListAdapter.ItemCli
             @Override
             public void onClick(View v) {
                 customSets = new ArrayList<>();
-                CollectionReference cf = mFstore.collection("Users").document(user.getUid()).collection("Sets");
+                CollectionReference cf = firestore.getSetsForCurrentUser();
                 cf.get().addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
                     @Override
                     public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
@@ -152,11 +150,6 @@ public class SingleGroup extends Fragment implements CategoryListAdapter.ItemCli
                         AlertDialog dialog = builder.create();
                         dialog.show();
                     }
-                }).addOnFailureListener(new OnFailureListener() {
-                    @Override
-                    public void onFailure(@NonNull Exception e) {
-
-                    }
                 });
             }
         });
@@ -165,27 +158,12 @@ public class SingleGroup extends Fragment implements CategoryListAdapter.ItemCli
 
     private void addMember(String email){
         //todo check if member is a valid user
-        DocumentReference df = mFstore.collection("Groups").document(groupId);
-        df.update("Members", FieldValue.arrayUnion(email)).addOnSuccessListener(new OnSuccessListener<Void>() {
+        firestore.addMemberToGroup(email, groupId).addOnSuccessListener(new OnSuccessListener<Void>() {
             @Override
             public void onSuccess(Void unused) {
                 getMembers();
+                firestore.addGroupToMember(email, groupId);
                 Toast.makeText(getContext(), "Added user with email: "+ email, Toast.LENGTH_SHORT).show();
-            }
-        });
-
-        //get user-member where email is email (XD)
-        CollectionReference cf = mFstore.collection("Users");
-        cf.whereEqualTo("email", email).get().addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
-            @Override
-            public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
-                //update "groups" array with this group id
-                List<DocumentSnapshot> documents = queryDocumentSnapshots.getDocuments();
-                documents.forEach(document -> {
-                    String userId = document.getId();
-                    DocumentReference df = mFstore.collection("Users").document(userId);
-                    df.update("Groups", FieldValue.arrayUnion(groupId));
-                });
             }
         });
     }
@@ -194,24 +172,24 @@ public class SingleGroup extends Fragment implements CategoryListAdapter.ItemCli
         //copy set data from teacher and put it in group
         String owner = setId.substring(0,28); //owner id
 
-        DocumentReference df = mFstore.collection("Users").document(owner).collection("Sets").document(setId);
-        df.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+        firestore.getUserSet(owner, setId).addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
             @Override
             public void onComplete(@NonNull Task<DocumentSnapshot> task) {
                 if (task.isSuccessful()){
+                    //todo test this
                     DocumentSnapshot document = task.getResult();
-                    //todo make a model
-                    Map<String, Double> kanjiInfo = (Map<String, Double>) document.get("Kanji_list");
-                    if (kanjiInfo != null && kanjiInfo.size()>0)
+
+                    SetModel setModel = document.toObject(SetModel.class);
+                    //temp
+                    setModel.setId(setId);
+
+                    HashMap<String, Double> kanjiInfo = setModel.getKanjiInfo();
+                    if (kanjiInfo != null && kanjiInfo.size()>0){
                         kanjiInfo.replaceAll((key, value)->2.5);
+                        setModel.setKanjiInfo(kanjiInfo);
+                    }
 
-                    DocumentReference df = mFstore.collection("Groups").document(groupId).collection("Sets").document(groupId+setId.substring(28));
-
-                    Map<String, Object> setInfo = new HashMap<>();
-                    setInfo.put("Owner", owner);
-                    setInfo.put("Kanji_list", kanjiInfo);
-                    setInfo.put("Set_name", setId.substring(28));
-                    df.set(setInfo);
+                    firestore.addHomework(setModel, groupId);
 
                     getHomework();
                 }
@@ -220,9 +198,8 @@ public class SingleGroup extends Fragment implements CategoryListAdapter.ItemCli
     }
 
     private void getMembers(){
-        DocumentReference df = mFstore.collection("Groups").document(groupId);
         members.clear();
-        df.get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+        firestore.getMembers(groupId).addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
             @Override
             public void onSuccess(DocumentSnapshot documentSnapshot) {
                 ArrayList<String> members_ = (ArrayList<String>) documentSnapshot.get("Members");
@@ -238,9 +215,8 @@ public class SingleGroup extends Fragment implements CategoryListAdapter.ItemCli
     }
 
     private void getHomework(){
-        CollectionReference cf = mFstore.collection("Groups").document(groupId).collection("Sets");
         sets.clear();
-        cf.get().addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
+        firestore.getHomework(groupId).addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
             @Override
             public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
                 List<DocumentSnapshot> documents = queryDocumentSnapshots.getDocuments();
@@ -249,7 +225,6 @@ public class SingleGroup extends Fragment implements CategoryListAdapter.ItemCli
                     sets.add(setName);
                     adapterHomework.notifyItemChanged(sets.indexOf(setName));
                 });
-                //progressBar.setVisibility(View.GONE);
                 Log.d(TAG, "onSuccess: "+sets);
             }
         });

@@ -46,7 +46,7 @@ public class GroupManagement extends Fragment implements CategoryListAdapter.Ite
     private FirebaseUser user;
     private ArrayList<String> groupChoices;
     CategoryListAdapter adapter;
-    private boolean isTeacher;
+    private Boolean isTeacher;
 
     public GroupManagement() {
         // Required empty public constructor
@@ -123,7 +123,7 @@ public class GroupManagement extends Fragment implements CategoryListAdapter.Ite
                     DocumentSnapshot document = task.getResult();
                     if (document.exists()){
                         isTeacher = document.getBoolean("isTeacher");
-                        if(isTeacher){
+                        if(isTeacher != null && isTeacher){
                             button.setVisibility(View.VISIBLE);
                             Log.d(TAG, "onComplete: teacher");
                             getGroups(true);
@@ -140,7 +140,6 @@ public class GroupManagement extends Fragment implements CategoryListAdapter.Ite
 
     private void getGroups(boolean isTeacher){
         //get all groups where owner = userid
-        //
         if (isTeacher){
             CollectionReference cf = mFstore.collection("Groups");
             cf.whereEqualTo("Owner", user.getUid()).get()
@@ -162,7 +161,9 @@ public class GroupManagement extends Fragment implements CategoryListAdapter.Ite
                 @Override
                 public void onSuccess(DocumentSnapshot documentSnapshot) {
                     groupChoices.clear();
-                    groupChoices.addAll((ArrayList<String>) documentSnapshot.get("Groups"));
+                    ArrayList<String> documents = (ArrayList<String>) documentSnapshot.get("Groups");
+                    if (documents != null)
+                        groupChoices.addAll(documents);
                     Log.d(TAG, "onSuccess: " + groupChoices);
                     groupChoices.forEach(group -> {
                         adapter.notifyItemChanged(groupChoices.indexOf(group));

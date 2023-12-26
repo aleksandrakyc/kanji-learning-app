@@ -17,33 +17,21 @@ import android.widget.EditText;
 import android.widget.Switch;
 import android.widget.Toast;
 
-import com.google.android.gms.tasks.OnFailureListener;
-import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.firebase.auth.AuthResult;
-import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.firestore.DocumentReference;
-import com.google.firebase.firestore.FirebaseFirestore;
-
-import java.util.HashMap;
-import java.util.Map;
-
 import pl.polsl.kanjiapp.R;
+import pl.polsl.kanjiapp.utils.FirestoreAdapter;
 
 public class Register extends Fragment {
     protected static final String TAG = "Register";
     Button btn;
     EditText login, password;
-    Switch isTeacher;
-    boolean isTeacherValue = false;
-    private FirebaseAuth mAuth;
-    private FirebaseFirestore mFstore;
+    Switch isTeacherRequest;
+    boolean request = false;
+    private FirestoreAdapter firestore;
     public Register() {    }
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        mAuth = FirebaseAuth.getInstance();
-        mFstore = FirebaseFirestore.getInstance();
+        firestore = new FirestoreAdapter();
     }
 
     @Override
@@ -60,18 +48,18 @@ public class Register extends Fragment {
         btn = getView().findViewById(R.id.registerBtn);
         login = getView().findViewById(R.id.editTextRegister);
         password = getView().findViewById(R.id.editTextPasswordRegister);
-        isTeacher = getView().findViewById(R.id.teacherSwitch);
+        isTeacherRequest = getView().findViewById(R.id.teacherSwitch);
 
-        if (mAuth.getCurrentUser() != null){
+        if (firestore.getUser() != null){
             Toast.makeText(getContext(),"log out first to create a new account.",Toast.LENGTH_SHORT).show();
             Navigation.findNavController(view).navigate(R.id.action_startMenu_to_CategoryList);
         }
-        isTeacher.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+        isTeacherRequest.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 if (isChecked) {
-                    isTeacherValue = true;
+                    request = true;
                 } else {
-                    isTeacherValue = false;
+                    request = false;
                 }
             }
         });
@@ -80,28 +68,10 @@ public class Register extends Fragment {
             @Override
             public void onClick(View v) {
                 if (checkField(login)&&checkField(password)){
-                    mAuth.createUserWithEmailAndPassword(login.getText().toString(), password.getText().toString())
-                    .addOnSuccessListener(new OnSuccessListener<AuthResult>() {
-                        @Override
-                        public void onSuccess(AuthResult authResult) {
-                            Toast.makeText(getContext(),"registered successfully!",Toast.LENGTH_SHORT).show();
-                            //add user to db
-                            FirebaseUser user = mAuth.getCurrentUser();
-                            DocumentReference df = mFstore.collection("Users").document(user.getUid());
-                            Map<String, Object> userInfo = new HashMap<>();
-                            userInfo.put("teacherRequest", isTeacherValue);
-                            userInfo.put("email", login.getText().toString());
-                            df.set(userInfo);
-                            Navigation.findNavController(view).navigate(R.id.action_register_to_login);
-                        }
-
-                    }).addOnFailureListener(new OnFailureListener() {
-                        @Override
-                        public void onFailure(@NonNull Exception e) {
-                            Toast.makeText(getContext(),"could not register!",Toast.LENGTH_SHORT).show();
-                            Log.e(TAG, "onFailure: "+e );
-                        }
-                    });
+                    firestore.createUser(login.getText().toString(), password.getText().toString(), request);
+                    //todo check if user exists
+                    if(firestore.getUserInfo(login.getText().toString())!=null)
+                        Navigation.findNavController(view).navigate(R.id.action_register_to_login);
                 } else {
                     Toast.makeText(getContext(),"please enter email and password",Toast.LENGTH_SHORT).show();
                 }

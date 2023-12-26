@@ -27,7 +27,6 @@ public class Login extends Fragment {
     Button btn;
     EditText login, password;
     private FirebaseAuth mAuth;
-    private FirebaseFirestore mFstore;
     public Login() {
         // Required empty public constructor
     }
