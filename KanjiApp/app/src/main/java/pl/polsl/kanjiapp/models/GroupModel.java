@@ -1,15 +1,19 @@
 package pl.polsl.kanjiapp.models;
 
+import java.util.ArrayList;
+
 public class GroupModel {
-    private String id, name, groupId;
+    private String id, name, owner;
+    private ArrayList<String> members;
 
     public GroupModel() {
     }
 
-    public GroupModel(String id, String name, String groupId) {
-        this.id = id;
+    public GroupModel(String ownerId, String name) {
+        this.id = ownerId+name;
         this.name = name;
-        this.groupId = groupId;
+        this.owner = ownerId;
+        this.members = new ArrayList<>();
     }
 
     public String getId() {
@@ -20,7 +24,11 @@ public class GroupModel {
         return name;
     }
 
-    public String getGroupId() {
-        return groupId;
+    public String getOwner() {
+        return owner;
+    }
+
+    public ArrayList<String> getMembers() {
+        return members;
     }
 }

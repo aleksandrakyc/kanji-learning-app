@@ -41,8 +41,10 @@ import java.util.TreeSet;
 
 import pl.polsl.kanjiapp.R;
 import pl.polsl.kanjiapp.models.CharacterModel;
+import pl.polsl.kanjiapp.models.SetModel;
 import pl.polsl.kanjiapp.types.CategoryType;
 import pl.polsl.kanjiapp.utils.DataBaseAdapter;
+import pl.polsl.kanjiapp.utils.FirestoreAdapter;
 import pl.polsl.kanjiapp.utils.Question;
 import pl.polsl.kanjiapp.utils.QuestionGenerator;
 
@@ -61,9 +63,7 @@ public class Learn extends Fragment {
     ArrayList<Question> questions;
     HashMap<String, Pair<Integer, Integer>> scores;
     Question question;
-    private FirebaseAuth mAuth;
-    private FirebaseFirestore mFstore;
-    FirebaseUser user;
+    private FirestoreAdapter firestore;
     ProgressBar progressBar;
 
     public Learn() {
@@ -73,9 +73,7 @@ public class Learn extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        mAuth = FirebaseAuth.getInstance();
-        mFstore = FirebaseFirestore.getInstance();
-        user = mAuth.getCurrentUser();
+        firestore = new FirestoreAdapter();
         if (getArguments() != null) {
             //get data for session
             dataBaseAdapter = new DataBaseAdapter(getContext());
@@ -160,14 +158,13 @@ public class Learn extends Fragment {
 
     private void getCharactersCustomSet(){
         Log.d(TAG, "getCharactersCustomSet: " + setId);
-        DocumentReference df = mFstore.collection("Users").document(user.getUid()).collection("Sets").document(setId);
 
         //get kanji details from list of characters
-        Set<String> characterSet = new TreeSet<>();
-        df.get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+        firestore.getUserSet(firestore.getUser().getUid(), setId).addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
             @Override
             public void onSuccess(DocumentSnapshot documentSnapshot) {
-                getSetDataFromFstore(documentSnapshot);
+                SetModel setModel = documentSnapshot.toObject(SetModel.class);
+                getSetDataFromFstore(setModel);
             }
         }).addOnFailureListener(new OnFailureListener() {
             @Override
@@ -221,33 +218,12 @@ public class Learn extends Fragment {
     }
 
     private void updateEasinessFactors(HashMap<String, Double> kanjiEFMap){
-        DocumentReference df;
-        if(type == Custom)
-            df = mFstore.collection("Users").document(user.getUid()).collection("Sets").document(setId);
-        else{
-            df = mFstore.collection("Users").document(user.getUid()).collection("Predefined").document(type.name()+mLevel);
+        if(type == Custom) {
+            firestore.updateEasinessFactors(true, kanjiEFMap, setId);
         }
-        df.get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
-            @Override
-            public void onSuccess(DocumentSnapshot documentSnapshot) {
-                //foreach
-                kanjiEFMap.forEach((kanji, EF) -> {
-                    double oldEF = (double) documentSnapshot.get("Kanji_list."+kanji);
-                    Log.d(TAG, "onSuccess: "+oldEF);
-                    double newEF = oldEF + EF;
-                    if(newEF<1.3)
-                        newEF = 1.3;
-                    df.update(
-                            "Kanji_list."+kanji, newEF
-                    );
-                });
-            }
-        }).addOnFailureListener(new OnFailureListener() {
-            @Override
-            public void onFailure(@NonNull Exception e) {
-
-            }
-        });
+        else{
+            firestore.updateEasinessFactors(false, kanjiEFMap, type.name()+mLevel);
+        }
     }
     private void evaluate(){
         HashMap<String, Double> kanjiEFMap = new HashMap<>();
@@ -257,8 +233,7 @@ public class Learn extends Fragment {
             Log.d(TAG, "evaluate: " + q);
             kanjiEFMap.put(kanji, newValue);
         });
-        //change this so that updates all at once
-        if(user!=null){
+        if(firestore.getUser()!=null){
             updateEasinessFactors(kanjiEFMap);
         }
     }
@@ -266,18 +241,14 @@ public class Learn extends Fragment {
         //create set
         characters = dataBaseAdapter.getKanjiByLevel(type, mLevel);
         QuestionGenerator generator;
-        if (user != null) {
+        if (firestore.getUser() != null) {
             String docId = type.name()+mLevel;
-            DocumentReference df = mFstore.collection("Users").document(user.getUid()).collection("Predefined").document(docId);
 
-            Map<String, Object> setInfo = new HashMap<>();
-            Map<String, Double> kanjiInfo = new HashMap<>();
+            HashMap<String, Double> kanjiInfo = new HashMap<>();
             characters.forEach(c->kanjiInfo.put(c.getKanji(), 2.5));
 
-            setInfo.put("Owner", user.getUid());
-            setInfo.put("Kanji_list", kanjiInfo);
-            setInfo.put("Set_name", docId);
-            df.set(setInfo);
+            SetModel setModel = new SetModel(docId, firestore.getUser().getUid(), docId, kanjiInfo);
+            firestore.addUserPredefinedSet(setModel);
             generator = new QuestionGenerator(characters, kanjiInfo, turns, wordEnabled, sentenceEnabled);
 
         }
@@ -292,11 +263,9 @@ public class Learn extends Fragment {
         loadQuestion(0);
     }
 
-    private void getSetDataFromFstore(DocumentSnapshot document){
+    private void getSetDataFromFstore(SetModel setModel){
         Set<String> characterSet = new TreeSet<>();
-        HashMap<String, Double> kanjiList = (HashMap<String, Double>) document.get("Kanji_list");
-
-        kanjiList.forEach((key, value) -> {
+        setModel.getKanjiInfo().forEach((key, value) -> {
             characterSet.add(key);
             Log.d(TAG, "onSuccess: " + value);
         });
@@ -309,20 +278,19 @@ public class Learn extends Fragment {
         else{
             characters = dataBaseAdapter.getKanjiByLevel(type, mLevel);
         }
-        QuestionGenerator generator = new QuestionGenerator(characters, kanjiList, turns, wordEnabled, sentenceEnabled);
+        QuestionGenerator generator = new QuestionGenerator(characters, setModel.getKanjiInfo(), turns, wordEnabled, sentenceEnabled);
         questions = generator.generateQuestions();
         turns = generator.getTurns();
         loadQuestion(0);
     }
 
     private void getPredefinedSetUserData(){
-        if (user == null){
+        if (firestore.getUser() == null){
             createPredefinedSetUserData();
         }
         else {
             String docId = type.name()+mLevel;
-            DocumentReference df = mFstore.collection("Users").document(user.getUid()).collection("Predefined").document(docId);
-            df.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+            firestore.getPredefinedUserSet(docId).addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
                 @Override
                 public void onComplete(@NonNull Task<DocumentSnapshot> task) {
                     if (task.isSuccessful()) {
@@ -330,7 +298,8 @@ public class Learn extends Fragment {
                         if (document.exists()) {
                             Log.d(TAG, "Document exists!");
                             //get data
-                            getSetDataFromFstore(document);
+                            SetModel setModel = document.toObject(SetModel.class);
+                            getSetDataFromFstore(setModel);
                         } else {
                             Log.d(TAG, "Document does not exist!");
                             //create new document

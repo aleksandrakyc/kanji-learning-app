@@ -35,15 +35,15 @@ import java.util.Map;
 
 import pl.polsl.kanjiapp.R;
 import pl.polsl.kanjiapp.adapters.CategoryListAdapter;
+import pl.polsl.kanjiapp.models.GroupModel;
 import pl.polsl.kanjiapp.types.CategoryType;
+import pl.polsl.kanjiapp.utils.FirestoreAdapter;
 
 public class GroupManagement extends Fragment implements CategoryListAdapter.ItemClickListener{
 
     protected static final String TAG = "GroupManagement";
     Button button;
-    private FirebaseAuth mAuth;
-    private FirebaseFirestore mFstore;
-    private FirebaseUser user;
+    private FirestoreAdapter firestore;
     private ArrayList<String> groupChoices;
     CategoryListAdapter adapter;
     private Boolean isTeacher;
@@ -55,9 +55,8 @@ public class GroupManagement extends Fragment implements CategoryListAdapter.Ite
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        mAuth = FirebaseAuth.getInstance();
-        mFstore = FirebaseFirestore.getInstance();
-        user = mAuth.getCurrentUser();
+
+        firestore = new FirestoreAdapter();
     }
 
     @Override
@@ -96,14 +95,11 @@ public class GroupManagement extends Fragment implements CategoryListAdapter.Ite
                     public void onClick(DialogInterface dialog, int which) {
 
                         EditText name = dialogLayout.findViewById(R.id.editTextSetName);
+                        String nameStr = name.getText().toString();
                         //create empty group with this name
-                        DocumentReference df = mFstore.collection("Groups")
-                                .document(user.getUid()+name.getText().toString());
-                        Map<String, Object> setInfo = new HashMap<>();
-                        setInfo.put("Owner", user.getUid());
-                        //todo name cant be empty
-                        setInfo.put("Name", name.getText().toString());
-                        df.set(setInfo);
+                        GroupModel group = new GroupModel(firestore.getUser().getUid(), nameStr);
+
+                        firestore.createGroup(group);
 
                         getGroups(isTeacher);
                     }
@@ -115,8 +111,7 @@ public class GroupManagement extends Fragment implements CategoryListAdapter.Ite
     }
 
     private void checkTeacherPermissions(){
-        DocumentReference df = mFstore.collection("Users").document(user.getUid());
-        df.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+        firestore.getCurrentUserInfo().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
             @Override
             public void onComplete(@NonNull Task<DocumentSnapshot> task) {
                 if (task.isSuccessful()){
@@ -141,8 +136,7 @@ public class GroupManagement extends Fragment implements CategoryListAdapter.Ite
     private void getGroups(boolean isTeacher){
         //get all groups where owner = userid
         if (isTeacher){
-            CollectionReference cf = mFstore.collection("Groups");
-            cf.whereEqualTo("Owner", user.getUid()).get()
+            firestore.getGroupsTeacher()
                     .addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
                 @Override
                 public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
@@ -156,12 +150,11 @@ public class GroupManagement extends Fragment implements CategoryListAdapter.Ite
             });
         }
         else {
-            DocumentReference df = mFstore.collection("Users").document(user.getUid());
-            df.get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+            firestore.getCurrentUserInfo().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
                 @Override
                 public void onSuccess(DocumentSnapshot documentSnapshot) {
                     groupChoices.clear();
-                    ArrayList<String> documents = (ArrayList<String>) documentSnapshot.get("Groups");
+                    ArrayList<String> documents = (ArrayList<String>) documentSnapshot.get("groups");
                     if (documents != null)
                         groupChoices.addAll(documents);
                     Log.d(TAG, "onSuccess: " + groupChoices);

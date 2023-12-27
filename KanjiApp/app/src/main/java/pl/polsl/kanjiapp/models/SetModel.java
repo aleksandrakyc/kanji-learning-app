@@ -3,7 +3,7 @@ package pl.polsl.kanjiapp.models;
 import java.util.HashMap;
 
 public class SetModel {
-    private String id, owner, name;
+    private String id, owner, name, groupId; //optional
     private HashMap<String, Double> kanjiInfo;
 
     public SetModel() {
@@ -38,5 +38,24 @@ public class SetModel {
 
     public void setId(String id) {
         this.id = id;
+    }
+
+    public String getGroupId() {
+        return groupId;
+    }
+
+    public void setGroupId(String groupId) {
+        this.groupId = groupId;
+    }
+
+    @Override
+    public String toString() {
+        return "SetModel{" +
+                "id='" + id + '\'' +
+                ", owner='" + owner + '\'' +
+                ", name='" + name + '\'' +
+                ", groupId='" + groupId + '\'' +
+                ", kanjiInfo=" + kanjiInfo +
+                '}';
     }
 }

@@ -36,14 +36,13 @@ import pl.polsl.kanjiapp.adapters.CategoryListAdapter;
 import pl.polsl.kanjiapp.types.CategoryType;
 import pl.polsl.kanjiapp.types.Grade;
 import pl.polsl.kanjiapp.types.Jlpt;
+import pl.polsl.kanjiapp.utils.FirestoreAdapter;
 
 public class CategoryListCustom extends Fragment implements CategoryListAdapter.ItemClickListener{
     protected static final String TAG = "CategoryListCustom";
     RecyclerView recyclerView;
     ProgressBar progressBar;
-    private FirebaseAuth mAuth;
-    private FirebaseFirestore mFstore;
-    FirebaseUser user;
+    private FirestoreAdapter firestore;
     private ArrayList<String> setChoices;
     CategoryListAdapter categoryListAdapter;
     public CategoryListCustom() {
@@ -52,9 +51,7 @@ public class CategoryListCustom extends Fragment implements CategoryListAdapter.
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        mAuth = FirebaseAuth.getInstance();
-        user = mAuth.getCurrentUser();
-        mFstore = FirebaseFirestore.getInstance();
+        firestore = new FirestoreAdapter();
     }
 
     @Override
@@ -73,25 +70,24 @@ public class CategoryListCustom extends Fragment implements CategoryListAdapter.
         recyclerView = getView().findViewById(R.id.customRecycler);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
 
-        if (user == null) {
+        if (firestore.getUser() == null) {
             progressBar.setVisibility(View.GONE);
             Toast.makeText(getContext(), "log in to see custom sets!", Toast.LENGTH_SHORT).show();
         }
         else {
-
-            CollectionReference cf = mFstore.collection("Users").document(user.getUid()).collection("Sets");
             setChoices = new ArrayList<>();
             categoryListAdapter = new CategoryListAdapter(getContext(), setChoices, 1);
             categoryListAdapter.setClickListener(this);
             recyclerView.setAdapter(categoryListAdapter);
-            cf.get().addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
+            firestore.getUserSets().addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
                 @Override
                 public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
                     List<DocumentSnapshot> documents = queryDocumentSnapshots.getDocuments();
-                    documents.forEach(documentSnapshot -> setChoices.add(documentSnapshot.getId()));
+                    documents.forEach(documentSnapshot -> {
+                        setChoices.add(documentSnapshot.getId());
+                        categoryListAdapter.notifyItemChanged(documents.indexOf(documentSnapshot));
+                    });
                     progressBar.setVisibility(View.GONE);
-                    categoryListAdapter.notifyDataSetChanged();
-
                 }
             });
     ;

@@ -180,8 +180,7 @@ public class SingleGroup extends Fragment implements CategoryListAdapter.ItemCli
                     DocumentSnapshot document = task.getResult();
 
                     SetModel setModel = document.toObject(SetModel.class);
-                    //temp
-                    setModel.setId(setId);
+                    setModel.setGroupId(groupId);
 
                     HashMap<String, Double> kanjiInfo = setModel.getKanjiInfo();
                     if (kanjiInfo != null && kanjiInfo.size()>0){
@@ -202,7 +201,7 @@ public class SingleGroup extends Fragment implements CategoryListAdapter.ItemCli
         firestore.getMembers(groupId).addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
             @Override
             public void onSuccess(DocumentSnapshot documentSnapshot) {
-                ArrayList<String> members_ = (ArrayList<String>) documentSnapshot.get("Members");
+                ArrayList<String> members_ = (ArrayList<String>) documentSnapshot.get("members");
                 if (members_!=null && members_.size()>0){
                     members_.forEach(member -> {
                         members.add(member);

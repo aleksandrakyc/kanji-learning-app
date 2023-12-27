@@ -19,6 +19,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.DocumentReference;
@@ -35,8 +36,10 @@ import java.util.stream.Collectors;
 import pl.polsl.kanjiapp.R;
 import pl.polsl.kanjiapp.adapters.SelectCharactersAdapter;
 import pl.polsl.kanjiapp.models.CharacterModel;
+import pl.polsl.kanjiapp.models.SetModel;
 import pl.polsl.kanjiapp.types.CategoryType;
 import pl.polsl.kanjiapp.utils.DataBaseAdapter;
+import pl.polsl.kanjiapp.utils.FirestoreAdapter;
 
 public class CreateNewSet extends Fragment implements SelectCharactersAdapter.ItemClickListener {
     protected static final String TAG = "CreateNewSet";
@@ -46,8 +49,7 @@ public class CreateNewSet extends Fragment implements SelectCharactersAdapter.It
     RecyclerView recyclerView;
     Set<CharacterModel> selectedCharacters;
     Button btn;
-    private FirebaseAuth mAuth;
-    private FirebaseFirestore mFstore;
+    private FirestoreAdapter firestore;
     String setName;
     public CreateNewSet() {
         // Required empty public constructor
@@ -56,8 +58,8 @@ public class CreateNewSet extends Fragment implements SelectCharactersAdapter.It
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        mAuth = FirebaseAuth.getInstance();
-        mFstore = FirebaseFirestore.getInstance();
+
+        firestore = new FirestoreAdapter();
     }
 
     @Override
@@ -100,27 +102,26 @@ public class CreateNewSet extends Fragment implements SelectCharactersAdapter.It
 
                         EditText name = dialogLayout.findViewById(R.id.editTextSetName);
                         setName = name.getText().toString();
+
                         //create new set in db
-                        FirebaseUser user = mAuth.getCurrentUser();
-                        String setId = user.getUid() + setName;
-                        DocumentReference df = mFstore.collection("Users").document(user.getUid()).collection("Sets").document(setId);
-
-                        Map<String, Object> setInfo = new HashMap<>();
-                        Map<String, Double> kanjiInfo = new HashMap<>();
+                        String setId = firestore.getUser().getUid() + setName;
+                        HashMap<String, Double> kanjiInfo = new HashMap<>();
                         selectedCharacters.forEach(c->kanjiInfo.put(c.getKanji(), 2.5));
+                        SetModel setModel = new SetModel(setId, firestore.getUser().getUid(), setName, kanjiInfo);
 
-                        setInfo.put("Owner", user.getUid());
-                        setInfo.put("Kanji_list", kanjiInfo);
-                        setInfo.put("Set_name", setName);
-                        df.set(setInfo);
-
-                        Toast.makeText(getContext(), "Created set " + setName, Toast.LENGTH_SHORT).show();
+                        firestore.addSetToUser(setModel).addOnSuccessListener(new OnSuccessListener<Void>() {
+                            @Override
+                            public void onSuccess(Void unused) {
+                                Log.d(TAG, "onSuccess: " + setName);
+                                Toast.makeText(getContext(), "Created set " + setName, Toast.LENGTH_SHORT).show();
+                            }
+                        });
 
                         //navigate to set view page
                         Bundle bundle = new Bundle();
                         bundle.putString("level", setId);
                         bundle.putInt("categoryType", CategoryType.Custom.getValue());
-                        Navigation.findNavController(view).navigate(R.id.action_createNewSet_to_kanjiListView, bundle);
+                        //Navigation.findNavController(view).navigate(R.id.action_createNewSet_to_kanjiListView, bundle);
                     }
                 });
                 AlertDialog dialog = builder.create();
