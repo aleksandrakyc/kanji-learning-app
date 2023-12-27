@@ -32,30 +32,30 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import pl.polsl.kanjiapp.R;
 import pl.polsl.kanjiapp.adapters.CategoryListAdapter;
+import pl.polsl.kanjiapp.models.SetModel;
+import pl.polsl.kanjiapp.models.UserModel;
 import pl.polsl.kanjiapp.types.CategoryType;
+import pl.polsl.kanjiapp.utils.FirestoreAdapter;
 
 public class CategoryListHomework extends Fragment implements CategoryListAdapter.ItemClickListener{
     protected static final String TAG = "CategoryListHomework";
     RecyclerView recyclerView;
     ProgressBar progressBar;
-    private FirebaseAuth mAuth;
-    private FirebaseFirestore mFstore;
-    FirebaseUser user;
+    private FirestoreAdapter firestore;
     private ArrayList<String> setChoices;
+    private ArrayList<SetModel> sets;
     CategoryListAdapter categoryListAdapter;
-    ArrayList<String> groups;
     public CategoryListHomework() {
         // Required empty public constructor
     }
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        mAuth = FirebaseAuth.getInstance();
-        user = mAuth.getCurrentUser();
-        mFstore = FirebaseFirestore.getInstance();
+        firestore = new FirestoreAdapter();
     }
 
     @Override
@@ -74,24 +74,26 @@ public class CategoryListHomework extends Fragment implements CategoryListAdapte
         recyclerView = getView().findViewById(R.id.customRecycler);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
 
-        if (user == null) {
+        if (firestore.getUser() == null) {
             progressBar.setVisibility(View.GONE);
             Toast.makeText(getContext(), "log in to see custom sets!", Toast.LENGTH_SHORT).show();
         }
         else {
             //get sets from all our groups
             setChoices = new ArrayList<>();
+            sets = new ArrayList<>();
             categoryListAdapter = new CategoryListAdapter(getContext(), setChoices, 1);
             categoryListAdapter.setClickListener(this);
             recyclerView.setAdapter(categoryListAdapter);
 
-            DocumentReference df = mFstore.collection("Users").document(user.getUid());
-            df.get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+            firestore.getCurrentUserInfo().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
                 @Override
                 public void onSuccess(DocumentSnapshot documentSnapshot) {
-                    groups = (ArrayList<String>) documentSnapshot.get("Groups");
-                    if (groups!=null && groups.size()>0){
-                        groups.forEach(group -> {
+
+                    UserModel userModel = documentSnapshot.toObject(UserModel.class);
+
+                    if (userModel.getGroups()!=null && userModel.getGroups().size()>0){
+                        userModel.getGroups().forEach(group -> {
                             //get all sets in that group
                             getSetsForGroup(group);
                         });
@@ -103,18 +105,18 @@ public class CategoryListHomework extends Fragment implements CategoryListAdapte
         }
     }
     private void getSetsForGroup(String groupId){
-
-        CollectionReference cf = mFstore.collection("Groups")
-                .document(groupId)
-                .collection("Sets");
-        cf.get()
+        firestore.getHomework(groupId)
                 .addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
                     @Override
                     public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
                         List<DocumentSnapshot> documents = queryDocumentSnapshots.getDocuments();
-                        if (documents != null && !documents.isEmpty()){
+                        if (!documents.isEmpty()){
                             documents.forEach(document -> {
+                                SetModel setModel = document.toObject(SetModel.class);
+                                sets.add(setModel);
+                                Log.d(TAG, "onSuccess: " + setModel.toString());
                                 String setName = document.getId();
+                                Log.d(TAG, "onSuccess: " + setName);
                                 setChoices.add(setName);
                                 categoryListAdapter.notifyItemChanged(setChoices.indexOf(setName));
                             });
@@ -128,52 +130,39 @@ public class CategoryListHomework extends Fragment implements CategoryListAdapte
         Log.d(TAG, "onItemClick: " + position);
         Bundle bundle = new Bundle();
 
-        loadSet(setChoices.get(position));
+        loadSet(sets.get(position));
 
-        bundle.putString("level", setChoices.get(position));
-        Log.d(TAG, "onItemClick: " + setChoices.get(position));
+        bundle.putString("level", sets.get(position).getId());
         bundle.putInt("categoryType", CategoryType.Custom.getValue());
 
         Toast.makeText(view.getContext(), "Recycle Click" + position, Toast.LENGTH_SHORT).show();
         Navigation.findNavController(view).navigate(R.id.action_startMenu_to_kanjiListView, bundle);
     }
 
-    private void loadSet(String setName){
-
-        Log.d(TAG, "loadSet: "+ setName);
+    private void loadSet(SetModel set){
+        Log.d(TAG, "loadSet: "+ set);
         //check if set has already been copied from the group
-        DocumentReference df = mFstore.collection("Users")
-                .document(user.getUid())
-                .collection("Sets")
-                .document(setName);
-        df.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+        firestore.getUserSet(firestore.getUser().getUid(), set.getId())
+                .addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
             @Override
             public void onComplete(@NonNull Task<DocumentSnapshot> task) {
                 if (task.isSuccessful()){
                     DocumentSnapshot document = task.getResult();
                     if (!document.exists()){
                         //if not, copy it
-                        copySet(setName, df);
+                        copySet(set);
                     }
                 }
             }
         });
     }
-    private void copySet(String setName, DocumentReference destination){
-        DocumentReference df = mFstore.collection("Groups")
-                .document(setName.substring(0,28))
-                .collection("Sets")
-                .document(setName);
-        df.get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+    private void copySet(SetModel set){
+        Log.d(TAG, "copySet: hello" + set);
+        firestore.getSetFromGroup(set).addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
             @Override
             public void onSuccess(DocumentSnapshot document) {
-                Map<String, Object> setInfo = new HashMap<>();
-                HashMap<String, Double> kanjiList = (HashMap<String, Double>) document.get("Kanji_list");
-                String owner = document.getString("Owner");
-                setInfo.put("Owner", owner);
-                setInfo.put("Kanji_list", kanjiList);
-                setInfo.put("Set_name", setName.substring(28));
-                destination.set(setInfo);
+                SetModel set = document.toObject(SetModel.class);
+                firestore.addSetToUser(set);
             }
         });
     }

@@ -34,16 +34,17 @@ import pl.polsl.kanjiapp.R;
 import pl.polsl.kanjiapp.utils.DataBaseAdapter;
 import pl.polsl.kanjiapp.models.*;
 import pl.polsl.kanjiapp.types.Jlpt;
+import pl.polsl.kanjiapp.utils.FirestoreAdapter;
 
 public class SingleKanjiView extends Fragment {
     protected static final String TAG = "SingleKanjiView";
     private String mCharacter;
     CharacterModel character;
     private Button button;
-    private FirebaseAuth mAuth;
-    private FirebaseFirestore mFstore;
-    FirebaseUser user;
+    private FirestoreAdapter firestore;
     private ArrayList<String> setChoices;
+    DataBaseAdapter dataBaseAdapter;
+    TextView kanjiView, kunyomiView, onyomiView, meaningView, wordView, sentenceView;
 
     public SingleKanjiView() {
         // Required empty public constructor
@@ -52,14 +53,11 @@ public class SingleKanjiView extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        mAuth = FirebaseAuth.getInstance();
-        mFstore = FirebaseFirestore.getInstance();
         if (getArguments() != null) {
             mCharacter = getArguments().getString("character");
         }
+        firestore = new FirestoreAdapter();
     }
-    DataBaseAdapter dataBaseAdapter;
-    TextView kanjiView, kunyomiView, onyomiView, meaningView, wordView, sentenceView;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -70,7 +68,6 @@ public class SingleKanjiView extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        user = mAuth.getCurrentUser();
         dataBaseAdapter = new DataBaseAdapter(getContext());
 //        dataBaseAdapter.createDatabase();
         dataBaseAdapter.open();
@@ -111,8 +108,7 @@ public class SingleKanjiView extends Fragment {
             @Override
             public void onClick(View v) {
                 setChoices = new ArrayList<>();
-                CollectionReference cf = mFstore.collection("Users").document(user.getUid()).collection("Sets");
-                cf.get().addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
+                firestore.getUserSets().addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
                     @Override
                     public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
                         List<DocumentSnapshot> documents = queryDocumentSnapshots.getDocuments();
@@ -141,20 +137,17 @@ public class SingleKanjiView extends Fragment {
                         AlertDialog dialog = builder.create();
                         dialog.show();
                     }
-                }).addOnFailureListener(new OnFailureListener() {
-                    @Override
-                    public void onFailure(@NonNull Exception e) {
-
-                    }
                 });
             }
         });
     }
     private void addCharacterToSet(String setId){
         Log.d(TAG, "addCharacterToSet: "+setId);
-        DocumentReference df = mFstore.collection("Users").document(user.getUid()).collection("Sets").document(setId);
-        df.update(
-                "Kanji_list."+character.getKanji(), 2.5
-        );
+        firestore.addCharacterToSet(setId, character).addOnSuccessListener(new OnSuccessListener<Void>() {
+            @Override
+            public void onSuccess(Void unused) {
+                Toast.makeText(getContext(), "Added character " + character.getKanji() + "to set", Toast.LENGTH_SHORT).show();
+            }
+        });
     }
 }

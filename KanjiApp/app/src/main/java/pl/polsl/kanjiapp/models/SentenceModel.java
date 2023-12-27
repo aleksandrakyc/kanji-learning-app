@@ -1,6 +1,6 @@
 package pl.polsl.kanjiapp.models;
 
-public class SentenceModel extends KanjiDbObject{
+public class SentenceModel {
     private int id;
     private String japanese;
     private String english;
@@ -46,32 +46,8 @@ public class SentenceModel extends KanjiDbObject{
         return japanese;
     }
 
-    public void setJapanese(String japanese) {
-        this.japanese = japanese;
-    }
-
     public String getEnglish() {
         return english;
-    }
-
-    public void setEnglish(String english) {
-        this.english = english;
-    }
-
-    public String getParticle() {
-        return particle;
-    }
-
-    public void setParticle(String particle) {
-        this.particle = particle;
-    }
-
-    public String getWord() {
-        return word;
-    }
-
-    public void setWord(String word) {
-        this.word = word;
     }
 
     public String getKanji() {
@@ -80,22 +56,6 @@ public class SentenceModel extends KanjiDbObject{
 
     public void setKanji(String kanji) {
         this.kanji = kanji;
-    }
-
-    public String getFurigana() {
-        return furigana;
-    }
-
-    public void setFurigana(String furigana) {
-        this.furigana = furigana;
-    }
-
-    public String getObi2() {
-        return obi2;
-    }
-
-    public void setObi2(String obi2) {
-        this.obi2 = obi2;
     }
 
 }

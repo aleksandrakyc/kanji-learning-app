@@ -32,10 +32,12 @@ import java.util.TreeSet;
 import pl.polsl.kanjiapp.R;
 import pl.polsl.kanjiapp.adapters.CharacterAdapter;
 import pl.polsl.kanjiapp.models.CharacterModel;
+import pl.polsl.kanjiapp.models.SetModel;
 import pl.polsl.kanjiapp.types.CategoryType;
 import pl.polsl.kanjiapp.types.Grade;
 import pl.polsl.kanjiapp.types.Jlpt;
 import pl.polsl.kanjiapp.utils.DataBaseAdapter;
+import pl.polsl.kanjiapp.utils.FirestoreAdapter;
 
 public class KanjiListView extends Fragment {
     protected static final String TAG = "KanjiListView";
@@ -43,14 +45,16 @@ public class KanjiListView extends Fragment {
     String setId;
     CategoryType type;
     Set<String> characterSet;
-    private FirebaseFirestore mFstore;
-    private DocumentReference df;
+    private FirestoreAdapter firestore;
     private ArrayList<CharacterModel> characterModelArrayList;
     CharacterAdapter adapter;
+    GridView kanjiGV;
+    DataBaseAdapter dataBaseAdapter;
+    Button btn;
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        mFstore = FirebaseFirestore.getInstance();
+        firestore = new FirestoreAdapter();
         if (getArguments() != null) {
             Log.d(TAG, "onCreate: " + getArguments().getInt("categoryType"));
             type = CategoryType.intToCategoryType(getArguments().getInt("categoryType"));
@@ -68,9 +72,7 @@ public class KanjiListView extends Fragment {
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_kanji_list_view, container, false);
     }
-    GridView kanjiGV;
-    DataBaseAdapter dataBaseAdapter;
-    Button btn;
+
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
@@ -113,17 +115,14 @@ public class KanjiListView extends Fragment {
             kanjiGV.setAdapter(adapter);
         }
         else {
-            //28 chars are user name, whole thing is set name
-            df = mFstore.collection("Users").document(setId.substring(0,28)).collection("Sets").document(setId);
-
             //get kanji details from list of characters
             characterSet = new TreeSet<>();
-            df.get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+            firestore.getUserSet(firestore.getUser().getUid(), setId).addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
                 @Override
                 public void onSuccess(DocumentSnapshot documentSnapshot) {
                     //TODO check this cast
-                    Map<String, Double> kanjiList = (Map<String, Double>) documentSnapshot.get("Kanji_list");
-                    kanjiList.forEach((key, value) -> characterSet.add(key));
+                    SetModel setModel = documentSnapshot.toObject(SetModel.class);
+                    setModel.getKanjiInfo().forEach((key, value) -> characterSet.add(key));
                     Log.d(TAG, "onSuccess: " + characterSet);
                     characterModelArrayList = dataBaseAdapter.getKanjiDetailsFromSet(characterSet);
                     adapter = new CharacterAdapter(getContext(), characterModelArrayList);

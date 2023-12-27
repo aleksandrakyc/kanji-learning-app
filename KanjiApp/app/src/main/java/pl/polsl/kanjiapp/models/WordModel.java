@@ -5,7 +5,7 @@ import java.util.List;
 
 import pl.polsl.kanjiapp.types.Jlpt;
 
-public class WordModel extends KanjiDbObject{
+public class WordModel {
     private int id;
     private String kanji;
     private String word; //okurigana in edict, jukugo in jukugo, compverb in compverbs
@@ -36,30 +36,6 @@ public class WordModel extends KanjiDbObject{
 
     public void setKanji(String kanji) {
         this.kanji = kanji;
-    }
-
-    public String getWord() {
-        return word;
-    }
-
-    public void setWord(String word) {
-        this.word = word;
-    }
-
-    public String getReading() {
-        return reading;
-    }
-
-    public void setReading(String reading) {
-        this.reading = reading;
-    }
-
-    public Jlpt getJlpt() {
-        return jlpt;
-    }
-
-    public void setJlpt(Jlpt jlpt) {
-        this.jlpt = jlpt;
     }
 
     public String getWordAndMeaning(){
