@@ -12,6 +12,7 @@ export class NavbarComponent implements OnInit {
 
   userEmail : string = ''
   loggedIn : boolean = false
+  noAdmin : boolean = false
   isAdmin : boolean = false
 
   constructor(private auth : AuthService, private dataService : DataService, private router : Router) { }
@@ -26,7 +27,23 @@ export class NavbarComponent implements OnInit {
         else {
           this.userEmail = ""  
           this.loggedIn = false
-          this.router.navigate(['/login']);
+
+          if (!this.noAdmin){
+            console.log(this.noAdmin)
+            this.dataService.checkIfAdminExists().subscribe(
+              res => {
+                console.log(res)
+                if (res.length == 0){
+                  this.router.navigate(['/register']);
+                  this.noAdmin = true
+                  alert("Create an administrator account!")
+                }
+                else {
+                  this.router.navigate(['/login']);
+                }
+              } 
+            )
+          }
         }
       }
       )
@@ -40,20 +57,26 @@ export class NavbarComponent implements OnInit {
           this.isAdmin = admin[0].isAdmin
           if(this.isAdmin){
             this.loggedIn = true
-          } 
+          }
           else{
-            this.logout()
-            this.router.navigate(['/login']);
-            alert("This is not an administrator account!")
+
+                  this.logout()
+                  this.router.navigate(['/login']);
+                  alert("This is not an administrator account!")
+
           }
         } catch (error) {
           this.logout()
           this.router.navigate(['/login']);
-          alert("This is not an administrator account!")
+          alert("error checking if admin")
         }
 
       }
     )
+  }
+
+  changePwd() {
+    this.router.navigate(['/change-pwd']);
   }
 
   logout() {

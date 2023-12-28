@@ -10,6 +10,8 @@ import { DashboardComponent } from './component/dashboard/dashboard.component';
 import { FormsModule } from '@angular/forms';
 import { NavbarComponent } from './component/navbar/navbar.component';
 import { TeachersComponent } from './component/teachers/teachers.component';
+import { RegisterComponent } from './component/register/register.component';
+import { ChangePwdComponent } from './component/change-pwd/change-pwd.component';
 
 @NgModule({
   declarations: [
@@ -17,7 +19,9 @@ import { TeachersComponent } from './component/teachers/teachers.component';
     LoginComponent,
     DashboardComponent,
     NavbarComponent,
-    TeachersComponent
+    TeachersComponent,
+    RegisterComponent,
+    ChangePwdComponent
   ],
   imports: [
     BrowserModule,
