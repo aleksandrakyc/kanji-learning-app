@@ -14,7 +14,7 @@
         android:id="@+id/textViewStats"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textSize="20sp"
+        android:textSize="@dimen/font_large"
         android:text="@string/stats1" />
 
 </LinearLayout>

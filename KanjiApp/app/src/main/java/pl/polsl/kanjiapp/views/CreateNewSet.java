@@ -58,7 +58,6 @@ public class CreateNewSet extends Fragment implements SelectCharactersAdapter.It
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
         firestore = new FirestoreAdapter();
     }
 
@@ -95,7 +94,7 @@ public class CreateNewSet extends Fragment implements SelectCharactersAdapter.It
                 AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
                 final View dialogLayout = getLayoutInflater().inflate(R.layout.fragment_set_name_dialog, null);
                 builder.setView(dialogLayout);
-                builder.setTitle("title");
+                builder.setTitle("Type name: ");
                 builder.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
@@ -121,7 +120,7 @@ public class CreateNewSet extends Fragment implements SelectCharactersAdapter.It
                         Bundle bundle = new Bundle();
                         bundle.putString("level", setId);
                         bundle.putInt("categoryType", CategoryType.Custom.getValue());
-                        //Navigation.findNavController(view).navigate(R.id.action_createNewSet_to_kanjiListView, bundle);
+                        Navigation.findNavController(view).navigate(R.id.action_createNewSet_to_kanjiListView, bundle);
                     }
                 });
                 AlertDialog dialog = builder.create();

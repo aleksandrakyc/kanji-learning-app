@@ -12,7 +12,8 @@
         android:layout_height="wrap_content"
         android:gravity="center"
         android:layout_marginTop="@dimen/margin_small"
-        android:textSize="20sp" />
+        android:textSize="@dimen/font_large"
+        android:textColor="@color/text" />
 
     <TextView
         android:id="@+id/questionType"
@@ -20,14 +21,16 @@
         android:layout_height="wrap_content"
         android:gravity="center"
         android:layout_marginTop="@dimen/margin_small"
-        android:textSize="30sp" />
+        android:textSize="@dimen/font_huge"
+        android:textColor="@color/text" />
 
     <TextView
         android:id="@+id/question"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="center"
-        android:textSize="60sp" />
+        android:textColor="@color/text"
+        android:textSize="@dimen/font_single_char" />
 
     <ViewFlipper
         android:id="@+id/viewFlipper"
@@ -48,7 +51,9 @@
                     android:layout_marginTop="@dimen/margin_small"
                     android:layout_marginStart="@dimen/margin_large"
                     android:layout_marginEnd="@dimen/margin_small"
-                    android:backgroundTint="@color/medium">
+                    android:backgroundTint="@color/medium"
+                    android:textSize="@dimen/font_large"
+                    android:textColor="@color/text">
 
                 </Button>
                 <Button
@@ -58,6 +63,8 @@
                     android:layout_marginTop="@dimen/margin_small"
                     android:layout_marginStart="@dimen/margin_small"
                     android:layout_marginEnd="@dimen/margin_large"
+                    android:textSize="@dimen/font_large"
+                    android:textColor="@color/text"
                     android:backgroundTint="@color/medium">
 
                 </Button>
@@ -70,7 +77,9 @@
                     android:layout_marginTop="@dimen/margin_small"
                     android:layout_marginStart="@dimen/margin_large"
                     android:layout_marginEnd="@dimen/margin_small"
-                    android:backgroundTint="@color/medium">
+                    android:backgroundTint="@color/medium"
+                    android:textSize="@dimen/font_large"
+                    android:textColor="@color/text">
 
                 </Button>
                 <Button
@@ -80,6 +89,8 @@
                     android:layout_marginTop="@dimen/margin_small"
                     android:layout_marginStart="@dimen/margin_small"
                     android:layout_marginEnd="@dimen/margin_large"
+                    android:textSize="@dimen/font_large"
+                    android:textColor="@color/text"
                     android:backgroundTint="@color/medium">
 
                 </Button>
@@ -97,7 +108,6 @@
             android:hint="Answer" />
     </ViewFlipper>
 
-
     <TextView
         android:id="@+id/textViewAnswer"
         android:layout_width="match_parent"
@@ -114,6 +124,8 @@
         android:layout_marginStart="@dimen/margin_large"
         android:layout_marginEnd="@dimen/margin_large"
         android:backgroundTint="@color/medium"
+        android:textSize="@dimen/font_large"
+        android:textColor="@color/text"
         android:text="@string/button_check_answer" />
 
 

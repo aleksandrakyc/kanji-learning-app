@@ -14,7 +14,7 @@
         android:id="@+id/textViewKanjiSet"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:textSize="20sp"
+        android:textSize="@dimen/font_huge"
         android:text="Learning kanji set unknown" />
 
     <Switch
@@ -22,6 +22,7 @@
         android:layout_width="match_parent"
         android:layout_height="50dp"
         android:text="Learn with words"
+        android:textSize="@dimen/font_large"
         tools:ignore="UseSwitchCompatOrMaterialXml" />
 
     <Switch
@@ -29,6 +30,7 @@
         android:layout_width="match_parent"
         android:layout_height="50dp"
         android:text="Learn with sentences"
+        android:textSize="@dimen/font_large"
         tools:ignore="UseSwitchCompatOrMaterialXml" />
 
     <EditText
@@ -37,13 +39,15 @@
         android:layout_height="50dp"
         android:ems="10"
         android:inputType="numberSigned"
-        android:text="20" />
+        android:hint="20" />
 
     <Button
         android:id="@+id/learnButton"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:backgroundTint="@color/medium"
+        android:textSize="@dimen/font_large"
+        android:textColor="@color/text"
         android:text="Study!" />
 
 

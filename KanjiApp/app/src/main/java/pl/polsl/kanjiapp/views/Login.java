@@ -65,6 +65,7 @@ public class Login extends Fragment {
                       .addOnSuccessListener(new OnSuccessListener<AuthResult>() {
                                 @Override
                                 public void onSuccess(AuthResult authResult) {
+                                    //check if user exists in db
                                     Toast.makeText(getContext(),"logged in successfully!",Toast.LENGTH_SHORT).show();
                                     Navigation.findNavController(view).navigate(R.id.action_login_to_category_list);
                                 }

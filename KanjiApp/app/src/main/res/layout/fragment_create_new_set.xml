@@ -17,7 +17,9 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:backgroundTint="@color/medium"
+        android:textColor="@color/text"
         android:text="Create"
+        android:textSize="@dimen/font_large"
         android:layout_weight="0"/>
 
 </LinearLayout>

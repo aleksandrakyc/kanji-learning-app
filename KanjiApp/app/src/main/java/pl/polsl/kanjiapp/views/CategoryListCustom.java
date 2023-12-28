@@ -84,6 +84,7 @@ public class CategoryListCustom extends Fragment implements CategoryListAdapter.
                 public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
                     List<DocumentSnapshot> documents = queryDocumentSnapshots.getDocuments();
                     documents.forEach(documentSnapshot -> {
+                        //todo check if is homework
                         setChoices.add(documentSnapshot.getId());
                         categoryListAdapter.notifyItemChanged(documents.indexOf(documentSnapshot));
                     });
