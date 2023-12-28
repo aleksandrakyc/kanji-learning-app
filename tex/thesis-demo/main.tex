@@ -588,7 +588,7 @@ Analiza rozwiązań dostępnych na rynku i badań wskazuje na komercyjny i nauko
 
 \section{Analiza rozwiązań dostępnych na rynku}
 
-Aktualnie formą nauczania języków wspomaganą komputerowo cieszącą się szerokim zainteresowaniem jest jej poddziedzina, czyli nauczanie języków obcych wspomagane przez urządzenia mobilne (ang. \english{Mobile-Assisted Language Learning, MALL}) \cite{bib:artykulDuolingo}. Największą popularnością \cite{bib:internetDuolingo,bib:artykulDuolingo} cieszy się aplikacja \href{https://pl.duolingo.com/}{Duolingo} \cite{bib:duolingo}, która umożliwia naukę pokaźniej listy języków (aż czterdziestu trzech na czas pisania tej pracy) z urządzenia mobilnego lub strony internetowej. Jednym z powodów dobrego przyjęcia Duolingo przez uczniów języków obcych jest podejście bogate w gry i zabawy, motywujące użytkownika przez punkty, nagrody i rankingi \cite{bib:artykulDuolingo}. Aplikacja nie wymaga od użytkownika dużego zaangażowania. Tworzenie własnych zestawów fiszek nie jest konieczne, wystarczy codziennie wykonać kilkanaście zadań wygenerowanych przez system. 
+Aktualnie formą nauczania języków wspomaganą komputerowo cieszącą się szerokim zainteresowaniem jest jej poddziedzina, czyli nauczanie języków obcych wspomagane przez urządzenia mobilne (ang. \english{Mobile-Assisted Language Learning, MALL}) \cite{bib:artykulDuolingo}. Największą popularnością \cite{bib:internetDuolingo,bib:artykulDuolingo} cieszy się aplikacja \href{https://pl.duolingo.com/}{Duolingo} \footnote{\url{https://pl.duolingo.com/}}, która umożliwia naukę pokaźniej listy języków (aż czterdziestu trzech na czas pisania tej pracy) z urządzenia mobilnego lub strony internetowej. Jednym z powodów dobrego przyjęcia Duolingo przez uczniów języków obcych jest podejście bogate w gry i zabawy, motywujące użytkownika przez punkty, nagrody i rankingi \cite{bib:artykulDuolingo}. Aplikacja nie wymaga od użytkownika dużego zaangażowania. Tworzenie własnych zestawów fiszek nie jest konieczne, wystarczy codziennie wykonać kilkanaście zadań wygenerowanych przez system. 
 
 Innym, bardziej angażującym użytkownika programem chętnie wykorzystywanym do nauki jest \href{https://apps.ankiweb.net/}{Anki} \footnote{\url{https://apps.ankiweb.net/}}. Jest to aplikacja oferująca większą możliwość dostosowania jej do własnych potrzeb, z tego powodu nie jest ograniczona do nauki języków obcych. Użytkownik ma możliwość stworzenie własnego zestawu do nauki złożonego z fiszek, który jest później przyswajany w interwałach zgodnie z zasadą powtórek w interwałach. Zaletą Anki jest opcja eksportowania i dzielenia się zestawami między użytkownikami. 
 
@@ -658,7 +658,7 @@ Wymagania niefunkcjonalne, w odróżeniu od funkcjonalnych, nie opisują konkret
 \end{itemize}
 
 \section{Diagramy przypadków użycia}
-Ze względu na dość dużą ilość przypadków użycia, zostały one zaprezentowane jako osobne diagramy UML dla każdego z aktorów. Gość to użytkownik niezalogowany. Uczeń do użytkownik zalogowany, a Nauczyciel ma dodatkowo nadane prawa nauczycielskie. Administrator to użytkownik specjalny, z dostępem do panelu administratora. \ksremark{Trzeba napisać, jacy są autorzy.}
+Ze względu na dość dużą ilość przypadków użycia, zostały one zaprezentowane jako osobne diagramy UML dla każdego z aktorów. Gość to użytkownik niezalogowany. Uczeń do użytkownik zalogowany, a Nauczyciel ma dodatkowo nadane prawa nauczycielskie. Administrator to użytkownik z dostępem do panelu administratora. Nie ma przeszkód, żeby użytkownik był jednocześnie nauczycielem i administratorem lub uczniem i administratorem.
 \begin{figure}[]
 \centering
 \includegraphics[width=\textwidth]{Uczen}
@@ -716,7 +716,7 @@ Do tworzenia aplikacji użyto środowiska Android Studio Giraffe \cite{bib:andro
 
 Do zrealizowania aplikacji opisywanej w tej pracy kluczowym elementem było znalezienie odpowiedniego źródła wiedzy na temat kanji, słów i zdań w języku japońskim. Aby zachować najważniejszą funkcjonalność aplikacji (przeglądanie znaków, uczenie się zestawów) w trybie offline, zdecydowano się na bazę danych przechowywaną lokalnie na urządzeniu każdego z użytkowników. 
 
-Stworzenie tej aplikacji i pracy inżynierskiej jest możliwe dzięki projektowi Kanjium \cite{bib:kanjium}. Jest to darmowa baza danych złożona z kilku plików (EDICT, KANJIDIC, KRADFILE) należących do  \english{Electronic Dictionary Research and Development Group (EDRDG)} \cite{bib:edrdg}. Informacje na temat partykuł, fonetyki, homonimów, akcentu tonicznego i inne modyfikacje do wyżej wspomnianych plików są autorstwa Urosa Ozvatica. Na potrzeby aplikacji opisywanej w tej pracy baza została jedynie okrojona z pewnych niepotrzebnych części 
+Stworzenie tej aplikacji i pracy inżynierskiej jest możliwe dzięki projektowi Kanjium \footnote{\url{https://github.com/mifunetoshiro/kanjium}}. Jest to darmowa baza danych złożona z kilku plików (EDICT, KANJIDIC, KRADFILE) należących do  \english{Electronic Dictionary Research and Development Group (EDRDG)} \footnote{\url{https://www.edrdg.org/edrdg/licence.html}} Informacje na temat partykuł, fonetyki, homonimów, akcentu tonicznego i inne modyfikacje do wyżej wspomnianych plików są autorstwa Urosa Ozvatica. Na potrzeby aplikacji opisywanej w tej pracy baza została jedynie okrojona z pewnych niepotrzebnych części 
 \ksremark{np. czego? todo}
 , aby jej rozmiar umożliwiał lokalne przechowywanie na urządzeniach użytkowników. Baza danych Kanjium została wykorzystana w tej pracy zgodnie z licencjami grupy EDRDG oraz autora poprawek Urosa Ozvatica.
 %https://github.com/mifunetoshiro/kanjium
@@ -727,7 +727,7 @@ Ponieważ wyżej opisana baza danych zawiera pewne niezmieniające się informac
 
 \subsection{Autoryzacja użytkowników i baza danych}
 %firebase auth, firestore
-Do zaimplementowania autoryzacji oraz bazy danych zawierającej informacje na temat zalogowanych użytkowników wykorzystano rozwiązanie Firebase \cite{bib:firebase}. Jest to komplet funkcjonalności oferowanych developerom aplikacji mobilnych, webowych, gier i innych. W aplikacji opisywanej w tej pracy z kompletu narzędzi wykorzystano mechanizm autoryzacji użytkowników i Firestore, czyli bazę danych NoSQL. 
+Do zaimplementowania autoryzacji oraz bazy danych zawierającej informacje na temat zalogowanych użytkowników wykorzystano rozwiązanie Firebase \footnote{\url{firebase.google.com/}}. Jest to komplet funkcjonalności oferowanych developerom aplikacji mobilnych, webowych, gier i innych. W aplikacji opisywanej w tej pracy z kompletu narzędzi wykorzystano mechanizm autoryzacji użytkowników i Firestore, czyli bazę danych NoSQL. 
 
 Autoryzacja użytkowników z użyciem Firebase dostarcza programistom łatwe w użyciu metody, które umożliwiają logowanie się użytkowników przez email i hasło lub konto na wybranych portalach społecznościowych. W celu dalszego ułatwienia implementacji Firebase oferuje gotowy interfejs użytkownika przeznaczony do logowania, jednak w tej pracy nie wykorzystano tej możliwości. Autoryzacja użytkownika oferowana przez Firebase została wybrana dla aplikacji opisywanej w tej pracy, ponieważ gotowe, bezpieczne rozwiązanie pozwoliło na poświęcenie cennego czasu na implementację bardziej kluczowych funkcjonalności. Warto zauważyć, że Firebase jest płatne od pewnych progów zużycia zasobów, jednak są one praktycznie nieosiągalne dla aplikacji niedostępnej dla szerokiej publiki.
 
@@ -736,13 +736,12 @@ Firestore, czyli baza danych oferowana jako część zestawu narzędzi Firebase,
 \subsection{Panel administratora}
 Panel administratora to aplikacja webowa umożliwiająca administratorowi systemu zarządzanie użytkownikami aplikacji mobilnej. Główną funkcjonalnością panelu administratora jest możliwość rozpatrywania wniosków o uprawnienia nauczyciela. Nauczyciel to użytkownik, który posiada dodatkowe przywileje zakładania grup i zadawania im zadań domowych. Użytkownik może poprosić o takie uprawnienia przy zakładaniu konta w aplikacji mobilnej, a administrator zaakceptować lub odrzucić prośbę. Oprócz tego panel administratora oferuje możliwość przeglądania listy użytkowników wraz z ich uprawnieniami i usuwania ich.
 
-Panel administratora korzysta z tego samego systemu uwierzytelniania użytkowników co aplikacja mobilna. Dodatkowo, przy logowaniu sprawdza, czy użytkownik próbujący się zalogować ma uprawnienia administratora. Opcja dodawania użytkownika z uprawnieniami administratora nie jest przewidziana w panelu, ponieważ jest to narzędzie wewnętrzne i zakłada się, że osoba używająca konta administratora w razie problemów ma dostęp do bazy danych.
-Panel korzysta z tej samej instancji bazy danych NoSQL co aplikacja mobilna. Dzięki temu jest w stanie modyfikować dane użytkowników. 
+Panel administratora korzysta z tego samego systemu uwierzytelniania użytkowników co aplikacja mobilna. Dodatkowo, przy logowaniu sprawdza, czy użytkownik próbujący się zalogować ma uprawnienia administratora. W przypadku, gdy w bazie nie istnieje użytkownik z uprawnieniami administratora, w panelu pojawia się możliwość założenia konta. Zakłada się, że istnieje tylko jedno konto z uprawnieniami administratora, więc opcja założenia dodatkowych kont nie jest przewidziana. W razie potrzeby administrator może zmienić hasło do swojego konta. Panel korzysta z tej samej instancji bazy danych NoSQL co aplikacja mobilna. Dzięki temu jest w stanie modyfikować dane użytkowników. 
 
-Jako framework ułatwiający budowę aplikacji webowej posłużył Angular \cite{bib:angular} w wersji 17. Angular to otwartoźródłowa platforma służąca do tworzenia aplikacji webowych używająca języka programowania TypeScript i rozwijana przez Google. Ponieważ funkcjonalności panelu administratora są bardzo proste, wybór Angulara sprowadził się tylko do łatwości użytku związanej z wcześniejszą znajomością tej platformy. Dodatkowym atutem tego frameworku jest też wbudowana obsługa narzędzi Firebase, które są wykorzystywane w aplikacji. Do interfejsu użytkownika wykorzystano bibliotekę Bootstrap \citep{bib:bootstrap}, która zawiera pewne zestawy szablonów CSS ułatwiających wykonanie estetycznie spójnej aplikacji.
+Jako framework ułatwiający budowę aplikacji webowej posłużył Angular \footnote{\url{https://angular.io/}} w wersji 17. Angular to otwartoźródłowa platforma służąca do tworzenia aplikacji webowych używająca języka programowania TypeScript i rozwijana przez Google. Ponieważ funkcjonalności panelu administratora są bardzo proste, wybór Angulara sprowadził się tylko do łatwości użytku związanej z wcześniejszą znajomością tej platformy. Dodatkowym atutem tego frameworku jest też wbudowana obsługa narzędzi Firebase, które są wykorzystywane w aplikacji. Do interfejsu użytkownika wykorzystano bibliotekę Bootstrap \footnote{\url{https://getbootstrap.com/}}, która zawiera pewne zestawy szablonów CSS ułatwiających wykonanie estetycznie spójnej aplikacji.
 
 % TODO
-\chapter{[Właściwy dla kierunku -- np. Specyfikacja zewnętrzna]}
+\chapter{Specyfikacja zewnętrzna}
 \label{ch:04}
 %wymagania sprzętowe i programowe
 %sposób instalacji
@@ -754,70 +753,112 @@ Jako framework ułatwiający budowę aplikacji webowej posłużył Angular \cite
 %przykład działania
 %scenariusze korzystania z systemu (ilustrowane zrzutami z ekranu lub generowanymi dokumentami)
 
+\section{Wymagania sprzętowe i programowe}
+
+\subsection{Aplikacja mobilna}
+
+Do instalacji aplikacji mobilnej użytkownik musi koniecznie posiadać urządzenie mobilne lub emulator z systemem Android w wersji conajmniej 10. Do niektórych funkcjonalności jest potrzebny dostęp do internetu, ale nie jest on konieczny do uruchomienia aplikacji, przeglądania znaków oraz nauki predefiniowanych zestawów. 
+
+\subsection{Baza danych i panel administratora}
+
+Aby móc stworzyć swoją instancję systemu obsługującego dane użytkowników aplikacji mobilnej, konieczne jest urządzenie z dostępem do internetu i skonfigurowany projekt w narzędziu Firebase. Do zbudowania projektu będzie potrzebne następujące oprogramowanie:
+\begin{itemize}
+\item Android Studio Giraffe,
+\item Angular w wersji 17,
+\item Node.js w wersji conajmniej 18.13 wraz z npm,
+\item przeglądarka internetowa.
+\end{itemize}
+
+\section{Sposób instalacji i aktywacji}
+
+\subsection{Aplikacja mobilna}
+Większość popularnych aplikacji mobilnych w systemie Android można wygodnie i bezpiecznie zainstalować za pomocą Sklepu Play. W przypadku aplikacji opisywanej w tej pracy nie jest to możliwe, dlatego należy ręcznie pobrać plik z rozszerzeniem apk i otworzyć go przez menadżer plików w celu instalacji. Jeśli w przyszłości aplikacja mobilna byłaby dalej rozwijana, jest możliwość wykupienia dostępu do Sklepu Play dla developerów oraz opublikowania aplikacji do pobrania za darmo lub za pewną opłatą. 
+
+Po instalacji użytkownik może od razu przejść do korzystania z okrojonej wersji aplikacji lub zarejestrować się, aby mieć dostęp do pełnej funkcjonalności. 
+
+\subsection{Baza danych i panel administratora}
+
+Po zainicjowaniu projektu w platformie Firebase należy podążać za krokami podanymi w dokumentacji \footnote{\url{https://firebase.google.com/docs/android/setup}} \footnote{\url{https://firebase.google.com/docs/web/setup}}, aby dołączyć swoj projekt Firebase do aplikacji mobilnej oraz panelu administratora. Istotnym jest, aby był to ten sam projekt, dzięki temu możliwa będzie wymiana danych. Po zbudowaniu i wdrożeniu panelu administratora należy założyć konto. 
+
+\section{Kategorie użytkowników}
+
+Użytkownicy w rozwiązaniu opisywanym w tej pracy dzielą się na cztery rodzaje. 
+\begin{itemize}
+\item Gość - użytkownik niezalogowany,
+\item Uczeń - użytkownik zalogowany,
+\item Nauczyciel - użytkownik zalogowany z dodatkowymi uprawnieniami. Może tworzyć grupy i zadawać zadania domowe,
+\item Administrator - ma dostęp do panelu administratora.
+\end{itemize}
+Rola administratora może występować równocześnie z rolą ucznia lub nauczyciela, ale Nauczyciel nie może być jednocześnie Uczniem.
+
+%\section{Sposób obsługi} duplikat ze scenariuszami?
+
+\section{Administracja systemu}
+
+Administracja systemu odbywa się za pomocą panelu administratora. Jest to aplikacja webowa połączona z bazą danych w Firebase, która umożliwia użytkownikowi - administratorowi na zarządzanie użytkownikami. Administrator może przeglądać listę użytkowników, usuwać użytkowników, rozpatrzać prośby o uprawnienia nauczyciela. 
+
+Panel administratora zawiera większość funkcjonalności potrzebnych do administracji systemu, jednak w razie potrzeby można skorzystać z obszerniejszych narzędzi dostarczanych przez Firebase. Przykładem może być tymczasowe zawieszenie użytkownika, dodanie nowej formy logowania lub włączenie dwuetapowej weryfikacji.
+
+\section{Bezpieczeństwo}
+
+System pobiera pewne wrażliwe dane na temat użytkowników, takie jak adres mailowy, dlatego ważne są kwestie bezpieczeństwa aplikacji. Narzędzia Firebase wykorzystywane w tej pracy, czyli autoryzacja użytkowników oraz baza danych, posiadają certyfikaty prywatności i bezpieczeństwa ISO 27001, ISO 27017, ISO 27018 oraz SOC 1, SOC 2, i SOC 3. \footnote{\url{https://firebase.google.com/support/privacy}}. 
+Baza danych jest zabezpieczona regułami, które blokują dostęp do danych użytkownikom niezalogowanym, co stanowi kolejną barierę.
+
+\begin{figure}[]
+\centering
+\includegraphics[width=0.5\textwidth]{Firestore}
+\caption{Reguły definiujące dostęp do bazy danych.}
+\label{fig:etykieta-rysunku}
+\end{figure}
+
+%\section{Przykład działania} duplikat?
+\section{Scenariusze korzystania z systemu}
+
+\subsection{Aplikacja mobilna}
+
+Scenariusze korzystania z systemu są przedstawione na rysunku \ref{fig:navgraph}. Pokazuje on ścieżki, jakie może przejść użytkownik rozpoczynając od ekranu startowego (ekran startMenu), paska menu \ref{fig:menu} naciskając ikonę plusa (ekran createNewSet) lub ikonę reprezentującą grupę (ekran groupManagement). 
+
+\begin{figure}[]
+\centering
+\includegraphics[width=0.5\textwidth]{menu}
+\caption{Pasek menu znajdujący się w górnej części interfejsu użytkownika aplikacji.}
+\label{fig:menu}
+\end{figure}
+
+\begin{figure}[]
+\centering
+\includegraphics[width=\textwidth]{Navgraph}
+\caption{Diagram reprezentujący scenariusze korzystania z systemu.}
+\label{fig:navgraph}
+\end{figure}
+
+\begin{figure}[]
+\centering
+\includegraphics[width=0.5\textwidth]{catlist}
+\caption{Okno aplikacji zawierające listę zestawów stworzonych przez użytkownika.}
+\label{fig:catlist}
+\end{figure}
+
+Szczególnym, najbardziej rozwiniętym przypadkiem scenariusza korzystania z aplikacji mobilnej jest sama nauka zestawów (ekran learn). Ponieważ diagram nie oddaje szczegółów, ten fragment zostanie przedstawiony za pomocą zrzutów ekranu.
+
+
+
+
+\subsection{Baza danych i panel administratora}
+
+
 % TODO
 \chapter{[Właściwy dla kierunku -- np. Specyfikacja wewnętrzna]}
 \label{ch:05}
 
+%przedstawienie idei
+%architektura systemu
+%opis struktur danych (i organizacji baz danych)
+%komponenty, moduły, biblioteki, przegląd ważniejszych klas (jeśli występują)
+%przegląd ważniejszych algorytmów (jeśli występują)
+%szczegóły implementacji wybranych fragmentów, zastosowane wzorce projektowe
+%diagramy UML
 
-Jeśli „Specyfikacja wewnętrzna”:
-\begin{itemize}
-\item przedstawienie idei
-\item architektura systemu
-\item opis struktur danych (i organizacji baz danych)
-\item komponenty, moduły, biblioteki, przegląd ważniejszych klas (jeśli występują)
-\item przegląd ważniejszych algorytmów (jeśli występują)
-\item szczegóły implementacji wybranych fragmentów, zastosowane wzorce projektowe
-\item diagramy UML
-\end{itemize}
-
-% % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % 
-% Pakiet minted wymaga importu: \usepackage{minted}                 %
-% i specjalnego kompilowania:                                       %
-% pdflatex -shell-escape main                                       %
-% % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % 
-
-
-Krótka wstawka kodu w linii tekstu jest możliwa, np.  \lstinline|int a;| (biblioteka \texttt{listings})% lub  \mintinline{C++}|int a;| (biblioteka \texttt{minted})
-. 
-Dłuższe fragmenty lepiej jest umieszczać jako rysunek, np. kod na rys \ref{fig:pseudokod:listings}% i rys. \ref{fig:pseudokod:minted}
-, a naprawdę długie fragmenty – w załączniku.
-
-
-\begin{figure}
-\centering
-\begin{lstlisting}
-class test : public basic
-{
-    public:
-      test (int a);
-      friend std::ostream operator<<(std::ostream & s, 
-                                     const test & t);
-    protected:
-      int _a;  
-      
-};
-\end{lstlisting}
-\caption{Pseudokod w \texttt{listings}.}
-\label{fig:pseudokod:listings}
-\end{figure}
-
-%\begin{figure}
-%\centering
-%\begin{minted}[linenos,frame=lines]{c++}
-%class test : public basic
-%{
-%    public:
-%      test (int a);
-%      friend std::ostream operator<<(std::ostream & s, 
-%                                     const test & t);
-%    protected:
-%      int _a;  
-%      
-%};
-%\end{minted}
-%\caption{Pseudokod w \texttt{minted}.}
-%\label{fig:pseudokod:minted}
-%\end{figure}
 
 % TODO
 \chapter{Weryfikacja i walidacja}
