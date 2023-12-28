@@ -39,7 +39,7 @@ export class NavbarComponent implements OnInit {
                   alert("Create an administrator account!")
                 }
                 else {
-                  this.router.navigate(['/login']);
+                  
                 }
               } 
             )

@@ -15,7 +15,7 @@ export class AuthService {
     console.log(email, password)
     this.fireauth.signInWithEmailAndPassword(email,password).then( res => {
         console.log("login successful for user " + res?.user?.email)
-        this.router.navigate(['']);
+        this.router.navigate(['/dashboard']);
     }, err => {
         alert(err.message);
         this.router.navigate(['/login']);
