@@ -778,7 +778,7 @@ Po instalacji użytkownik może od razu przejść do korzystania z okrojonej wer
 
 \subsection{Baza danych i panel administratora}
 
-Po zainicjowaniu projektu w platformie Firebase należy podążać za krokami podanymi w dokumentacji \footnote{\url{https://firebase.google.com/docs/android/setup}} \footnote{\url{https://firebase.google.com/docs/web/setup}}, aby dołączyć swoj projekt Firebase do aplikacji mobilnej oraz panelu administratora. Istotnym jest, aby był to ten sam projekt, dzięki temu możliwa będzie wymiana danych. Po zbudowaniu i wdrożeniu panelu administratora należy założyć konto. 
+Po zainicjowaniu projektu w platformie Firebase należy podążać za krokami podanymi w dokumentacji \footnote{\url{https://firebase.google.com/docs/android/setup}} \footnote{\url{https://firebase.google.com/docs/web/setup}}, aby dołączyć swoj projekt Firebase do aplikacji mobilnej oraz panelu administratora. Istotnym jest, aby był to ten sam projekt, dzięki temu możliwa będzie wymiana danych. Po zbudowaniu i wdrożeniu panelu administratora należy założyć konto umożliwiające administrację systemu. 
 
 \section{Kategorie użytkowników}
 
@@ -787,7 +787,7 @@ Użytkownicy w rozwiązaniu opisywanym w tej pracy dzielą się na cztery rodzaj
 \item Gość - użytkownik niezalogowany,
 \item Uczeń - użytkownik zalogowany,
 \item Nauczyciel - użytkownik zalogowany z dodatkowymi uprawnieniami. Może tworzyć grupy i zadawać zadania domowe,
-\item Administrator - ma dostęp do panelu administratora.
+\item Administrator - użytkownik, który ma dostęp do panelu administratora.
 \end{itemize}
 Rola administratora może występować równocześnie z rolą ucznia lub nauczyciela, ale Nauczyciel nie może być jednocześnie Uczniem.
 
@@ -802,13 +802,13 @@ Panel administratora zawiera większość funkcjonalności potrzebnych do admini
 \section{Bezpieczeństwo}
 
 System pobiera pewne wrażliwe dane na temat użytkowników, takie jak adres mailowy, dlatego ważne są kwestie bezpieczeństwa aplikacji. Narzędzia Firebase wykorzystywane w tej pracy, czyli autoryzacja użytkowników oraz baza danych, posiadają certyfikaty prywatności i bezpieczeństwa ISO 27001, ISO 27017, ISO 27018 oraz SOC 1, SOC 2, i SOC 3. \footnote{\url{https://firebase.google.com/support/privacy}}. 
-Baza danych jest zabezpieczona regułami, które blokują dostęp do danych użytkownikom niezalogowanym, co stanowi kolejną barierę.
+Baza danych jest zabezpieczona regułami (rys. \ref{fig:rules}), które blokują dostęp do danych użytkownikom niezalogowanym, co stanowi kolejną barierę.
 
 \begin{figure}[]
 \centering
 \includegraphics[width=0.5\textwidth]{Firestore}
-\caption{Reguły definiujące dostęp do bazy danych.}
-\label{fig:etykieta-rysunku}
+\caption{Przykład reguł definiujących dostęp do bazy danych.}
+\label{fig:rules}
 \end{figure}
 
 %\section{Przykład działania} duplikat?
@@ -816,7 +816,7 @@ Baza danych jest zabezpieczona regułami, które blokują dostęp do danych uży
 
 \subsection{Aplikacja mobilna}
 
-Scenariusze korzystania z systemu są przedstawione na rysunku \ref{fig:navgraph}. Pokazuje on ścieżki, jakie może przejść użytkownik rozpoczynając od ekranu startowego (ekran startMenu), paska menu \ref{fig:menu} naciskając ikonę plusa (ekran createNewSet) lub ikonę reprezentującą grupę (ekran groupManagement). 
+Scenariusze korzystania z aplikacji mobilnej są przedstawione na rysunku \ref{fig:navgraph}. Przedstawiony na nim diagram pokazuje ścieżki, jakie może przejść użytkownik rozpoczynając od ekranu startowego (ekran startMenu), paska menu (rys. \ref{fig:menu}) naciskając ikonę plusa (ekran createNewSet) lub ikonę reprezentującą grupę (ekran groupManagement). 
 
 \begin{figure}[]
 \centering
@@ -832,20 +832,97 @@ Scenariusze korzystania z systemu są przedstawione na rysunku \ref{fig:navgraph
 \label{fig:navgraph}
 \end{figure}
 
+Szczególnym, najbardziej rozwiniętym przypadkiem scenariusza korzystania z aplikacji mobilnej jest sama nauka zestawów (ekran learn). Ponieważ diagram nie pokazuje szczegółów, ten fragment zostanie przedstawiony za pomocą zrzutów ekranu. 
+
+Użytkownik rozpoczyna od wyboru zestawu z listy (ekran CategoryList na rysunku \ref{fig:navgraph}). Po wybraniu zestawu może obejrzeć znaki, które się w nim znajdują (rys. \ref{fig:list}). Po naciśnięciu przycisku \textit{learn}, użytkownik przechodzi do wyboru opcji podejścia (rys. \ref{fig:options}). Może wybrać liczbę tur oraz w pewien sposób zmodyfikować pytania, które wygeneruje program.  Po przejściu do nauki widoczne jest pytanie, znak którego dotyczy, pole do wprowadzenia odpowiedzi oraz przycisk zatwierdzający (rys. \ref{fig:start}). W kolejnych pytaniach pojawia się dodatkowo informacja o poprawnej odpowiedzi w poprzednim pytaniu (rys. \ref{fig:correct}) lub o niepoprawnej wraz z przykładami, jak należało odpowiedzieć na to pytanie (rys. \ref{fig:incorrect}). Po zakończonym podejściu użytkownik może zobaczyć statystyki (rys. \ref{fig:stats}).
+
 \begin{figure}[]
 \centering
-\includegraphics[width=0.5\textwidth]{catlist}
-\caption{Okno aplikacji zawierające listę zestawów stworzonych przez użytkownika.}
-\label{fig:catlist}
+\includegraphics[width=0.5\textwidth]{learn/list}
+\caption{Widok zestawu wybranego do nauki.}
+\label{fig:list}
 \end{figure}
 
-Szczególnym, najbardziej rozwiniętym przypadkiem scenariusza korzystania z aplikacji mobilnej jest sama nauka zestawów (ekran learn). Ponieważ diagram nie oddaje szczegółów, ten fragment zostanie przedstawiony za pomocą zrzutów ekranu.
+\begin{figure}[]
+\centering
+\includegraphics[width=0.5\textwidth]{learn/options}
+\caption{Widok wyboru opcji sesji powtórek.}
+\label{fig:options}
+\end{figure}
 
+\begin{figure}[]
+\centering
+\includegraphics[width=0.5\textwidth]{learn/start}
+\caption{Pierwsze pytanie.}
+\label{fig:start}
+\end{figure}
 
+\begin{figure}[]
+\centering
+\includegraphics[width=0.5\textwidth]{learn/correct}
+\caption{Kolejne pytanie z informacją o poprawnej odpowiedzi do poprzedniego.}
+\label{fig:correct}
+\end{figure}
 
+\begin{figure}[]
+\centering
+\includegraphics[width=0.5\textwidth]{learn/incorrect}
+\caption{Kolejne pytanie z informacją o niepoprawnej odpowiedzi do poprzedniego oraz przykładami poprawnych odpowiedzi.}
+\label{fig:incorrect}
+\end{figure}
+
+\begin{figure}[]
+\centering
+\includegraphics[width=0.5\textwidth]{learn/stats}
+\caption{Ekran ze statystykami podejścia pojawiający się po zakończeniu nauki.}
+\label{fig:stats}
+\end{figure}
 
 \subsection{Baza danych i panel administratora}
 
+Aby skorzystać z funkcjonalności panelu administratora, należy się zalogować. Ekran logowania jest przedstawiony na rysunku \ref{fig:login}. Dostęp do panelu mają jedynie użytkownicy o uprawnieniach administratora. Jeżeli konta z takimi uprawnieniami nie ma jeszcze w systemie, użytkownik zostanie o tym powiadomiony (rysunek \ref{fig:alert}) oraz przeniesiony do podstrony umożliwiającej założenie konta (rysunek \ref{fig:register}). Po udanym zalogowaniu lub rejestracji administrator ma dostęp do funkcjonalności panelu, takich jak wyświetlanie użytkowników wraz z ich uprawnieniami oraz możliwością ich usunięcia (rysunek \ref{fig:dashboard}) lub widok próśb o uprawnienia nauczyciela, które może zaakceptować lub odrzucić. Zalogowany administrator ma też możliwość zmiany hasła, co jest przedstawione na rysunku \ref{fig:changepwd}. Nie ma potrzeby wpisywania starego hasła, ponieważ autoryzacja użytkowników Firebase automatycznie sprawdza, czy użytkownik niedawno się logował. Jeżeli od logowania minęło zbyt dużo czasu, użytkownik może ponownie się zalogować i zmienić hasło. 
+
+\begin{figure}[]
+\centering
+\includegraphics[width=\textwidth]{adminpanel/login}
+\caption{Okno logowania.}
+\label{fig:login}
+\end{figure}
+
+\begin{figure}[]
+\centering
+\includegraphics[width=\textwidth]{adminpanel/alert}
+\caption{Powiadomienie wyświetlane w przypadku, gdy w bazie nie ma użytkownika z uprawnieniami administratora.}
+\label{fig:alert}
+\end{figure}
+
+\begin{figure}[]
+\centering
+\includegraphics[width=\textwidth]{adminpanel/register}
+\caption{Okno rejestracji.}
+\label{fig:register}
+\end{figure}
+
+\begin{figure}[]
+\centering
+\includegraphics[width=\textwidth]{adminpanel/dashboard}
+\caption{Widok wszystkich użytkowników.}
+\label{fig:dashboard}
+\end{figure}
+
+\begin{figure}[]
+\centering
+\includegraphics[width=\textwidth]{adminpanel/requests}
+\caption{Widok próśb o uprawnienia nauczyciela.}
+\label{fig:requests}
+\end{figure}
+
+\begin{figure}[]
+\centering
+\includegraphics[width=\textwidth]{adminpanel/changepwd}
+\caption{Okno zmiany hasła.}
+\label{fig:changepwd}
+\end{figure}
 
 % TODO
 \chapter{[Właściwy dla kierunku -- np. Specyfikacja wewnętrzna]}
