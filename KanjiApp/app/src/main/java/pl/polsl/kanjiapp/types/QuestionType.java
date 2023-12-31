@@ -24,14 +24,16 @@ public enum QuestionType {
     private static final Random RANDOM = new Random();
     public static QuestionType randomQuestion(boolean wordEnabled, boolean sentenceEnabled)  {
         if (!wordEnabled)
-            return values.get(RANDOM.nextInt(SIZE-3));
+            return values.get(RANDOM.nextInt(2));//temp
         if (!sentenceEnabled)
             return values.get(RANDOM.nextInt(SIZE-1));
         return values.get(RANDOM.nextInt(SIZE));
     }
     public static int numOfAvailQuestions(boolean wordEnabled, boolean sentenceEnabled){
-        if (!wordEnabled)
-            return(SIZE-3);
+        if (!wordEnabled){
+            //temp
+            return (2);
+        }
         if (!sentenceEnabled)
             return (SIZE-1);
         return SIZE;

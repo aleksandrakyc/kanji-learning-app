@@ -133,7 +133,6 @@ public class Learn extends Fragment {
             int n = 0;
             @Override
             public void onClick(View v) {
-
                 checkAnswer();
                 //evaluate answer
                 if(n==turns-1){
@@ -141,7 +140,9 @@ public class Learn extends Fragment {
                     Log.d(TAG, "onClick: bye");
                     Bundle bundle = new Bundle();
                     bundle.putInt("turns", turns);
-                    //bundle.putInt("correctAnswrs", Collections.frequency(answers, Boolean.TRUE));
+                    Log.d(TAG, "onClick: " + scores);
+                    int correct = scores.values().stream().mapToInt(pair -> pair.second).sum();
+                    bundle.putInt("correctAnswrs", correct);
                     Navigation.findNavController(view).navigate(R.id.action_learn_to_learningStats, bundle);
                 }
                 n++;
@@ -181,7 +182,6 @@ public class Learn extends Fragment {
             case CHAR_ONE_OFF:
                 Log.d(TAG, "changeView: changing to buttons");
                 viewFlipper.setDisplayedChild(viewFlipper.indexOfChild(getView().findViewById(R.id.choiceBtns)));
-
                 break;
             default:
                 Log.d(TAG, "changeView: changing to edittext");
@@ -210,6 +210,7 @@ public class Learn extends Fragment {
             correct = 0;
         }
         Pair<Integer, Integer> pair = scores.get(question.getKanji());
+        //pair is: first - number of questions, second - number of correct answers
         if (pair == null)
             scores.put(question.getKanji(), new Pair<>(1,correct));
         else

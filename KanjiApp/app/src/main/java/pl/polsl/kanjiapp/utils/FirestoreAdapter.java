@@ -139,7 +139,7 @@ public class FirestoreAdapter {
     public Task<Void> addCharacterToSet(String setId, CharacterModel character) {
         DocumentReference df = mFstore.collection("Users").document(user.getUid()).collection("Sets").document(setId);
         return df.update(
-                "Kanji_list."+character.getKanji(), 2.5
+                "kanjiInfo."+character.getKanji(), 2.5
         );
     }
 
