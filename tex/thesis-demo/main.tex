@@ -755,40 +755,45 @@ Jako framework ułatwiający budowę aplikacji webowej posłużył Angular\footn
 %scenariusze korzystania z systemu (ilustrowane zrzutami z ekranu lub generowanymi dokumentami)
 
 \section{Wymagania sprzętowe i programowe}
-\ksremark{Dwie-trzy linijki zagajenia, żebyśmy nie mieli zderzenia nagłówków.}
+Rozwiązanie opisywane w tej pracy dzieli się na dwie części. Z jednej strony można analizować specyfikację zewnętrzną samej aplikacji mobilnej, z której będą korzystać użytkownicy. Jednak należy też opisać sposób zarządzania całym systemem, w tym panelem administratora. Ten drugi przypadek dotyczy osoby lub organizacji, która zarządzałaby systemem aplikacji mobilnej do nauki kanji.
+
 \subsection{Aplikacja mobilna}
 
-Do instalacji aplikacji mobilnej użytkownik musi koniecznie posiadać urządzenie mobilne lub emulator z systemem Android w wersji conajmniej 10. Do niektórych funkcjonalności \ksremark{jakich?} jest potrzebny dostęp do internetu, ale nie jest on konieczny do uruchomienia aplikacji, przeglądania znaków oraz nauki predefiniowanych zestawów. 
+Do instalacji aplikacji mobilnej użytkownik musi koniecznie posiadać urządzenie mobilne lub emulator z systemem Android w wersji conajmniej 10. Do funkcjonalności takich jak zarządzanie grupami lub rozwiązywanie zadania domowego jest potrzebny dostęp do internetu, ale nie jest on konieczny do uruchomienia aplikacji, przeglądania znaków oraz nauki predefiniowanych zestawów. 
 
 \subsection{Baza danych i panel administratora}
 
 Aby móc stworzyć swoją instancję systemu obsługującego dane użytkowników aplikacji mobilnej, konieczne jest urządzenie z dostępem do internetu i skonfigurowany projekt w narzędziu Firebase. Do zbudowania projektu będzie potrzebne następujące oprogramowanie:
 \begin{itemize}
-\item Android Studio Giraffe,
+\item Android Studio,
 \item Angular w wersji 17,
 \item Node.js w wersji conajmniej 18.13 wraz z npm,
 \item przeglądarka internetowa \ksremark{Czy są jakieś wymagania dla przeglądarek?}.
 \end{itemize}
 
 \section{Sposób instalacji i aktywacji}
-\ksremark{zagajenie}
-\subsection{Aplikacja mobilna}
-Większość popularnych aplikacji mobilnych w systemie Android można wygodnie i bezpiecznie zainstalować za pomocą Sklepu Play. W przypadku aplikacji opisywanej w tej pracy nie jest to możliwe, dlatego należy ręcznie pobrać plik z rozszerzeniem apk \ksremark{\texttt{apk}} i otworzyć go przez menadżer plików w celu instalacji. Jeśli w przyszłości aplikacja mobilna byłaby dalej rozwijana, jest możliwość wykupienia dostępu do Sklepu Play dla deweloperów oraz opublikowania aplikacji do pobrania za darmo lub za pewną opłatą. 
 
-Po instalacji użytkownik może od razu przejść do korzystania z okrojonej wersji aplikacji lub zarejestrować się, aby mieć dostęp do pełnej funkcjonalności \ksremark{Czy jest napisane, czy różni się wersja okrojona od pełnej?}. 
+Podobnie jak wyżej, sposób instalacji i aktywacji oprogramowania będzie różny dla docelowego użytkownika aplikacji mobilnej i dla osoby zarządzającej systemem. 
+
+\subsection{Aplikacja mobilna}
+Większość popularnych aplikacji mobilnych w systemie Android można wygodnie i bezpiecznie zainstalować za pomocą Sklepu Play. W przypadku aplikacji opisywanej w tej pracy nie jest to możliwe, dlatego należy ręcznie pobrać plik z rozszerzeniem \texttt{apk} i otworzyć go przez menadżer plików w celu instalacji. Jeśli w przyszłości aplikacja mobilna byłaby dalej rozwijana, jest możliwość wykupienia dostępu do Sklepu Play dla deweloperów oraz opublikowania aplikacji do pobrania za darmo lub za pewną opłatą. 
+
+Po instalacji użytkownik może od razu przejść do korzystania z okrojonej wersji aplikacji lub zarejestrować się, aby mieć dostęp do pełnej funkcjonalności. Wersja bez rejestracji jest tożsama wersji bez dostępu do internetu, co oznacza brak możliwości przeglądania grup i zadań domowych oraz tworzenia nowych zestawów.
 
 \subsection{Baza danych i panel administratora}
 
 Po zainicjowaniu projektu w platformie Firebase należy podążać za krokami podanymi w dokumentacji\footnote{\url{https://firebase.google.com/docs/android/setup}} \footnote{\url{https://firebase.google.com/docs/web/setup}}, aby dołączyć swój projekt Firebase do aplikacji mobilnej oraz panelu administratora. Istotne jest, aby był to ten sam projekt, dzięki temu możliwa będzie wymiana danych. Po zbudowaniu i wdrożeniu panelu administratora należy założyć konto umożliwiające administrację systemu. 
 
+Przy budowaniu w panelu administratora w trybie produkcyjnym należy zwrócić uwagę na konfigurację, ponieważ rozwiązania Firebase i Angular wydają się nie być w stu procentach kompatybilne. Aby doprowadzić aplikację do działania należy uruchomić komendę budowania z wyłączoną optymalizacją (\texttt{ng build --optimization=false}).
+
 \section{Kategorie użytkowników}
 
 Użytkownicy w rozwiązaniu opisywanym w tej pracy dzielą się na cztery rodzaje. 
 \begin{itemize}
-\item Gość - \ksremark{pauza `--', nie dywiz, myślnik `-'} użytkownik niezalogowany,
-\item Uczeń - użytkownik zalogowany,
-\item Nauczyciel - użytkownik zalogowany z dodatkowymi uprawnieniami. Może tworzyć grupy i zadawać zadania domowe,
-\item Administrator - użytkownik, który ma dostęp do panelu administratora.
+\item Gość -- użytkownik niezalogowany,
+\item Uczeń -- użytkownik zalogowany,
+\item Nauczyciel -- użytkownik zalogowany z dodatkowymi uprawnieniami. Może tworzyć grupy i zadawać zadania domowe,
+\item Administrator -- użytkownik, który ma dostęp do panelu administratora.
 \end{itemize}
 Rola administratora może występować równocześnie z rolą ucznia lub nauczyciela, ale Nauczyciel nie może być jednocześnie Uczniem.
 
@@ -814,10 +819,12 @@ Baza danych jest zabezpieczona regułami (rys. \ref{fig:rules}), które blokują
 
 %\section{Przykład działania} duplikat?
 \section{Scenariusze korzystania z systemu}
-\ksremark{zagajenie}
+
+Scenariusze korzystania z systemu to przykładowe drogi, jakie użytkownik może przejść po systemie opisywanym w tej pracy. Zostaną przedstawione osobno dla aplikacji mobilnej i dla panelu administratora.
+
 \subsection{Aplikacja mobilna}
 
-Scenariusze korzystania z aplikacji mobilnej są przedstawione na rysunku \ref{fig:navgraph}. Przedstawiony na nim diagram pokazuje ścieżki, jakie może przejść użytkownik rozpoczynając od ekranu startowego (ekran startMenu), paska menu (rys. \ref{fig:menu}) naciskając ikonę plusa (ekran createNewSet) lub ikonę reprezentującą grupę (ekran groupManagement). 
+Scenariusze korzystania z aplikacji mobilnej są przedstawione na rysunku \ref{fig:navgraph}. Przedstawiony na nim diagram pokazuje ścieżki, jakie może podjąć użytkownik rozpoczynając od ekranu startowego (ekran startMenu), paska menu (rys. \ref{fig:menu}) naciskając ikonę plusa (ekran createNewSet) lub ikonę reprezentującą grupę (ekran groupManagement). 
 
 \begin{figure}[]
 \centering
@@ -833,52 +840,9 @@ Scenariusze korzystania z aplikacji mobilnej są przedstawione na rysunku \ref{f
 \label{fig:navgraph}
 \end{figure}
 
-Szczególnym, najbardziej rozwiniętym przypadkiem scenariusza korzystania z aplikacji mobilnej jest sama nauka zestawów (ekran learn). Ponieważ diagram nie pokazuje szczegółów, ten fragment zostanie przedstawiony za pomocą zrzutów ekranu. 
+Szczególnym, najbardziej rozwiniętym przypadkiem scenariusza korzystania z aplikacji mobilnej jest sama nauka zestawów (ekran learn). Ponieważ diagram nie pokazuje szczegółów, ten fragment zostanie przedstawiony za pomocą zrzutów ekranu (rys. \ref{fig:study}). 
 
 Użytkownik rozpoczyna od wyboru zestawu z listy (ekran CategoryList na rysunku \ref{fig:navgraph}). Po wybraniu zestawu może obejrzeć znaki, które się w nim znajdują (rys. \ref{fig:list}). Po naciśnięciu przycisku \textit{learn}, użytkownik przechodzi do wyboru opcji podejścia (rys. \ref{fig:options}). Może wybrać liczbę tur oraz w pewien sposób zmodyfikować pytania, które wygeneruje program.  Po przejściu do nauki widoczne jest pytanie, znak którego dotyczy, pole do wprowadzenia odpowiedzi oraz przycisk zatwierdzający (rys. \ref{fig:start}). W kolejnych pytaniach pojawia się dodatkowo informacja o poprawnej odpowiedzi w poprzednim pytaniu (rys. \ref{fig:correct}) lub o niepoprawnej wraz z przykładami, jak należało odpowiedzieć na to pytanie (rys. \ref{fig:incorrect}). Po zakończonym podejściu użytkownik może zobaczyć statystyki (rys. \ref{fig:stats}).
-
-
-\begin{figure}[]
-\centering
-\includegraphics[width=0.5\textwidth]{learn/list}
-\caption{Widok zestawu wybranego do nauki.}
-\label{fig:list}
-\end{figure}
-
-\begin{figure}[]
-\centering
-\includegraphics[width=0.5\textwidth]{learn/options}
-\caption{Widok wyboru opcji sesji powtórek.}
-\label{fig:options}
-\end{figure}
-
-\begin{figure}[]
-\centering
-\includegraphics[width=0.5\textwidth]{learn/start}
-\caption{Pierwsze pytanie.}
-\label{fig:start}
-\end{figure}
-
-\begin{figure}[]
-\centering
-\includegraphics[width=0.5\textwidth]{learn/correct}
-\caption{Kolejne pytanie z informacją o poprawnej odpowiedzi do poprzedniego.}
-\label{fig:correct}
-\end{figure}
-
-\begin{figure}[]
-\centering
-\includegraphics[width=0.5\textwidth]{learn/incorrect}
-\caption{Kolejne pytanie z informacją o niepoprawnej odpowiedzi do poprzedniego oraz przykładami poprawnych odpowiedzi.}
-\label{fig:incorrect}
-\end{figure}
-
-\begin{figure}[]
-\centering
-\includegraphics[width=0.5\textwidth]{learn/stats}
-\caption{Ekran ze statystykami podejścia pojawiający się po zakończeniu nauki.}
-\label{fig:stats}
-\end{figure}
 
 
 %%%%%%%%%%%%%%%%%%%%%
@@ -900,7 +864,7 @@ Użytkownik rozpoczyna od wyboru zestawu z listy (ekran CategoryList na rysunku 
 \hfill
 \begin{subfigure}{0.3\textwidth}
    \includegraphics[width=\textwidth]{learn/start}
-   \caption{Pierwsze pytanie.}
+   \caption{Pierwsze pytanie z wybranego zestawu.}
    \label{fig:start}
 \end{subfigure}
 
@@ -910,7 +874,13 @@ Użytkownik rozpoczyna od wyboru zestawu z listy (ekran CategoryList na rysunku 
    \caption{Kolejne pytanie z informacją o poprawnej odpowiedzi do poprzedniego.}
    \label{fig:correct}
 \end{subfigure}
-\hfill        
+\hfill 
+\begin{subfigure}{0.3\textwidth}
+   \includegraphics[width=\textwidth]{learn/incorrect}
+   \caption{Kolejne pytanie z informacją o niepoprawnej odpowiedzi do poprzedniego.}
+   \label{fig:stats}
+\end{subfigure}
+\hfill
 \begin{subfigure}{0.3\textwidth}
    \includegraphics[width=\textwidth]{learn/stats}
    \caption{Ekran ze statystykami podejścia pojawiający się po zakończeniu nauki.}
@@ -919,10 +889,9 @@ Użytkownik rozpoczyna od wyboru zestawu z listy (ekran CategoryList na rysunku 
 \hfill
 \rule{0cm}{1cm}
 
-\caption{Wspólny podpis kilku rysunków.}
-\label{fig:wiele-rysunkow}
+\caption{Scenariusz reprezentujący naukę wybranego zestawu.}
+\label{fig:study}
 \end{figure}
-\ksremark{Pięć ilustracji wrzuciłem do jednego rysunku z podrysunkami (rys. \ref{fig:wiele-rysunkow}). Może tak będzie lepiej?}
 %%%%%%%%%%%%%%%%%%%%%
 
 \subsection{Baza danych i panel administratora}
@@ -956,7 +925,6 @@ Aby skorzystać z funkcjonalności panelu administratora, należy się zalogowa�
 \caption{Widok wszystkich użytkowników.}
 \label{fig:dashboard}
 \end{figure}
-\ksremark{Rys. \ref{fig:register}, \ref{fig:dashboard}, \ref{fig:requests}, \ref{fig:changepwd}: Są w tych rysunkach duże białe obszary, które można obciąć.}
 
 \begin{figure}[]
 \centering
@@ -1018,6 +986,8 @@ Panel administratora to aplikacja webowa stworzona w całości dzięki framework
 
 \section{Organizacja baz danych}
 
+W rozwiązaniu opisywanym w tej pracy występują dwie bazy danych. Pierwsza z nich jest przechowywana lokalnie i dotyczy reguł języka japońskiego, a druga znajduje się na zdalnym serwerze i zawiera dane dotyczące użytkowników i grup.
+
 \subsection{Baza danych dotycząca języka japońskiego}
 
 Dane dotyczące znaków, słownictwa, przykładowych zdań i innych informacji są przechowywane lokalnie w pliku sqlite. Jest on okrojoną wersją bazy danych Kanjium \footnote{\url{https://github.com/mifunetoshiro/kanjium}}, która łączy wiele źródeł informacji na temat języka japońskiego w spójną relacyjną bazę danych. 
@@ -1030,7 +1000,7 @@ Diagram przedstawiający schemat bazy danych (rys. \ref{fig:kanjidb}) został wy
 \begin{figure}[]
 \centering
 \includegraphics[width=0.8\textwidth]{kanjidb}
-\caption{Diagram przedstawiający schemat bazy danych.}
+\caption{Diagram przedstawiający schemat bazy danych sqlite dotyczących języka japońskiego.}
 \label{fig:kanjidb}
 \end{figure}
 
@@ -1041,11 +1011,13 @@ Dane dotyczące użytkowników są przechowywane w bazie danych NoSQL zorientowa
 \begin{figure}[]
 \centering
 \includegraphics[width=0.8\textwidth]{firestore.drawio}
-\caption{Diagram przedstawiający schemat bazy danych.}
+\caption{Diagram przedstawiający schemat bazy danych zorientowanej na dokumenty.}
 \label{fig:firestore}
 \end{figure}
 
 \section{Pakiety i klasy}
+
+W tym podrozdziale zostanie opisana struktura projektów aplikacji mobilnej i panelu administratora oraz ważniejsze klasy w tych programach.
 
 \subsection{Aplikacja mobilna}
 
@@ -1053,12 +1025,14 @@ Kod aplikacji mobilnej został podzielony na pięć pakietów, które odpowiadaj
 
 Aplikacja jest zbudowana z następujących pakietów:
 \begin{itemize}
-\item adapters - klasy pośredniczące między elementami interfejsu użytkownika i danymi,
-\item models - klasy reprezentujące dane,
-\item types - typy wyliczeniowe,
-\item utils - klasy pomocnicze, służące do komunikacji z bazą danych lub generowania pytań,
-\item views - klasy obsługujące interfejs użytkownika.
+\item adapters -- klasy pośredniczące między elementami interfejsu użytkownika i danymi,
+\item models -- klasy reprezentujące dane,
+\item types -- typy wyliczeniowe,
+\item utils -- klasy pomocnicze, służące do komunikacji z bazą danych lub generowania pytań,
+\item views -- klasy obsługujące interfejs użytkownika.
 \end{itemize}
+
+%interesting klasa
 
 \subsection{Panel administratora}
 
@@ -1066,17 +1040,17 @@ Kod panelu administratora składa się z komponentów odpowiedzialnych za interf
 
 \begin{figure}
 \dirtree{%
-.1 src/app.
-.2 component.
+.1 src/app/.
+.2 component/.
 .3 change-pwd.
 .3 dashboard.
 .3 login.
 .3 navbar.
 .3 register.
 .3 teachers.
-.2 models.
+.2 models/.
 .3 account.
-.2 shared.
+.2 shared/.
 .3 auth.service.
 .3 data.service.
 }
