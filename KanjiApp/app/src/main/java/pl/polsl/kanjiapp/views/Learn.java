@@ -2,7 +2,6 @@ package pl.polsl.kanjiapp.views;
 
 import static pl.polsl.kanjiapp.types.CategoryType.Custom;
 import static pl.polsl.kanjiapp.types.CategoryType.intToCategoryType;
-import static pl.polsl.kanjiapp.types.QuestionType.CHAR_ONE_OFF;
 
 import android.os.Bundle;
 
@@ -27,15 +26,10 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
-import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
-import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Map;
 import java.util.Set;
 import java.util.TreeSet;
 
@@ -45,7 +39,7 @@ import pl.polsl.kanjiapp.models.SetModel;
 import pl.polsl.kanjiapp.types.CategoryType;
 import pl.polsl.kanjiapp.utils.DataBaseAdapter;
 import pl.polsl.kanjiapp.utils.FirestoreAdapter;
-import pl.polsl.kanjiapp.utils.Question;
+import pl.polsl.kanjiapp.models.QuestionModel;
 import pl.polsl.kanjiapp.utils.QuestionGenerator;
 
 
@@ -60,9 +54,9 @@ public class Learn extends Fragment {
     Button checkBtn;
     DataBaseAdapter dataBaseAdapter;
     ArrayList<CharacterModel> characters;
-    ArrayList<Question> questions;
+    ArrayList<QuestionModel> questions;
     HashMap<String, Pair<Integer, Integer>> scores;
-    Question question;
+    QuestionModel question;
     private FirestoreAdapter firestore;
     ProgressBar progressBar;
 

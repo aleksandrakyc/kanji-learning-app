@@ -338,6 +338,7 @@
 \usepackage{graphicx}
 \graphicspath{ {../Diagrams/} }
 \usepackage{float}
+\usepackage{dirtree}
 %\newcommand{\japanese}[1]{{\selectlanguage{japanese}\obcy{#1}}} 
  
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -705,7 +706,7 @@ Mimo zalet tego nowocześniejszego języka, w aplikacji opisywanej w tej pracy p
 %api version 33 - min ver 29 - java 8 support
 Przy tworzeniu aplikacji na platformę Android należy wybrać minimalną oraz docelową wersję zestawu narzędzi dla programistów (ang. \english{software development kit}, SDK). W aplikacji opisywanej w tej pracy minimalna wersja to 29 (Android 10), a docelowa 33 (Android 13). Wybór minimalnej wersji zestawu narzędzi jest uzasadniony tym, że 81,9 procent użytkowników tego systemu posiada minimalnie Androida 10 \cite{bib:internetapilevels}. Docelowa wersja jest narzucona przez sklep Google Play. 
 
-Do tworzenia aplikacji użyto środowiska Android Studio Giraffe \cite{bib:androidStudio}. Android Studio to oficjalnie wspierane środowisko programistyczne dla developerów na platformę Android rozwijane przez firmę JetBrains. Zaprezentowane w 2013 roku, niedługo później zastąpiło wcześniej dominujące Eclipse. Android Studio oferuje bogaty wachlarz udogodnień dla programistów, takich jak:
+Do tworzenia aplikacji użyto środowiska Android Studio Giraffe \footnote{\url{https://developer.android.com/studio/releases/past-releases/as-giraffe-release-notes}}. Android Studio to oficjalnie wspierane środowisko programistyczne dla developerów na platformę Android rozwijane przez firmę JetBrains. Zaprezentowane w 2013 roku, niedługo później zastąpiło wcześniej dominujące Eclipse. Android Studio oferuje bogaty wachlarz udogodnień dla programistów, takich jak:
 \begin{itemize}
 \item sugestie poprawek kodu dostosowane do Androida,
 \item graficzny edytor wyglądu aplikacji z dynamicznym podglądem,
@@ -983,6 +984,106 @@ Aby skorzystać z funkcjonalności panelu administratora, należy się zalogowa�
 %szczegóły implementacji wybranych fragmentów, zastosowane wzorce projektowe
 %diagramy UML
 
+\section{Architektura systemu}
+
+System opisywany w tej pracy składa się z następujących części:
+\begin{itemize}
+\item Aplikacja mobilna do nauki kanji,
+\item Lokalna baza danych z danymi dotyczącymi języka japońskiego,
+\item Baza danych przechowująca dane użytkowników, ich postępy oraz grupy, do których należą,
+\item Panel administratora pozwalający na zarządzanie użytkownikami
+\end{itemize}
+
+\begin{figure}[]
+\centering
+\includegraphics[width=0.8\textwidth]{archi}
+\caption{Diagram przedstawiający architekturę systemu.}
+\label{fig:archi}
+\end{figure}
+%ten diagram jest na brudno
+
+\subsection{Aplikacja mobilna}
+
+Większość aplikacji na system operacyjny Android jest napisanych zgodnie z architekturą MVC (\english{Model View Controller}), MVP (\english{Model View Presenter}) lub MVVM (\english{Model View ViewModel}). Wzorzec należy dobrać odpowiednio do rodzaju programu, jednak często wybór sprowadza się do preferencji programistów. 
+
+Według niektórych źródeł, wzorzec MVC jest wymuszany przez samą strukturę aplikacji androidowych \cite{bib:internetMVC}. W tej wersji modelem są klasy reprezentujące dane, kontrolerem aktywności lub fragmenty stanowiące logikę działania aplikacji, a widokiem pliki z rozszerzeniem xml reprezentujące wygląd danego okna. Takie podejście nie oddaje do końca prawdy. Widok to statyczny plik xml, nie jest w stanie sam odświeżać danych. Z tego powodu klasa aktywności oprócz odpowiedzialności kontrolera wykonuje rownież zadania widoku. Konsekwencją tego jest w pewnym sensie zatracenie się sensu architektury MVC, której głównym zadaniem jest rozdzielenie odpowiedzialności modelu, widoku i kontrolera. W większych projektach jest to dużym problemem, ponieważ utrudnia testy jednostkowe aplikacji.
+
+Odpowiedzią na ten problem jest architektura MVP, która w sposób dostosowany do aplikacji Androidowych rozdziela model, widok i odpowiednik kontrolera - prezenter. Prezenter w tej wersji to osobna klasa w pełni oddzielona od widoku, co umożliwia testowanie jednostkowe logiki aplikacji. We wzorcu MVP jedynie widok dziedziczy po klasach typowych dla Androida, takich jak \english{Activity} lub \english{Fragment}. Wadą architektury MVP jest większa ilość szablonowego kodu, który należy napisać na potrzeby komunikacji między modelem, widokiem i prezenterem. Może to skutkować również mniejszą czytelnością.
+
+Na etapie planowania architektury aplikacji mobilnej wybrano wzorzec MVC. Ponieważ MVC jest powszechny w materiałach edukacyjnych oraz w pewnym sensie wymuszany przez samo środowisko pracy w Androidzie, to podejście pozwoliło na skupienie się na odpowiednim działaniu aplikacji bez większego problemu z projektowaniem architektury systemu. W przypadku dalszego rozwijania aplikacji, również w kwestii testów jednostkowych, warto wykonać refraktoryzację kodu na wzorzec MVP. 
+
+\subsection{Panel administratora}
+
+Panel administratora to aplikacja webowa stworzona w całości dzięki frameworkowi Angular \footnote{\url{https://angular.io/}}. Ponieważ ta aplikacja nie jest zbyt rozbudowana, jej architektura nie jest skomplikowana i nie wymaga modyfikacji narzędzi dostarczanych przez Angular. Częściami aplikacji wykonanej w tym frameworku są komponenty, czyli widoki. Komponent posiada plik z rozszerzeniem html, który definiuje wygląd elementu aplikacji oraz klasę w języku Typescript, która odpowiada za logikę. Komponenty używają serwisów, czyli klas wyspecjalizowanych do zarządzania danymi. Angular silnie polega na mechanizmie wstrzykiwania zależności, którego używa do łączenia serwisów z komponentami. 
+
+\section{Organizacja baz danych}
+
+\subsection{Baza danych dotycząca języka japońskiego}
+
+Dane dotyczące znaków, słownictwa, przykładowych zdań i innych informacji są przechowywane lokalnie w pliku sqlite. Jest on okrojoną wersją bazy danych Kanjium \footnote{\url{https://github.com/mifunetoshiro/kanjium}}, która łączy wiele źródeł informacji na temat języka japońskiego w spójną relacyjną bazę danych. 
+
+Dzięki projektowi Kanjium powstało bardzo bogate źródło wiedzy na temat języka japońskiego, jednak do zrealizowania aplikacji omawianej w tej pracy nie jest konieczny cały zbiór. Dodatkowo, ponieważ ta baza danych jest przeznaczona do przechowywana lokalnie na urządzeniu każdego z użytkowników, istotny jest mały rozmiar samego pliku. Z tych powodów zdecydowano się na usunięcie pewnych tabel i pozostawienie tylko niezbędnych informacji, takich jak słownik kanji (tabela kanjidict), tabele zawierające złożenia znaków (edict, compverbs, jukugo), tabelę sentences, która ma w sobie przykładowe zdania oraz tabelę search, która umożliwia wyszukiwanie znaków przez użytkownika. Pozbyto się danych, które nie są konieczne do zrealizowania nauki znaków kanji, takich jak odmiana czasowników lub przysłowia.
+
+Ostatecznie okrojona baza danych ma rozmiar 18 MB, co nieco przekracza wstępne założenia o bazie nieprzekraczającej 15 MB, jednak przy obecnych rozmiarach pamięci w urządzeniach mobilnych nie powinno to zniechęcić użytkowników od korzystania z aplikacji. W przyszłości jest możliwość dalszego zmniejszania bazy na przykład przez usuwanie zbędnych wierszy, nie tylko tabel i kolumn.
+
+Diagram przedstawiający schemat bazy danych (rys. \ref{fig:kanjidb}) został wygenerowany przez otwartoźródłowe oprogramowanie schemacrawler \footnote{\url{https://www.schemacrawler.com/}}.
+\begin{figure}[]
+\centering
+\includegraphics[width=0.8\textwidth]{kanjidb}
+\caption{Diagram przedstawiający schemat bazy danych.}
+\label{fig:kanjidb}
+\end{figure}
+
+\subsection{Baza danych przechowująca dane użytkowników}
+
+Dane dotyczące użytkowników są przechowywane w bazie danych NoSQL zorientowanej na dokumenty. Na rysunku \ref{fig:firestore} przedstawiono kolekcje jako foldery, które przechowują dokumenty. Dokumenty mogą mieć zagnieżdżone kolekcje, które na diagramie są zaznaczone pogrubionym tekstem. 
+
+\begin{figure}[]
+\centering
+\includegraphics[width=0.8\textwidth]{firestore.drawio}
+\caption{Diagram przedstawiający schemat bazy danych.}
+\label{fig:firestore}
+\end{figure}
+
+\section{Pakiety i klasy}
+
+\subsection{Aplikacja mobilna}
+
+Kod aplikacji mobilnej został podzielony na pięć pakietów, które odpowiadają za różne części funkcjonowania programu. Oprócz nich w repozytorium znajduje się plik \textit{MainActivity.java}, który pełni rolę punktu startowego programu, zarządzania nawigacją oraz paskiem menu. 
+
+Aplikacja jest zbudowana z następujących pakietów:
+\begin{itemize}
+\item adapters - klasy pośredniczące między elementami interfejsu użytkownika i danymi,
+\item models - klasy reprezentujące dane,
+\item types - typy wyliczeniowe,
+\item utils - klasy pomocnicze, służące do komunikacji z bazą danych lub generowania pytań,
+\item views - klasy obsługujące interfejs użytkownika.
+\end{itemize}
+
+\subsection{Panel administratora}
+
+Kod panelu administratora składa się z komponentów odpowiedzialnych za interfejs użytkownika, serwisów zarządzających danymi oraz modeli reprezentujących dane.
+
+\begin{figure}
+\dirtree{%
+.1 src/app.
+.2 component.
+.3 change-pwd.
+.3 dashboard.
+.3 login.
+.3 navbar.
+.3 register.
+.3 teachers.
+.2 models.
+.3 account.
+.2 shared.
+.3 auth.service.
+.3 data.service.
+}
+\caption{Struktura plików w kodzie panelu administratora.}
+\label{fig:dirtree}
+\end{figure}
+
 
 % TODO
 \chapter{Weryfikacja i walidacja}
@@ -992,10 +1093,7 @@ Aby skorzystać z funkcjonalności panelu administratora, należy się zalogowa�
 \item organizacja eksperymentów
 \item przypadki testowe zakres testowania (pełny/niepełny)
 \item wykryte i usunięte błędy
-\item opcjonalnie wyniki badań eksperymentalnych
 \end{itemize}
-
-
 
 % TODO
 \chapter{Podsumowanie i wnioski}
@@ -1004,8 +1102,6 @@ Aby skorzystać z funkcjonalności panelu administratora, należy się zalogowa�
 \item kierunki ewentualnych danych prac (rozbudowa funkcjonalna …)
 \item problemy napotkane w trakcie pracy
 \end{itemize}
-
-
 
 \backmatter
 
