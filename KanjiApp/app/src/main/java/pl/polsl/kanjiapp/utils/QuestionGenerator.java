@@ -12,12 +12,13 @@ import java.util.TreeSet;
 import java.util.stream.Collectors;
 
 import pl.polsl.kanjiapp.models.CharacterModel;
+import pl.polsl.kanjiapp.models.QuestionModel;
 import pl.polsl.kanjiapp.types.QuestionType;
 
 public class QuestionGenerator {
 
     protected static final String TAG = "QuestionGenerator";
-    ArrayList<Question> questions;
+    ArrayList<QuestionModel> questions;
     HashMap<String, Double> kanjiEFmap;
     ArrayList<CharacterModel> characters;
     int turns, maxUniqueQs;
@@ -60,13 +61,13 @@ public class QuestionGenerator {
             Log.d(TAG, "QuestionGenerator: " + this.characters.get(i));
         }
     }
-    public ArrayList<Question> generateQuestions() {
-        TreeSet<Question> questionsSet = new TreeSet<>();
+    public ArrayList<QuestionModel> generateQuestions() {
+        TreeSet<QuestionModel> questionsSet = new TreeSet<>();
 
         int index = 0, size;
         while (questionsSet.size()<maxUniqueQs&&questionsSet.size()<turns){
             size = questionsSet.size();
-            questionsSet.add(new Question(characters.get(index%characters.size()), QuestionType.randomQuestion(wordEnabled, sentenceEnabled)));
+            questionsSet.add(new QuestionModel(characters.get(index%characters.size()), QuestionType.randomQuestion(wordEnabled, sentenceEnabled)));
             if (questionsSet.size() > size)
                 index++;
         }
@@ -76,7 +77,7 @@ public class QuestionGenerator {
         return questions;
     }
 
-    public ArrayList<Question> getQuestions() {
+    public ArrayList<QuestionModel> getQuestions() {
         return questions;
     }
 
