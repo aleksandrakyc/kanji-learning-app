@@ -703,7 +703,7 @@ Aplikacja została napisana w języku programowania Java na platformę Android w
 Mimo zalet tego nowocześniejszego języka, w aplikacji opisywanej w tej pracy postawiono na Javę. Jest to głównie spowodowane osobistymi pobudkami, takimi jak większa pewność w tym języku i sytuacja na rynku pracy. Dużą zaletą Kotlina i środowiska programistycznego Android Studio jest możliwość konwersji kodu w Javie na kod w Kotlinie. Ta cecha, wraz z interoperacyjnością tych dwóch języków, umożliwia dalszy rozwój aplikacji lub całkowitą migrację na Kotlina w przyszłości. 
 
 %api version 33 - min ver 29 - java 8 support
-Przy tworzeniu aplikacji na platformę Android należy wybrać minimalną oraz docelową wersję zestawu narzędzi dla programistów (ang. \english{software development kit, SDK}). W aplikacji opisywanej w tej pracy minimalna wersja to 29 (Android 10), a docelowa 33 (Android 13). Wybór minimalnej wersji zestawu narzędzi jest uzasadniony tym, że 81,9 procent użytkowników tego systemu posiada minimalnie Androida 10 \cite{bib:internetapilevels}. Docelowa wersja jest narzucona przez sklep Google Play. 
+Przy tworzeniu aplikacji na platformę Android należy wybrać minimalną oraz docelową wersję zestawu narzędzi dla programistów (ang. \english{software development kit}, SDK). W aplikacji opisywanej w tej pracy minimalna wersja to 29 (Android 10), a docelowa 33 (Android 13). Wybór minimalnej wersji zestawu narzędzi jest uzasadniony tym, że 81,9 procent użytkowników tego systemu posiada minimalnie Androida 10 \cite{bib:internetapilevels}. Docelowa wersja jest narzucona przez sklep Google Play. 
 
 Do tworzenia aplikacji użyto środowiska Android Studio Giraffe \cite{bib:androidStudio}. Android Studio to oficjalnie wspierane środowisko programistyczne dla developerów na platformę Android rozwijane przez firmę JetBrains. Zaprezentowane w 2013 roku, niedługo później zastąpiło wcześniej dominujące Eclipse. Android Studio oferuje bogaty wachlarz udogodnień dla programistów, takich jak:
 \begin{itemize}
@@ -716,7 +716,7 @@ Do tworzenia aplikacji użyto środowiska Android Studio Giraffe \cite{bib:andro
 
 Do zrealizowania aplikacji opisywanej w tej pracy kluczowym elementem było znalezienie odpowiedniego źródła wiedzy na temat kanji, słów i zdań w języku japońskim. Aby zachować najważniejszą funkcjonalność aplikacji (przeglądanie znaków, uczenie się zestawów) w trybie offline, zdecydowano się na bazę danych przechowywaną lokalnie na urządzeniu każdego z użytkowników. 
 
-Stworzenie tej aplikacji i pracy inżynierskiej jest możliwe dzięki projektowi Kanjium \footnote{\url{https://github.com/mifunetoshiro/kanjium}}. Jest to darmowa baza danych złożona z kilku plików (EDICT, KANJIDIC, KRADFILE) należących do  \english{Electronic Dictionary Research and Development Group (EDRDG)} \footnote{\url{https://www.edrdg.org/edrdg/licence.html}} Informacje na temat partykuł, fonetyki, homonimów, akcentu tonicznego i inne modyfikacje do wyżej wspomnianych plików są autorstwa Urosa Ozvatica. Na potrzeby aplikacji opisywanej w tej pracy baza została jedynie okrojona z pewnych niepotrzebnych części 
+Stworzenie tej aplikacji i pracy inżynierskiej jest możliwe dzięki projektowi Kanjium \footnote{\url{https://github.com/mifunetoshiro/kanjium}}. Jest to darmowa baza danych złożona z kilku plików (EDICT, KANJIDIC, KRADFILE) należących do  \english{Electronic Dictionary Research and Development Group} (EDRDG) \footnote{\url{https://www.edrdg.org/edrdg/licence.html}} Informacje na temat partykuł, fonetyki, homonimów, akcentu tonicznego i inne modyfikacje do wyżej wspomnianych plików są autorstwa Urosa Ozvatica. Na potrzeby aplikacji opisywanej w tej pracy baza została jedynie okrojona z pewnych niepotrzebnych części 
 \ksremark{np. czego? todo}
 , aby jej rozmiar umożliwiał lokalne przechowywanie na urządzeniach użytkowników. Baza danych Kanjium została wykorzystana w tej pracy zgodnie z licencjami grupy EDRDG oraz autora poprawek Urosa Ozvatica.
 %https://github.com/mifunetoshiro/kanjium
@@ -738,7 +738,7 @@ Panel administratora to aplikacja webowa umożliwiająca administratorowi system
 
 Panel administratora korzysta z tego samego systemu uwierzytelniania użytkowników co aplikacja mobilna. Dodatkowo, przy logowaniu sprawdza, czy użytkownik próbujący się zalogować ma uprawnienia administratora. W przypadku, gdy w bazie nie istnieje użytkownik z uprawnieniami administratora, w panelu pojawia się możliwość założenia konta. Zakłada się, że istnieje tylko jedno konto z uprawnieniami administratora, więc opcja założenia dodatkowych kont nie jest przewidziana. W razie potrzeby administrator może zmienić hasło do swojego konta. Panel korzysta z tej samej instancji bazy danych NoSQL co aplikacja mobilna. Dzięki temu jest w stanie modyfikować dane użytkowników. 
 
-Jako framework ułatwiający budowę aplikacji webowej posłużył Angular \footnote{\url{https://angular.io/}} w wersji 17. Angular to otwartoźródłowa platforma służąca do tworzenia aplikacji webowych używająca języka programowania TypeScript i rozwijana przez Google. Ponieważ funkcjonalności panelu administratora są bardzo proste, wybór Angulara sprowadził się tylko do łatwości użytku związanej z wcześniejszą znajomością tej platformy. Dodatkowym atutem tego frameworku jest też wbudowana obsługa narzędzi Firebase, które są wykorzystywane w aplikacji. Do interfejsu użytkownika wykorzystano bibliotekę Bootstrap \footnote{\url{https://getbootstrap.com/}}, która zawiera pewne zestawy szablonów CSS ułatwiających wykonanie estetycznie spójnej aplikacji.
+Jako framework ułatwiający budowę aplikacji webowej posłużył Angular\footnote{\url{https://angular.io/}} w wersji 17. Angular to otwartoźródłowa platforma służąca do tworzenia aplikacji webowych używająca języka programowania TypeScript i rozwijana przez Google. Ponieważ funkcjonalności panelu administratora są bardzo proste, wybór Angulara sprowadził się tylko do łatwości użytku związanej z wcześniejszą znajomością tej platformy. Dodatkowym atutem tego frameworku jest też wbudowana obsługa narzędzi Firebase, które są wykorzystywane w aplikacji. Do interfejsu użytkownika wykorzystano bibliotekę Bootstrap\footnote{\url{https://getbootstrap.com/}}, która zawiera pewne zestawy szablonów CSS ułatwiających wykonanie estetycznie spójnej aplikacji.
 
 % TODO
 \chapter{Specyfikacja zewnętrzna}
@@ -754,10 +754,10 @@ Jako framework ułatwiający budowę aplikacji webowej posłużył Angular \foot
 %scenariusze korzystania z systemu (ilustrowane zrzutami z ekranu lub generowanymi dokumentami)
 
 \section{Wymagania sprzętowe i programowe}
-
+\ksremark{Dwie-trzy linijki zagajenia, żebyśmy nie mieli zderzenia nagłówków.}
 \subsection{Aplikacja mobilna}
 
-Do instalacji aplikacji mobilnej użytkownik musi koniecznie posiadać urządzenie mobilne lub emulator z systemem Android w wersji conajmniej 10. Do niektórych funkcjonalności jest potrzebny dostęp do internetu, ale nie jest on konieczny do uruchomienia aplikacji, przeglądania znaków oraz nauki predefiniowanych zestawów. 
+Do instalacji aplikacji mobilnej użytkownik musi koniecznie posiadać urządzenie mobilne lub emulator z systemem Android w wersji conajmniej 10. Do niektórych funkcjonalności \ksremark{jakich?} jest potrzebny dostęp do internetu, ale nie jest on konieczny do uruchomienia aplikacji, przeglądania znaków oraz nauki predefiniowanych zestawów. 
 
 \subsection{Baza danych i panel administratora}
 
@@ -766,25 +766,25 @@ Aby móc stworzyć swoją instancję systemu obsługującego dane użytkowników
 \item Android Studio Giraffe,
 \item Angular w wersji 17,
 \item Node.js w wersji conajmniej 18.13 wraz z npm,
-\item przeglądarka internetowa.
+\item przeglądarka internetowa \ksremark{Czy są jakieś wymagania dla przeglądarek?}.
 \end{itemize}
 
 \section{Sposób instalacji i aktywacji}
-
+\ksremark{zagajenie}
 \subsection{Aplikacja mobilna}
-Większość popularnych aplikacji mobilnych w systemie Android można wygodnie i bezpiecznie zainstalować za pomocą Sklepu Play. W przypadku aplikacji opisywanej w tej pracy nie jest to możliwe, dlatego należy ręcznie pobrać plik z rozszerzeniem apk i otworzyć go przez menadżer plików w celu instalacji. Jeśli w przyszłości aplikacja mobilna byłaby dalej rozwijana, jest możliwość wykupienia dostępu do Sklepu Play dla developerów oraz opublikowania aplikacji do pobrania za darmo lub za pewną opłatą. 
+Większość popularnych aplikacji mobilnych w systemie Android można wygodnie i bezpiecznie zainstalować za pomocą Sklepu Play. W przypadku aplikacji opisywanej w tej pracy nie jest to możliwe, dlatego należy ręcznie pobrać plik z rozszerzeniem apk \ksremark{\texttt{apk}} i otworzyć go przez menadżer plików w celu instalacji. Jeśli w przyszłości aplikacja mobilna byłaby dalej rozwijana, jest możliwość wykupienia dostępu do Sklepu Play dla deweloperów oraz opublikowania aplikacji do pobrania za darmo lub za pewną opłatą. 
 
-Po instalacji użytkownik może od razu przejść do korzystania z okrojonej wersji aplikacji lub zarejestrować się, aby mieć dostęp do pełnej funkcjonalności. 
+Po instalacji użytkownik może od razu przejść do korzystania z okrojonej wersji aplikacji lub zarejestrować się, aby mieć dostęp do pełnej funkcjonalności \ksremark{Czy jest napisane, czy różni się wersja okrojona od pełnej?}. 
 
 \subsection{Baza danych i panel administratora}
 
-Po zainicjowaniu projektu w platformie Firebase należy podążać za krokami podanymi w dokumentacji \footnote{\url{https://firebase.google.com/docs/android/setup}} \footnote{\url{https://firebase.google.com/docs/web/setup}}, aby dołączyć swoj projekt Firebase do aplikacji mobilnej oraz panelu administratora. Istotnym jest, aby był to ten sam projekt, dzięki temu możliwa będzie wymiana danych. Po zbudowaniu i wdrożeniu panelu administratora należy założyć konto umożliwiające administrację systemu. 
+Po zainicjowaniu projektu w platformie Firebase należy podążać za krokami podanymi w dokumentacji\footnote{\url{https://firebase.google.com/docs/android/setup}} \footnote{\url{https://firebase.google.com/docs/web/setup}}, aby dołączyć swój projekt Firebase do aplikacji mobilnej oraz panelu administratora. Istotne jest, aby był to ten sam projekt, dzięki temu możliwa będzie wymiana danych. Po zbudowaniu i wdrożeniu panelu administratora należy założyć konto umożliwiające administrację systemu. 
 
 \section{Kategorie użytkowników}
 
 Użytkownicy w rozwiązaniu opisywanym w tej pracy dzielą się na cztery rodzaje. 
 \begin{itemize}
-\item Gość - użytkownik niezalogowany,
+\item Gość - \ksremark{pauza `--', nie dywiz, myślnik `-'} użytkownik niezalogowany,
 \item Uczeń - użytkownik zalogowany,
 \item Nauczyciel - użytkownik zalogowany z dodatkowymi uprawnieniami. Może tworzyć grupy i zadawać zadania domowe,
 \item Administrator - użytkownik, który ma dostęp do panelu administratora.
@@ -795,13 +795,13 @@ Rola administratora może występować równocześnie z rolą ucznia lub nauczyc
 
 \section{Administracja systemu}
 
-Administracja systemu odbywa się za pomocą panelu administratora. Jest to aplikacja webowa połączona z bazą danych w Firebase, która umożliwia użytkownikowi - administratorowi na zarządzanie użytkownikami. Administrator może przeglądać listę użytkowników, usuwać użytkowników, rozpatrzać prośby o uprawnienia nauczyciela. 
+Administracja systemu odbywa się za pomocą panelu administratora. Jest to aplikacja webowa połączona z bazą danych w Firebase, która umożliwia użytkownikowi  administratorowi na zarządzanie użytkownikami. Administrator może przeglądać listę użytkowników, usuwać użytkowników, rozpatrzać prośby o uprawnienia nauczyciela. 
 
 Panel administratora zawiera większość funkcjonalności potrzebnych do administracji systemu, jednak w razie potrzeby można skorzystać z obszerniejszych narzędzi dostarczanych przez Firebase. Przykładem może być tymczasowe zawieszenie użytkownika, dodanie nowej formy logowania lub włączenie dwuetapowej weryfikacji.
 
 \section{Bezpieczeństwo}
 
-System pobiera pewne wrażliwe dane na temat użytkowników, takie jak adres mailowy, dlatego ważne są kwestie bezpieczeństwa aplikacji. Narzędzia Firebase wykorzystywane w tej pracy, czyli autoryzacja użytkowników oraz baza danych, posiadają certyfikaty prywatności i bezpieczeństwa ISO 27001, ISO 27017, ISO 27018 oraz SOC 1, SOC 2, i SOC 3. \footnote{\url{https://firebase.google.com/support/privacy}}. 
+System pobiera pewne wrażliwe dane na temat użytkowników, takie jak adres mailowy, dlatego ważne są kwestie bezpieczeństwa aplikacji. Narzędzia Firebase wykorzystywane w tej pracy, czyli autoryzacja użytkowników oraz baza danych, posiadają certyfikaty prywatności i bezpieczeństwa ISO 27001, ISO 27017, ISO 27018 oraz SOC 1, SOC 2, i SOC 3\footnote{\url{https://firebase.google.com/support/privacy}}. 
 Baza danych jest zabezpieczona regułami (rys. \ref{fig:rules}), które blokują dostęp do danych użytkownikom niezalogowanym, co stanowi kolejną barierę.
 
 \begin{figure}[]
@@ -813,7 +813,7 @@ Baza danych jest zabezpieczona regułami (rys. \ref{fig:rules}), które blokują
 
 %\section{Przykład działania} duplikat?
 \section{Scenariusze korzystania z systemu}
-
+\ksremark{zagajenie}
 \subsection{Aplikacja mobilna}
 
 Scenariusze korzystania z aplikacji mobilnej są przedstawione na rysunku \ref{fig:navgraph}. Przedstawiony na nim diagram pokazuje ścieżki, jakie może przejść użytkownik rozpoczynając od ekranu startowego (ekran startMenu), paska menu (rys. \ref{fig:menu}) naciskając ikonę plusa (ekran createNewSet) lub ikonę reprezentującą grupę (ekran groupManagement). 
@@ -835,6 +835,7 @@ Scenariusze korzystania z aplikacji mobilnej są przedstawione na rysunku \ref{f
 Szczególnym, najbardziej rozwiniętym przypadkiem scenariusza korzystania z aplikacji mobilnej jest sama nauka zestawów (ekran learn). Ponieważ diagram nie pokazuje szczegółów, ten fragment zostanie przedstawiony za pomocą zrzutów ekranu. 
 
 Użytkownik rozpoczyna od wyboru zestawu z listy (ekran CategoryList na rysunku \ref{fig:navgraph}). Po wybraniu zestawu może obejrzeć znaki, które się w nim znajdują (rys. \ref{fig:list}). Po naciśnięciu przycisku \textit{learn}, użytkownik przechodzi do wyboru opcji podejścia (rys. \ref{fig:options}). Może wybrać liczbę tur oraz w pewien sposób zmodyfikować pytania, które wygeneruje program.  Po przejściu do nauki widoczne jest pytanie, znak którego dotyczy, pole do wprowadzenia odpowiedzi oraz przycisk zatwierdzający (rys. \ref{fig:start}). W kolejnych pytaniach pojawia się dodatkowo informacja o poprawnej odpowiedzi w poprzednim pytaniu (rys. \ref{fig:correct}) lub o niepoprawnej wraz z przykładami, jak należało odpowiedzieć na to pytanie (rys. \ref{fig:incorrect}). Po zakończonym podejściu użytkownik może zobaczyć statystyki (rys. \ref{fig:stats}).
+
 
 \begin{figure}[]
 \centering
@@ -878,6 +879,51 @@ Użytkownik rozpoczyna od wyboru zestawu z listy (ekran CategoryList na rysunku 
 \label{fig:stats}
 \end{figure}
 
+
+%%%%%%%%%%%%%%%%%%%%%
+% WIELE RYSUNKÓW 
+
+\begin{figure}
+\centering
+\begin{subfigure}{0.3\textwidth}
+    \includegraphics[width=\textwidth]{learn/list}
+    \caption{Widok zestawu wybranego do nauki.}
+    \label{fig:list}
+\end{subfigure}
+\hfill
+\begin{subfigure}{0.3\textwidth}
+   \includegraphics[width=\textwidth]{learn/options}
+   \caption{Widok wyboru opcji sesji powtórek.}
+   \label{fig:options}
+\end{subfigure}
+\hfill
+\begin{subfigure}{0.3\textwidth}
+   \includegraphics[width=\textwidth]{learn/start}
+   \caption{Pierwsze pytanie.}
+   \label{fig:start}
+\end{subfigure}
+
+\hfill
+\begin{subfigure}{0.3\textwidth}
+   \includegraphics[width=\textwidth]{learn/correct}
+   \caption{Kolejne pytanie z informacją o poprawnej odpowiedzi do poprzedniego.}
+   \label{fig:correct}
+\end{subfigure}
+\hfill        
+\begin{subfigure}{0.3\textwidth}
+   \includegraphics[width=\textwidth]{learn/stats}
+   \caption{Ekran ze statystykami podejścia pojawiający się po zakończeniu nauki.}
+   \label{fig:stats}
+\end{subfigure}
+\hfill
+\rule{0cm}{1cm}
+
+\caption{Wspólny podpis kilku rysunków.}
+\label{fig:wiele-rysunkow}
+\end{figure}
+\ksremark{Pięć ilustracji wrzuciłem do jednego rysunku z podrysunkami (rys. \ref{fig:wiele-rysunkow}). Może tak będzie lepiej?}
+%%%%%%%%%%%%%%%%%%%%%
+
 \subsection{Baza danych i panel administratora}
 
 Aby skorzystać z funkcjonalności panelu administratora, należy się zalogować. Ekran logowania jest przedstawiony na rysunku \ref{fig:login}. Dostęp do panelu mają jedynie użytkownicy o uprawnieniach administratora. Jeżeli konta z takimi uprawnieniami nie ma jeszcze w systemie, użytkownik zostanie o tym powiadomiony (rysunek \ref{fig:alert}) oraz przeniesiony do podstrony umożliwiającej założenie konta (rysunek \ref{fig:register}). Po udanym zalogowaniu lub rejestracji administrator ma dostęp do funkcjonalności panelu, takich jak wyświetlanie użytkowników wraz z ich uprawnieniami oraz możliwością ich usunięcia (rysunek \ref{fig:dashboard}) lub widok próśb o uprawnienia nauczyciela, które może zaakceptować lub odrzucić. Zalogowany administrator ma też możliwość zmiany hasła, co jest przedstawione na rysunku \ref{fig:changepwd}. Nie ma potrzeby wpisywania starego hasła, ponieważ autoryzacja użytkowników Firebase automatycznie sprawdza, czy użytkownik niedawno się logował. Jeżeli od logowania minęło zbyt dużo czasu, użytkownik może ponownie się zalogować i zmienić hasło. 
@@ -909,6 +955,7 @@ Aby skorzystać z funkcjonalności panelu administratora, należy się zalogowa�
 \caption{Widok wszystkich użytkowników.}
 \label{fig:dashboard}
 \end{figure}
+\ksremark{Rys. \ref{fig:register}, \ref{fig:dashboard}, \ref{fig:requests}, \ref{fig:changepwd}: Są w tych rysunkach duże białe obszary, które można obciąć.}
 
 \begin{figure}[]
 \centering
@@ -925,7 +972,7 @@ Aby skorzystać z funkcjonalności panelu administratora, należy się zalogowa�
 \end{figure}
 
 % TODO
-\chapter{[Właściwy dla kierunku -- np. Specyfikacja wewnętrzna]}
+\chapter{Specyfikacja wewnętrzna}
 \label{ch:05}
 
 %przedstawienie idei
