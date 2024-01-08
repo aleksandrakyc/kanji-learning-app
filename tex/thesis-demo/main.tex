@@ -741,6 +741,8 @@ Panel administratora korzysta z tego samego systemu uwierzytelniania użytkownik
 
 Jako framework ułatwiający budowę aplikacji webowej posłużył Angular\footnote{\url{https://angular.io/}} w wersji 17. Angular to otwartoźródłowa platforma służąca do tworzenia aplikacji webowych używająca języka programowania TypeScript i rozwijana przez Google. Ponieważ funkcjonalności panelu administratora są bardzo proste, wybór Angulara sprowadził się tylko do łatwości użytku związanej z wcześniejszą znajomością tej platformy. Dodatkowym atutem tego frameworku jest też wbudowana obsługa narzędzi Firebase, które są wykorzystywane w aplikacji. Do interfejsu użytkownika wykorzystano bibliotekę Bootstrap\footnote{\url{https://getbootstrap.com/}}, która zawiera pewne zestawy szablonów CSS ułatwiających wykonanie estetycznie spójnej aplikacji.
 
+Aby umożliwić szeroki dostęp do panelu administratora, można upublicznić go na własnym serwerze lub wykorzystując \english{hosting}. Na potrzeby tej pracy przestowano darmowy (z pewnymi ogranicznieniami) serwis z pakietu Firebase. Dzięki wykorzystaniu tej usługi można odwiedzić panel administratora\footnote{\url{https://kanjilearningapp-e002b.web.app/}} z dowolnego urządzenia połączonego  z Internetem.
+
 % TODO
 \chapter{Specyfikacja zewnętrzna}
 \label{ch:04}
@@ -768,7 +770,7 @@ Aby móc stworzyć swoją instancję systemu obsługującego dane użytkowników
 \item Android Studio,
 \item Angular w wersji 17,
 \item Node.js w wersji conajmniej 18.13 wraz z npm,
-\item przeglądarka internetowa \ksremark{Czy są jakieś wymagania dla przeglądarek?}.
+\item przeglądarka internetowa (testowano na Firefox w wersji 120)
 \end{itemize}
 
 \section{Sposób instalacji i aktywacji}
@@ -785,6 +787,8 @@ Po instalacji użytkownik może od razu przejść do korzystania z okrojonej wer
 Po zainicjowaniu projektu w platformie Firebase należy podążać za krokami podanymi w dokumentacji\footnote{\url{https://firebase.google.com/docs/android/setup}}\footnote{\url{https://firebase.google.com/docs/web/setup}}, aby dołączyć swój projekt Firebase do aplikacji mobilnej oraz panelu administratora. Istotne jest, aby był to ten sam projekt, dzięki temu możliwa będzie wymiana danych. Po zbudowaniu i wdrożeniu panelu administratora należy założyć konto umożliwiające administrację systemu. 
 
 Przy budowaniu w panelu administratora w trybie produkcyjnym należy zwrócić uwagę na konfigurację, ponieważ rozwiązania Firebase i Angular wydają się nie być w stu procentach kompatybilne. Aby doprowadzić aplikację do działania należy uruchomić komendę budowania z wyłączoną optymalizacją (\texttt{ng build --optimization=false}).
+
+%hosting
 
 \section{Kategorie użytkowników}
 
@@ -842,7 +846,7 @@ Scenariusze korzystania z aplikacji mobilnej są przedstawione na rysunku \ref{f
 
 Szczególnym, najbardziej rozwiniętym przypadkiem scenariusza korzystania z aplikacji mobilnej jest sama nauka zestawów (ekran learn). Ponieważ diagram nie pokazuje szczegółów, ten fragment zostanie przedstawiony za pomocą zrzutów ekranu (rys. \ref{fig:study}). 
 
-Użytkownik rozpoczyna od wyboru zestawu z listy (ekran CategoryList na rysunku \ref{fig:navgraph}). Po wybraniu zestawu może obejrzeć znaki, które się w nim znajdują (rys. \ref{fig:list}). Po naciśnięciu przycisku \textit{learn}, użytkownik przechodzi do wyboru opcji podejścia (rys. \ref{fig:options}). Może wybrać liczbę tur oraz w pewien sposób zmodyfikować pytania, które wygeneruje program.  Po przejściu do nauki widoczne jest pytanie, znak którego dotyczy, pole do wprowadzenia odpowiedzi oraz przycisk zatwierdzający (rys. \ref{fig:start}). W kolejnych pytaniach pojawia się dodatkowo informacja o poprawnej odpowiedzi w poprzednim pytaniu (rys. \ref{fig:correct}) lub o niepoprawnej wraz z przykładami, jak należało odpowiedzieć na to pytanie (rys. \ref{fig:incorrect}) \ksremark{Tu jest chyba niepoprawna etykieta, bo się wyświetlają `??'.}. Po zakończonym podejściu użytkownik może zobaczyć statystyki (rys. \ref{fig:stats}).
+Użytkownik rozpoczyna od wyboru zestawu z listy (ekran CategoryList na rysunku \ref{fig:navgraph}). Po wybraniu zestawu może obejrzeć znaki, które się w nim znajdują (rys. \ref{fig:list}). Po naciśnięciu przycisku \textit{learn}, użytkownik przechodzi do wyboru opcji podejścia (rys. \ref{fig:options}). Może wybrać liczbę tur oraz w pewien sposób zmodyfikować pytania, które wygeneruje program.  Po przejściu do nauki widoczne jest pytanie, znak którego dotyczy, pole do wprowadzenia odpowiedzi oraz przycisk zatwierdzający (rys. \ref{fig:start}). W kolejnych pytaniach pojawia się dodatkowo informacja o poprawnej odpowiedzi w poprzednim pytaniu (rys. \ref{fig:correct}) lub o niepoprawnej wraz z przykładami, jak należało odpowiedzieć na to pytanie (rys. \ref{fig:incorrect}). Po zakończonym podejściu użytkownik może zobaczyć statystyki (rys. \ref{fig:stats}).
 
 
 %%%%%%%%%%%%%%%%%%%%%
@@ -878,7 +882,7 @@ Użytkownik rozpoczyna od wyboru zestawu z listy (ekran CategoryList na rysunku 
 \begin{subfigure}{0.3\textwidth}
    \includegraphics[width=\textwidth]{learn/incorrect}
    \caption{Kolejne pytanie z informacją o niepoprawnej odpowiedzi do poprzedniego.}
-   \label{fig:stats}
+   \label{fig:incorrect}
 \end{subfigure}
 \hfill
 \begin{subfigure}{0.3\textwidth}
@@ -955,10 +959,10 @@ Aby skorzystać z funkcjonalności panelu administratora, należy się zalogowa�
 
 System opisywany w tej pracy składa się z następujących części:
 \begin{itemize}
-\item Aplikacja \ksremark{Tu i niżej: małą literą.} mobilna do nauki kanji,
-\item Lokalna baza danych z danymi dotyczącymi języka japońskiego,
-\item Baza danych przechowująca dane użytkowników, ich postępy oraz grupy, do których należą,
-\item Panel administratora pozwalający na zarządzanie użytkownikami
+\item aplikacja mobilna do nauki kanji,
+\item lokalna baza danych z danymi dotyczącymi języka japońskiego,
+\item baza danych przechowująca dane użytkowników, ich postępy oraz grupy, do których należą,
+\item panel administratora pozwalający na zarządzanie użytkownikami
 \end{itemize}
 
 \begin{figure}[]
@@ -973,15 +977,15 @@ System opisywany w tej pracy składa się z następujących części:
 
 Większość aplikacji na system operacyjny Android jest napisanych zgodnie z architekturą MVC (\english{Model View Controller}), MVP (\english{Model View Presenter}) lub MVVM (\english{Model View ViewModel}). Wzorzec należy dobrać odpowiednio do rodzaju programu, jednak często wybór sprowadza się do preferencji programistów. 
 
-Według niektórych źródeł wzorzec MVC jest wymuszany przez samą strukturę aplikacji androidowych \cite{bib:internetMVC}. W tej wersji modelem są klasy reprezentujące dane, kontrolerem aktywności lub fragmenty stanowiące logikę działania aplikacji, a widokiem pliki z rozszerzeniem xml \ksremark{\texttt{xml}} reprezentujące wygląd danego okna. Takie podejście nie oddaje do końca prawdy. Widok to statyczny plik xml \ksremark{jak wyżej} -- nie jest w stanie sam odświeżać danych. Z tego powodu klasa aktywności oprócz odpowiedzialności kontrolera wykonuje rownież zadania widoku. Konsekwencją tego jest w pewnym sensie zatracenie się sensu architektury MVC, której głównym zadaniem jest rozdzielenie odpowiedzialności modelu, widoku i kontrolera. W większych projektach jest to dużym problemem, ponieważ utrudnia testy jednostkowe aplikacji.
+Według niektórych źródeł wzorzec MVC jest wymuszany przez samą strukturę aplikacji androidowych \cite{bib:internetMVC}. W tej wersji modelem są klasy reprezentujące dane, kontrolerem aktywności lub fragmenty stanowiące logikę działania aplikacji, a widokiem pliki z rozszerzeniem \texttt{xml} reprezentujące wygląd danego okna. Takie podejście nie oddaje do końca prawdy. Widok to statyczny plik \texttt{xml} -- nie jest w stanie sam odświeżać danych. Z tego powodu klasa aktywności oprócz odpowiedzialności kontrolera wykonuje rownież zadania widoku. Konsekwencją tego jest w pewnym sensie zatracenie się sensu architektury MVC, której głównym zadaniem jest rozdzielenie odpowiedzialności modelu, widoku i kontrolera. W większych projektach jest to dużym problemem, ponieważ utrudnia testy jednostkowe aplikacji.
 
-Odpowiedzią na ten problem jest architektura MVP, która w sposób dostosowany do aplikacji Androidowych rozdziela model, widok i odpowiednik kontrolera - \ksremark{pauza `--' zamiast myślnika `-'} prezenter. Prezenter w tej wersji to osobna klasa w pełni oddzielona od widoku, co umożliwia testowanie jednostkowe logiki aplikacji. We wzorcu MVP jedynie widok dziedziczy po klasach typowych dla Androida, takich jak \english{Activity} lub \english{Fragment}. Wadą architektury MVP jest większa ilość szablonowego kodu, który należy napisać na potrzeby komunikacji między modelem, widokiem i prezenterem. Może to skutkować również mniejszą czytelnością.
+Odpowiedzią na ten problem jest architektura MVP, która w sposób dostosowany do aplikacji Androidowych rozdziela model, widok i odpowiednik kontrolera -- prezenter. Prezenter w tej wersji to osobna klasa w pełni oddzielona od widoku, co umożliwia testowanie jednostkowe logiki aplikacji. We wzorcu MVP jedynie widok dziedziczy po klasach typowych dla Androida, takich jak \english{Activity} lub \english{Fragment}. Wadą architektury MVP jest większa ilość szablonowego kodu, który należy napisać na potrzeby komunikacji między modelem, widokiem i prezenterem. Może to skutkować również mniejszą czytelnością.
 
 Na etapie planowania architektury aplikacji mobilnej wybrano wzorzec MVC. Ponieważ MVC jest powszechny w materiałach edukacyjnych oraz w pewnym sensie wymuszany przez samo środowisko pracy w Androidzie, to podejście pozwoliło na skupienie się na odpowiednim działaniu aplikacji bez większego problemu z projektowaniem architektury systemu. W przypadku dalszego rozwijania aplikacji, również w kwestii testów jednostkowych, warto wykonać refraktoryzację kodu na wzorzec MVP. 
 
 \subsection{Panel administratora}
 
-Panel administratora to aplikacja webowa stworzona w całości dzięki frameworkowi Angular\footnote{\url{https://angular.io/}}. Ponieważ ta aplikacja nie jest zbyt rozbudowana, jej architektura nie jest skomplikowana i nie wymaga modyfikacji narzędzi dostarczanych przez Angular. Częściami aplikacji wykonanej w tym frameworku są komponenty, czyli widoki. Komponent posiada plik z rozszerzeniem html \ksremark{\texttt{html}}, który definiuje wygląd elementu aplikacji oraz klasę w języku Typescript, która odpowiada za logikę. Komponenty używają serwisów, czyli klas wyspecjalizowanych do zarządzania danymi. Angular silnie polega na mechanizmie wstrzykiwania zależności, którego używa do łączenia serwisów z komponentami. 
+Panel administratora to aplikacja webowa stworzona w całości dzięki frameworkowi Angular\footnote{\url{https://angular.io/}}. Ponieważ ta aplikacja nie jest zbyt rozbudowana, jej architektura nie jest skomplikowana i nie wymaga modyfikacji narzędzi dostarczanych przez Angular. Częściami aplikacji wykonanej w tym frameworku są komponenty, czyli widoki. Komponent posiada plik z rozszerzeniem \texttt{html}, który definiuje wygląd elementu aplikacji oraz klasę w języku Typescript, która odpowiada za logikę. Komponenty używają serwisów, czyli klas wyspecjalizowanych do zarządzania danymi. Angular silnie polega na mechanizmie wstrzykiwania zależności, którego używa do łączenia serwisów z komponentami. 
 
 \section{Organizacja baz danych}
 
@@ -989,9 +993,9 @@ W rozwiązaniu opisywanym w tej pracy występują dwie bazy danych. Pierwsza z n
 
 \subsection{Baza danych dotycząca języka japońskiego}
 
-Dane dotyczące znaków, słownictwa, przykładowych zdań i innych informacji są przechowywane lokalnie w pliku sqlite. Jest on okrojoną wersją bazy danych Kanjium\footnote{\url{https://github.com/mifunetoshiro/kanjium}}, która łączy wiele źródeł informacji na temat języka japońskiego w spójną relacyjną bazę danych. 
+Dane dotyczące znaków, słownictwa, przykładowych zdań i innych informacji są przechowywane lokalnie w pliku sqlite. Jest on okrojoną wersją bazy danych Kanjium\footnote{\url{https://github.com/mifunetoshiro/kanjium}}, która łączy wiele źródeł informacji na temat języka japońskiego w spójną bazę danych. 
 
-Dzięki projektowi Kanjium powstało bardzo bogate źródło wiedzy na temat języka japońskiego, jednak do zrealizowania aplikacji omawianej w tej pracy nie jest konieczny cały zbiór. Dodatkowo, ponieważ ta baza danych jest przeznaczona do przechowywana lokalnie na urządzeniu każdego z użytkowników, istotny jest mały rozmiar samego pliku. Z tych powodów zdecydowano się na usunięcie pewnych tabel i pozostawienie tylko niezbędnych informacji \ksremark{(rys. \ref{fig:kanjidb})}, takich jak słownik kanji (tabela kanjidict \ksremark{Napisałbym to czcionką nieproporcjonalną \texttt{kanjidict}.}), tabele zawierające złożenia znaków (edict, compverbs, jukugo \ksremark{Tu i dalej też.}), tabelę sentences, która ma w sobie przykładowe zdania oraz tabelę search, która umożliwia wyszukiwanie znaków przez użytkownika. Pozbyto się danych, które nie są konieczne do zrealizowania nauki znaków kanji, takich jak odmiana czasowników lub przysłowia.
+Dzięki projektowi Kanjium powstało bardzo bogate źródło wiedzy na temat języka japońskiego, jednak do zrealizowania aplikacji omawianej w tej pracy nie jest konieczny cały zbiór. Dodatkowo, ponieważ ta baza danych jest przeznaczona do przechowywana lokalnie na urządzeniu każdego z użytkowników, istotny jest mały rozmiar samego pliku. Z tych powodów zdecydowano się na usunięcie pewnych tabel i pozostawienie tylko niezbędnych informacji (rys. \ref{fig:kanjidb}), takich jak słownik kanji (tabela \texttt{kanjidict}), tabele zawierające złożenia znaków (\texttt{edict}, \texttt{compverbs}, \texttt{jukugo}), tabelę \texttt{sentences}, która ma w sobie przykładowe zdania oraz tabelę \texttt{search}, która umożliwia wyszukiwanie znaków przez użytkownika. Pozbyto się danych, które nie są konieczne do zrealizowania nauki znaków kanji, takich jak odmiana czasowników lub przysłowia.
 
 Ostatecznie okrojona baza danych ma rozmiar 18 MB, co nieco przekracza wstępne założenia o bazie nieprzekraczającej 15 MB, jednak przy obecnych rozmiarach pamięci w urządzeniach mobilnych nie powinno to zniechęcić użytkowników od korzystania z aplikacji. W~przyszłości jest możliwość dalszego zmniejszania bazy na przykład przez usuwanie zbędnych wierszy, nie tylko tabel i kolumn.
 
@@ -1002,18 +1006,17 @@ Diagram przedstawiający schemat bazy danych (rys. \ref{fig:kanjidb}) został wy
 \caption{Diagram przedstawiający schemat bazy danych sqlite dotyczących języka japońskiego.}
 \label{fig:kanjidb}
 \end{figure}
-\ksremark{Rys. \ref{fig:kanjidb}: Czy są jakieś relacje między tabelami?}
+\ksremark{Rys. \ref{fig:kanjidb}: Czy są jakieś relacje między tabelami?} %nie ma foreign keys wiec chyba nie?
 
 \subsection{Baza danych przechowująca dane użytkowników}
 
 Dane dotyczące użytkowników są przechowywane w bazie danych NoSQL zorientowanej na dokumenty. Na rysunku \ref{fig:firestore} przedstawiono kolekcje jako foldery, które przechowują dokumenty. Dokumenty mogą mieć zagnieżdżone kolekcje, które na diagramie są zaznaczone pogrubionym tekstem. 
 
-
 \begin{itemize}
-\item \texttt{User}:
-\item \texttt{Group}:
-\item \texttt{Predefined}:
-\item \texttt{Set}:
+\item \texttt{User}: dokument reprezentujący użytkownika, posiada informacje o jego danych i uprawnieniach. Posiada zagnieżdżone kolekcje \texttt{Sets} i \texttt{Predefined} które zawierają dokumenty reprezentujące zestawy do nauki.
+\item \texttt{Group}: ten rodzaj dokumentu reprezentuje grupę. Zawiera identyfikatory członków oraz zagnieżdżoną kolekcję zestawów, które do niej należą.
+\item \texttt{Set}: dokumenty \texttt{Set} przedstawiają zestaw znaków. W tej bazie danych można przechowywać mapę, co okazało się bardzo pomocne przy zapisywaniu wartości jakości zapamiętywania dla każdego znaku.
+\item \texttt{Predefined}: dokumenty \texttt{Predefined} mają strukturę identyczną do dokumentów \texttt{Set}, ale dotyczą zestawów do nauki już zapisanych w kodzie aplikacji.
 \end{itemize}
 
 \begin{figure}[]
@@ -1029,22 +1032,22 @@ W tym podrozdziale zostanie opisana struktura projektów aplikacji mobilnej i pa
 
 \subsection{Aplikacja mobilna}
 
-Kod aplikacji mobilnej został podzielony na pięć pakietów, które odpowiadają za różne części funkcjonowania programu. Oprócz nich w repozytorium znajduje się plik \textit{MainActivity.java} \ksremark{Nazwy plików, ścieżek itd pisałbym czcionką niepropocjonalną, np. \texttt{MainActivity.java}.}, który pełni rolę punktu startowego programu, zarządzania nawigacją oraz paskiem menu. 
+Kod aplikacji mobilnej został podzielony na pięć pakietów, które odpowiadają za różne części funkcjonowania programu. Oprócz nich w repozytorium znajduje się plik \texttt{MainActivity.java}, który pełni rolę punktu startowego programu, zarządzania nawigacją oraz paskiem menu. 
 
 Aplikacja jest zbudowana z następujących pakietów:
 \begin{itemize}
-\item adapters \ksremark{tu też: \texttt{adapters}} -- klasy pośredniczące między elementami interfejsu użytkownika i danymi,
-\item models -- klasy reprezentujące dane,
-\item types -- typy wyliczeniowe,
-\item utils -- klasy pomocnicze, służące do komunikacji z bazą danych lub generowania pytań,
-\item views -- klasy obsługujące interfejs użytkownika.
+\item \texttt{adapters} -- klasy pośredniczące między elementami interfejsu użytkownika i danymi,
+\item \texttt{models} -- klasy reprezentujące dane,
+\item \texttt{types} -- typy wyliczeniowe,
+\item \texttt{utils} -- klasy pomocnicze, służące do komunikacji z bazą danych lub generowania pytań,
+\item \texttt{views} -- klasy obsługujące interfejs użytkownika.
 \end{itemize}
 
-%interesting klasa
+
 
 \subsection{Panel administratora}
 
-Kod panelu administratora składa się z komponentów odpowiedzialnych za interfejs użytkownika, serwisów zarządzających danymi oraz modeli reprezentujących dane. \ksremark{Może jakiś diagram?}
+Kod panelu administratora składa się z komponentów odpowiedzialnych za interfejs użytkownika, serwisów zarządzających danymi oraz modeli reprezentujących dane. Diagram na rysunku \ref{fig:angular} przedstawia strukturę modułu aplikacji i komponentów które zawiera.
 
 \begin{figure}
 \dirtree{%
@@ -1061,21 +1064,53 @@ Kod panelu administratora składa się z komponentów odpowiedzialnych za interf
 .2 shared/.
 .3 auth.service.
 .3 data.service.
-}
+}angy
 \caption{Struktura plików w kodzie panelu administratora.}
 \label{fig:dirtree}
 \end{figure}
 
+\begin{figure}[]
+\centering
+\includegraphics[width=\textwidth]{angular}
+\caption{Diagram modułu aplikacji panelu administratora.}
+\label{fig:angular}
+\end{figure}
 
 % TODO
 \chapter{Weryfikacja i walidacja}
 \label{ch:06}
-\begin{itemize}
-\item sposób testowania w ramach pracy (np. odniesienie do modelu V)
-\item organizacja eksperymentów
-\item przypadki testowe zakres testowania (pełny/niepełny)
-\item wykryte i usunięte błędy
-\end{itemize}
+%\item sposób testowania w ramach pracy (np. odniesienie do modelu V)
+%\item organizacja eksperymentów
+%\item przypadki testowe zakres testowania (pełny/niepełny)
+%\item wykryte i usunięte błędy
+
+\section{Sposób testowania w ramach pracy}
+
+Testowanie to proces towarzyszący tworzeniu aplikacji i ściśle z nim powiązany. Aplikacja opisywana w tej pracy została przetestowana w pewnym zakresie, jednak przed wypuszczeniem ją na rynek należałoby go znacznie rozszerzyć.
+
+\subsection{Testy manualne}
+
+Testy manualne były wykonywane przez cały czas rozwoju aplikacji mobilnej oraz panelu administratora. Polegały one na manualnym przejściu przez pewną ścieżkę programu w celu wykrycia błędu lub potwierdzenia prawidłowego działania. Najczęściej testy manualne były wykonywane po implementacji pewnej fukcjonalności. Po zakończeniu prac nad rozwojem kodu programy zostały kompleksowo przetestowane. 
+
+Testowanie manualne aplikacji mobilnej było możliwe dzięki emulatorowi urządzenia mobilnego z systemem Android. Użycie emulatora zaoszczędziło dużą ilość czasu oraz nakładu pracy, ponieważ pozwoliło na testowanie bezpośrednio w środowisku developerskim Android Studio. Emulator wykorzystany do testowaina w rozwiązaniu opisywanym w tej pracy to Pixel 7 z systemem Android w wersji 13.0 i obsługą sklepu Google Play.
+
+\begin{figure}[]
+\centering
+\includegraphics[width=\textwidth]{androidstudio}
+\caption{Widok środowiska developerskiego z uruchomionym emulatorem.}
+\label{fig:androidstudio}
+\end{figure}
+
+Panel administratora został przetestowany z użyciem przeglądarki internetowej Firefox w wersji 120. Angular oferuje pomocne narzędzie wywoływane komendą \texttt{ng serve}, które automatycznie buduje aplikację po każdej zmianie w kodzie, co pozwala na dynamiczną pracę i natychmiastowy widok zmian w interfejsie użytkownika. Innym przydatnym narzędziem było badanie źródła strony w przeglądarce Firefox, które umożliwiło podgląd na konsolę. 
+
+\subsection{Testy automatyczne}
+
+
+
+\section{Wykryte i usunięte błędy}
+
+Przykładowy błąd przy rozwijaniu panelu administratora ujawnił się przy budowaniu aplikacji i umieszczaniu jej na zdalnym serwerze. Przy pierwszych próbach odwiedzenia strony internetowej zawierającej panel administratora wyświetlał się pusty biały ekran. Było to spowodowane błędną konfiguracją przy budowaniu za pomocą Angulara, który używając domyślnej optymalizacji nie współpracował z narzędziami autoryzacji użytkownika Firebase. Problem udało się usunąć dzięki użyciu flagi (\texttt{--optimization=false}) przy budowaniu aplikacji.
+%angular deployment
 
 % TODO
 \chapter{Podsumowanie i wnioski}
@@ -1097,29 +1132,11 @@ Kod panelu administratora składa się z komponentów odpowiedzialnych za interf
 % TODO
 \chapter{Spis skrótów i symboli}
 
-\begin{itemize}
-\item[DNA] kwas deoksyrybonukleinowy (ang. \english{deoxyribonucleic acid})
-\item[MVC] model -- widok -- kontroler (ang. \english{model--view--controller}) 
-\item[$N$] liczebność zbioru danych
-\item[$\mu$] stopnień przyleżności do zbioru
-\item[$\mathbb{E}$] zbiór krawędzi grafu
-\item[$\mathcal{L}$] transformata Laplace'a 
-\end{itemize}
 
 
 % TODO
 \chapter{Źródła}
 
-Jeżeli w pracy konieczne jest umieszczenie długich fragmentów kodu źródłowego, należy je przenieść w to miejsce.
-
-\begin{lstlisting}
-if (_nClusters < 1)
-	throw std::string ("unknown number of clusters");
-if (_nIterations < 1 and _epsilon < 0)
-	throw std::string ("You should set a maximal number of iteration or minimal difference -- epsilon.");
-if (_nIterations > 0 and _epsilon > 0)
-	throw std::string ("Both number of iterations and minimal epsilon set -- you should set either number of iterations or minimal epsilon.");
-\end{lstlisting}
 
 
 % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % 
