@@ -1079,20 +1079,16 @@ Kod panelu administratora składa się z komponentów odpowiedzialnych za interf
 % TODO
 \chapter{Weryfikacja i walidacja}
 \label{ch:06}
-%\item sposób testowania w ramach pracy (np. odniesienie do modelu V)
-%\item organizacja eksperymentów
-%\item przypadki testowe zakres testowania (pełny/niepełny)
-%\item wykryte i usunięte błędy
 
 \section{Sposób testowania w ramach pracy}
 
-Testowanie to proces towarzyszący tworzeniu aplikacji i ściśle z nim powiązany. Aplikacja opisywana w tej pracy została przetestowana w pewnym zakresie, jednak przed wypuszczeniem ją na rynek należałoby go znacznie rozszerzyć.
+Testowanie to proces towarzyszący tworzeniu aplikacji i ściśle z nim powiązany. Aplikacja opisywana w tej pracy została przetestowana w pewnym zakresie, jednak przed wypuszczeniem jej na rynek należałoby go znacznie rozszerzyć.
 
 \subsection{Testy manualne}
 
-Testy manualne były wykonywane przez cały czas rozwoju aplikacji mobilnej oraz panelu administratora. Polegały one na manualnym przejściu przez pewną ścieżkę programu w celu wykrycia błędu lub potwierdzenia prawidłowego działania. Najczęściej testy manualne były wykonywane po implementacji pewnej fukcjonalności. Po zakończeniu prac nad rozwojem kodu programy zostały kompleksowo przetestowane. 
+Testy manualne były wykonywane przez cały czas rozwoju aplikacji mobilnej oraz panelu administratora. Polegały one na przejściu przez pewną ścieżkę programu w celu wykrycia błędu lub potwierdzenia prawidłowego działania. Najczęściej testy manualne były wykonywane po implementacji pewnej fukcjonalności. Po zakończeniu prac nad rozwojem kodu programy zostały kompleksowo przetestowane. 
 
-Testowanie manualne aplikacji mobilnej było możliwe dzięki emulatorowi urządzenia mobilnego z systemem Android. Użycie emulatora zaoszczędziło dużą ilość czasu oraz nakładu pracy, ponieważ pozwoliło na testowanie bezpośrednio w środowisku developerskim Android Studio. Emulator wykorzystany do testowaina w rozwiązaniu opisywanym w tej pracy to Pixel 7 z systemem Android w wersji 13.0 i obsługą sklepu Google Play.
+Testowanie manualne aplikacji mobilnej było możliwe dzięki emulatorowi urządzenia mobilnego z systemem Android. Użycie emulatora zaoszczędziło dużą ilość czasu oraz nakładu pracy, ponieważ pozwoliło na testowanie bezpośrednio w środowisku developerskim Android Studio. Emulator wykorzystany do testowania w rozwiązaniu opisywanym w tej pracy to Pixel 7 z systemem Android w wersji 13.0 i obsługą sklepu Google Play.
 
 \begin{figure}[]
 \centering
@@ -1101,16 +1097,36 @@ Testowanie manualne aplikacji mobilnej było możliwe dzięki emulatorowi urząd
 \label{fig:androidstudio}
 \end{figure}
 
-Panel administratora został przetestowany z użyciem przeglądarki internetowej Firefox w wersji 120. Angular oferuje pomocne narzędzie wywoływane komendą \texttt{ng serve}, które automatycznie buduje aplikację po każdej zmianie w kodzie, co pozwala na dynamiczną pracę i natychmiastowy widok zmian w interfejsie użytkownika. Innym przydatnym narzędziem było badanie źródła strony w przeglądarce Firefox, które umożliwiło podgląd na konsolę. 
+Panel administratora został przetestowany z użyciem przeglądarki internetowej Firefox w wersji 120. Angular oferuje pomocne w testowaniu narzędzie wywoływane komendą \texttt{ng serve}, które automatycznie buduje aplikację po każdej zmianie w kodzie, co pozwala na dynamiczną pracę i natychmiastowy widok zmian w interfejsie użytkownika. Innym przydatnym narzędziem było badanie źródła strony w przeglądarce Firefox, które umożliwiło podgląd na konsolę. 
 
 \subsection{Testy automatyczne}
 
+Na potrzeby zautomatyzowanego testowania aplikacji przeznaczonych na system Android można wykorzystać:
+\begin{itemize}
+\item testy jednostkowe -- testujące pewien kawałek kodu taki jak klasa lub metoda,
+\item testy integracyjne -- wykorzystujące narzędzia takie jak Robolectric\footnote{\url{https://robolectric.org/}} do testowania większej części kodu lokalnie lub na urządzeniu,
+\item testy interfejsu użytkownika -- symulujące realne używanie aplikacji przez użytkownika za pomocą metod umożliwiających interakcję z interfejsem użytkownika z poziomu kodu.
+\end{itemize}
 
+\begin{figure}[]
+\centering
+\includegraphics[width=0.7\textwidth]{test-scopes}
+\caption{Diagram reprezentujący sposób testowania aplikacji przeznaczonych na system operacyjny Android.}
+\label{fig:testscopes}
+\end{figure}
+
+Na zakres testowania aplikacji mobilnej opisywanej w tej pracy oprócz testów manualnych składają się testy jednostkowe w niepełnym zakresie (tylko niektóre klasy zostały przetestowane). Aby móc bezpiecznie wydać aplikację na przykład w Sklepie Play, należałoby rozszerzyć testowanie o testy integracyjne i testy interfejsu użytkownika. 
+
+Przykładem klasy przetestowanej za pomocą testów jednostkowych jest \texttt{QuestionGenerator}. Ta klasa jest odpowiedzialna za generowanie pytań (obiektów typu \texttt{QuestionModel}) w sposób, który pozwoli jak najlepiej przyswoić informacje użytkownikowi. Bierze pod uwagę między innymi liczbę odpowiadającą każdemu znakowi, która oznacza biegłość użytkownika w pytaniach dotyczących tego znaku. Na podstawie tych danych generuje losowe pytania dotyczących tych znaków w zestawie, z którymi użytkownik do tej pory radził sobie najgorzej. 
+
+Do przetestowania wyżej opisanej klasy użyto narzędzia Junit\footnote{\url{https://junit.org/junit4/}}, które pozwala na wykonywanie testów jednostkowych. Napisano testy odnoszące się do normalnego trybu działania aplikacji, czyli do tworzenia pytań na podstawie pewnego zestawu znaków. Przetestowano również wpływ błędnych lub nieprzewidywanych danych wejściowych na zachowanie klasy, takich jak wygenerowanie zestawu pytań o liczebności równej zeru. 
 
 \section{Wykryte i usunięte błędy}
 
+%crashe przy uczeniu
+Przy testach manualnych aplikacji mobilnej wykryto wiele błędów, większość z nich skutkowała gwałtownym zatrzymaniem działania aplikacji spowodowanym na przykład \english{null pointer exception} lub nieprawidłowym indeksowaniem listy czy tablicy. Takie błędy wynikały z drobnych pomyłek w kodzie i zostały szybko poprawione. Za pomocą testów automatycznych udało się wykryć błąd w klasie odpowiedzialnej za generowanie pytań, która przy przyjęciu błędnie sformatowanego znaku generowała na miejscu pytania wartość \texttt{null}, co powodowało późniejsze gwałtowne zatrzymanie aplikacji.
+
 Przykładowy błąd przy rozwijaniu panelu administratora ujawnił się przy budowaniu aplikacji i umieszczaniu jej na zdalnym serwerze. Przy pierwszych próbach odwiedzenia strony internetowej zawierającej panel administratora wyświetlał się pusty biały ekran. Było to spowodowane błędną konfiguracją przy budowaniu za pomocą Angulara, który używając domyślnej optymalizacji nie współpracował z narzędziami autoryzacji użytkownika Firebase. Problem udało się usunąć dzięki użyciu flagi (\texttt{--optimization=false}) przy budowaniu aplikacji.
-%angular deployment
 
 % TODO
 \chapter{Podsumowanie i wnioski}
