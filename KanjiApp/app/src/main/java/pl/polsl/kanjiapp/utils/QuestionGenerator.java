@@ -26,7 +26,7 @@ public class QuestionGenerator {
         this.turns = turns;
         this.wordEnabled = wordEnabled;
         this.sentenceEnabled = sentenceEnabled;
-        int n = (turns>characters.size())? characters.size():turns;
+        int n = Math.min(turns, characters.size());
         this.characters = new ArrayList<>();
 
         maxUniqueQs = characters.size() * QuestionType.numOfAvailQuestions(wordEnabled, sentenceEnabled);
@@ -40,10 +40,12 @@ public class QuestionGenerator {
                         Map.Entry::getValue,
                         (oldValue, newValue) -> oldValue, HashMap::new));
 
-        //this is bad - if character doesnt match ef map null is being inserted
         this.kanjiEFmap.forEach((key, value) -> { this.characters.add(characters.stream().filter(character -> character.getKanji().equals(key)).findFirst().orElse(null));});
 
         //check for null
+        while(this.characters.contains(null)){
+            this.characters.remove(null);
+        }
         //this.characters.forEach(character -> Log.d(TAG, "QuestionGenerator: " + character));
     }
     public QuestionGenerator(ArrayList<CharacterModel> characters, int turns, boolean wordEnabled, boolean sentenceEnabled) {
@@ -76,10 +78,6 @@ public class QuestionGenerator {
 
         questions = new ArrayList<>();
         questions.addAll(questionsSet);
-        return questions;
-    }
-
-    public ArrayList<QuestionModel> getQuestions() {
         return questions;
     }
 

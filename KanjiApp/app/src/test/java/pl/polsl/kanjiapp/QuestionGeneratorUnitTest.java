@@ -55,4 +55,13 @@ public class QuestionGeneratorUnitTest {
         assertTrue(characters.contains("二"));
     }
 
+    @Test
+    public void highestScoreCharacterDoesNotAppearIfTurnsLesserThanCharacters(){
+        setUp(2);
+        ArrayList<QuestionModel> questions = generator.generateQuestions();
+        TreeSet<String> characters = new TreeSet<>();
+        questions.forEach(questionModel -> characters.add(questionModel.getKanji()));
+        assertFalse(characters.contains("三"));
+    }
+
 }
