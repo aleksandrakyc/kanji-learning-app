@@ -2,8 +2,6 @@ package pl.polsl.kanjiapp.utils;
 
 import static java.lang.Math.min;
 
-import android.util.Log;
-
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
@@ -25,7 +23,6 @@ public class QuestionGenerator {
     boolean wordEnabled, sentenceEnabled;
     public QuestionGenerator(ArrayList<CharacterModel> characters, Map<String, Double> kanjiEFmap, int turns, boolean wordEnabled, boolean sentenceEnabled) {
 
-        Log.d(TAG, "QuestionGenerator: Constructor");
         this.turns = turns;
         this.wordEnabled = wordEnabled;
         this.sentenceEnabled = sentenceEnabled;
@@ -43,12 +40,15 @@ public class QuestionGenerator {
                         Map.Entry::getValue,
                         (oldValue, newValue) -> oldValue, HashMap::new));
 
+        //this is bad - if character doesnt match ef map null is being inserted
         this.kanjiEFmap.forEach((key, value) -> { this.characters.add(characters.stream().filter(character -> character.getKanji().equals(key)).findFirst().orElse(null));});
-        this.characters.forEach(character -> Log.d(TAG, "QuestionGenerator: " + character));
+
+        //check for null
+        //this.characters.forEach(character -> Log.d(TAG, "QuestionGenerator: " + character));
     }
     public QuestionGenerator(ArrayList<CharacterModel> characters, int turns, boolean wordEnabled, boolean sentenceEnabled) {
 
-        Log.d(TAG, "QuestionGenerator: Constructor");
+        //Log.d(TAG, "QuestionGenerator: Constructor");
         Random RANDOM = new Random();
         this.turns = turns;
         this.maxUniqueQs = turns;
@@ -58,7 +58,7 @@ public class QuestionGenerator {
         //get random
         for (int i = 0; i<turns; i++){
             this.characters.add(characters.get(RANDOM.nextInt(characters.size())));
-            Log.d(TAG, "QuestionGenerator: " + this.characters.get(i));
+            //Log.d(TAG, "QuestionGenerator: " + this.characters.get(i));
         }
     }
     public ArrayList<QuestionModel> generateQuestions() {
@@ -71,6 +71,8 @@ public class QuestionGenerator {
             if (questionsSet.size() > size)
                 index++;
         }
+
+        //if questiontype, add wrong answers
 
         questions = new ArrayList<>();
         questions.addAll(questionsSet);

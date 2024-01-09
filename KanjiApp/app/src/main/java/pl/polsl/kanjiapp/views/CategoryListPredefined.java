@@ -54,7 +54,7 @@ public class CategoryListPredefined extends Fragment implements CategoryListAdap
         String[] jlptValues = Arrays.copyOfRange(Jlpt.names(), 1, Jlpt.names().length);
         String[] gradeValues = Arrays.copyOfRange(Grade.names(), 1, Grade.names().length);
 
-        ArrayList<String> categoryValues = new ArrayList<String>(Arrays.asList(jlptValues));
+        ArrayList<String> categoryValues = new ArrayList<>(Arrays.asList(jlptValues));
         categoryValues.addAll(Arrays.asList(gradeValues));
         categoryList = getView().findViewById(R.id.recyclerJlpt);
         categoryList.setLayoutManager(new LinearLayoutManager(getContext()));
