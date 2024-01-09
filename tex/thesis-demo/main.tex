@@ -959,7 +959,7 @@ Aby skorzystać z funkcjonalności panelu administratora, należy się zalogowa�
 
 System opisywany w tej pracy składa się z następujących części:
 \begin{itemize}
-\item aplikacja mobilna do nauki kanji,
+\item aplikacja mobilna do nauki kanji \ksremark{(roz. \ref{sec:1}) i analogicznie niżej},
 \item lokalna baza danych z danymi dotyczącymi języka japońskiego,
 \item baza danych przechowująca dane użytkowników, ich postępy oraz grupy, do których należą,
 \item panel administratora pozwalający na zarządzanie użytkownikami
@@ -974,6 +974,7 @@ System opisywany w tej pracy składa się z następujących części:
 %ten diagram jest na brudno
 
 \subsection{Aplikacja mobilna}
+\label{sec:1}
 
 Większość aplikacji na system operacyjny Android jest napisanych zgodnie z architekturą MVC (\english{Model View Controller}), MVP (\english{Model View Presenter}) lub MVVM (\english{Model View ViewModel}). Wzorzec należy dobrać odpowiednio do rodzaju programu, jednak często wybór sprowadza się do preferencji programistów. 
 
@@ -1075,6 +1076,7 @@ Kod panelu administratora składa się z komponentów odpowiedzialnych za interf
 \caption{Diagram modułu aplikacji panelu administratora.}
 \label{fig:angular}
 \end{figure}
+\ksremark{Rys. \ref{fig:angular}: Czy dałoby się, żeby ten rysunek nie był tak mocno poziomy. Jaką relację oznaczają strzałki na tym diagramie?}
 
 % TODO
 \chapter{Weryfikacja i walidacja}
@@ -1103,9 +1105,10 @@ Panel administratora został przetestowany z użyciem przeglądarki internetowej
 
 Na potrzeby zautomatyzowanego testowania aplikacji przeznaczonych na system Android można wykorzystać:
 \begin{itemize}
-\item testy jednostkowe -- testujące pewien kawałek kodu taki jak klasa lub metoda,
+\item testy jednostkowe -- testujące pewien kawałek \ksremark{fragment} kodu taki jak klasa lub metoda,
 \item testy integracyjne -- wykorzystujące narzędzia takie jak Robolectric\footnote{\url{https://robolectric.org/}} do testowania większej części kodu lokalnie lub na urządzeniu,
 \item testy interfejsu użytkownika -- symulujące realne używanie aplikacji przez użytkownika za pomocą metod umożliwiających interakcję z interfejsem użytkownika z poziomu kodu.
+\ksremark{Ta lista nie jest zgodna z rys. \ref{fig:testscopes}. Tak ma być?}
 \end{itemize}
 
 \begin{figure}[]
@@ -1124,7 +1127,7 @@ Do przetestowania wyżej opisanej klasy użyto narzędzia Junit\footnote{\url{ht
 \section{Wykryte i usunięte błędy}
 
 %crashe przy uczeniu
-Przy testach manualnych aplikacji mobilnej wykryto wiele błędów, większość z nich skutkowała gwałtownym zatrzymaniem działania aplikacji spowodowanym na przykład \english{null pointer exception} lub nieprawidłowym indeksowaniem listy czy tablicy. Takie błędy wynikały z drobnych pomyłek w kodzie i zostały szybko poprawione. Za pomocą testów automatycznych udało się wykryć błąd w klasie odpowiedzialnej za generowanie pytań, która przy przyjęciu błędnie sformatowanego znaku generowała na miejscu pytania wartość \texttt{null}, co powodowało późniejsze gwałtowne zatrzymanie aplikacji.
+Przy testach manualnych aplikacji mobilnej wykryto wiele błędów, większość z nich skutkowała gwałtownym zatrzymaniem działania aplikacji spowodowanym na przykład \ksremark{najpierw po polsku, potem po angielsku} \english{null pointer exception} lub nieprawidłowym indeksowaniem listy czy tablicy. Takie błędy wynikały z drobnych pomyłek w kodzie i zostały szybko poprawione. Za pomocą testów automatycznych udało się wykryć błąd w klasie odpowiedzialnej za generowanie pytań, która przy przyjęciu błędnie sformatowanego znaku generowała na miejscu pytania wartość \texttt{null}, co powodowało późniejsze gwałtowne zatrzymanie aplikacji.
 
 Przykładowy błąd przy rozwijaniu panelu administratora ujawnił się przy budowaniu aplikacji i umieszczaniu jej na zdalnym serwerze. Przy pierwszych próbach odwiedzenia strony internetowej zawierającej panel administratora wyświetlał się pusty biały ekran. Było to spowodowane błędną konfiguracją przy budowaniu za pomocą Angulara, który używając domyślnej optymalizacji nie współpracował z narzędziami autoryzacji użytkownika Firebase. Problem udało się usunąć dzięki użyciu flagi (\texttt{--optimization=false}) przy budowaniu aplikacji.
 
@@ -1137,29 +1140,28 @@ Ponieważ zakres testowania jest niepełny, możliwe są niewykryte błędy w ko
 %\item kierunki ewentualnych danych prac (rozbudowa funkcjonalna …)
 %\item problemy napotkane w trakcie pracy
 
-\section{Uzyskane wyniki}
+%\section{Uzyskane wyniki}
 
-W trakcie pisania tej pracy udało się zbudować aplikację mobilną do nauki znaków kanji oraz system służący do administracji jej użytkownikami. Wymagania funkcjonalne zostały w większości spełnione, jednak pozostało kilka elementów które zostały pominięte na rzecz ważniejszych zadań, których nie udało się przewidzieć na początku planowania pracy. Najważniejsze cechy aplikacji, czyli możliwość przeglądania słownika znaków oraz nauka z użyciem metody powtórek w interwałach zostały zaimplementowane. Pominięto takie funkcjonalności jak nauka pisania poprzez rysowanie na telefonie lub informacja zwrotna dla nauczyciela zadającego zadanie domowe. Aplikacja jest otwarta na modyfikacje, więc w przyszłości jest możliwość dodania wyżej wymienionych przypadków użycia. Rozwiązanie spełnia założenia wymagań niefunkcjonalnych za wyjątkiem nieco większego pliku lokalnie przechowywanej bazy danych niż zakładano.
+W trakcie pisania tej pracy udało się zbudować aplikację mobilną do nauki znaków kanji oraz system służący do administracji jej użytkownikami. Wymagania funkcjonalne zostały w większości spełnione, jednak pozostało kilka elementów które zostały pominięte na rzecz ważniejszych zadań, których nie udało się przewidzieć na początku planowania pracy. \ksremark{$gets$ nie tak. Tutaj piszemy, jakie ma cechy aplikacja. Czyli coś w stylu: W ramach niniejszej pracy inżynierskiej powstała aplikacja taka i siaka. Aplikacja umożliwia, no i tu piszemy, jaka jest jej funkcjonalność.} Najważniejsze cechy aplikacji, czyli możliwość przeglądania słownika znaków oraz nauka z użyciem metody powtórek w interwałach zostały zaimplementowane. Pominięto takie funkcjonalności jak nauka pisania poprzez rysowanie na telefonie lub informacja zwrotna dla nauczyciela zadającego zadanie domowe. Aplikacja jest otwarta na modyfikacje, więc w przyszłości \ksremark{To jest przypadek «od więc nie zaczyna się zdania» :-) Lepiej będzie: «\ldots\ modyfikacje, w przyszłości więc jest \ldots».} jest możliwość dodania wyżej wymienionych przypadków użycia. Rozwiązanie spełnia założenia wymagań niefunkcjonalnych za wyjątkiem nieco większego pliku lokalnie przechowywanej bazy danych niż zakładano.
 
-\section{Rozbudowa funkcjonalna w przyszłości}
+%\section{Rozbudowa funkcjonalna w przyszłości}
 
 Aplikacja do nauki znaków kanji ma duży potencjał na rozwój jej funkcjonalności. Nauka badająca sposoby, w jakie ludzie zapamiętują nowe informacje, szczególnie w kontekście języków obcych nauczanych komputerowo może przynieść wiele inspiracji do udoskonalania algorytmu dostarczającego zadania do użytkownika. Dodatkowo można znacznie ulepszyć działanie aplikacji z programistycznego punktu widzenia, na przykład wykonać refraktoryzację kodu na wzorzec projektowy MVP lub zaprojektować bardziej intuicyjny interfejs użytkownika.
 
-Często występującym problemem w dziedzinie komputerowo wspomaganego nauczania języków jest binarne postrzeganie problemu przez komputer. Jeśli sprawdzanie poprawności odpowiedzi odbywa się poprostu za pomocą porównania łańcuchów znaków, wszystkie nieszablonowe lub zawierające drobne literówki odpowiedzi będą traktowane jako niepoprawne. Przy takim podejściu nie ma możliwości przyznania części punktu, jak to odbywa się w tradycyjnym nauczaniu. Implementując inteligentniejszy system sprawdzania odpowiedzi można też zauważyć pewnie tendencje użytkownika i wykorzystać tą wiedzę do dostosowania strategii nauczania. Przy takich zadaniach mogą się okazać pomocne technologie przetwarzania języka naturalnego (ang. \english{natural language processing}, NLP}).
+Często występującym problemem w dziedzinie komputerowo wspomaganego nauczania języków jest binarne postrzeganie problemu przez komputer. Jeśli sprawdzanie poprawności odpowiedzi odbywa się po prostu za pomocą porównania łańcuchów znaków, wszystkie nieszablonowe lub zawierające drobne literówki odpowiedzi będą traktowane jako niepoprawne. Przy takim podejściu nie ma możliwości przyznania części punktu, jak to odbywa się w tradycyjnym nauczaniu. Implementując inteligentniejszy system sprawdzania odpowiedzi można też zauważyć pewnie tendencje użytkownika i wykorzystać tą wiedzę do dostosowania strategii nauczania. Przy takich zadaniach mogą się okazać pomocne technologie przetwarzania języka naturalnego (ang. \english{natural language processing}, NLP}).
 
-Dużym obszarem, w którym aplikacja mobilna mogłaby się rozwinąć jest testowanie. Zaczynając od pokrycia testami jednostkowymi całego kodu, przez testy integracyjne aż do testów interfejsu użytkownika -- dzięki kompleksowemu testowaniu aplikacja mogłaby dużo zyskać na stabilności i bezpieczeństwie. W dalszych etapach rozwoju możnaby też rozważyć wykorzystanie praktyk ciągłej integracji i ciągłego wdrażania.
+Dużym obszarem, w którym aplikacja mobilna mogłaby się rozwinąć jest testowanie. Zaczynając od pokrycia testami jednostkowymi całego kodu, przez testy integracyjne aż do testów interfejsu użytkownika -- dzięki kompleksowemu testowaniu aplikacja mogłaby dużo zyskać na stabilności i bezpieczeństwie. W dalszych etapach rozwoju można by też rozważyć wykorzystanie praktyk ciągłej integracji i ciągłego wdrażania.
 
-\section{Problemy napotkane w trakcie pracy}
+%\section{Problemy napotkane w trakcie pracy}
 
 \backmatter
 
 %\bibliographystyle{plplain}  % bibtex
 %\bibliography{biblio} % bibtex
 \printbibliography           % biblatex
-\addcontentsline{toc}{chapter}{Bibliografia}
-
+\addcontentsline{toc}{chapter}{Bibliografia} 
 \begin{appendices}
-
+\ksremark{Trochę krótka bibliografia.}
 % TODO
 \chapter{Spis skrótów i symboli}
 
