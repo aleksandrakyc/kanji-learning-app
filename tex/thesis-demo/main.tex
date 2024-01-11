@@ -111,7 +111,7 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %                                             %
 % PROSZĘ NIE MODYFIKOWAĆ PONIŻSZYCH USTAWIEŃ! %
-%                                             %
+%                                             %k
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 
@@ -499,10 +499,12 @@ escapeinside={@*}{*@},%
 \Title
 
 \subsubsection*{Streszczenie}  
-(Streszczenie pracy – odpowiednie pole w systemie APD powinno zawierać kopię tego streszczenia.) \ksremark{Tę stronę trzeba uzupełnić.}
+%(Streszczenie pracy – odpowiednie pole w systemie APD powinno zawierać kopię tego streszczenia.) \ksremark{Tę stronę trzeba uzupełnić.}
+
+Praca opisuje aplikację mobilną do nauki znaków kanji wraz z panelem administracyjnym służącym do administracji jej użytkowników. Aplikacja mobilna jest przeznaczona na system Android i wykorzystuje rozwiązanie Firebase do autoryzacji użytkowników i przechowywania ich danych. W aplikacji zostały zaimplementowane funkcjonalności wspierające samodzielną naukę oraz naukę w grupach. Aplikacja oferuje przeglądanie słownika znaków poukładanych względem poziomu trudności, tworzenie własnych zestawów czy tryb nauki predefiniowanych lub nowo utworzonych zestawów znaków. W celu polepszenia jakości uczenia, aplikacja wykorzystuje algorytm powtórek w interwałach, który dostarcza użytkownikowi zadania dotyczące zagadnień, z którymi do tej pory radził sobie najgorzej. Do zarządzania użytkownikami i ich uprawnieniami jest przeznaczony panel administratora, czyli aplikacja webowa napisana z użyciem narzędzia Angular. 
 
 \subsubsection*{Słowa kluczowe} 
-(2-5 slow (fraz) kluczowych, oddzielonych przecinkami)
+Android, nauka języka japońskiego, aplikacja mobilna, kanji
 
 \subsubsection*{Thesis title} 
 \begin{otherlanguage}{british}
@@ -511,14 +513,14 @@ escapeinside={@*}{*@},%
 
 \subsubsection*{Abstract} 
 \begin{otherlanguage}{british}
-(Thesis abstract – to be copied into an appropriate field during an electronic submission – in English.)
+
+This thesis describes a mobile application for learning kanji as well as an administration panel used to manage the application's users. The mobile application is designed to run on the Android system and uses Firebase to authorize users and store their data. The application has features that support individual as well as group learning. The user can browse kanji sorted by difficulty levels, create custom sets and a use learning mode for predefined as well as custom sets. In order to improve learning quality the app uses spaced repetition, which is an algorithm designed to ask the user about characters that have been previously the most difficult for them. Users and their permissions are managed via the administration panel, a web application written in the Angular framework.
+
 \end{otherlanguage}
 \subsubsection*{Key words}  
 \begin{otherlanguage}{british}
-(2-5 keywords, separated by commas)
+Android, Japanese language learning, mobile application, kanji
 \end{otherlanguage}
-
-
 
 %%%%%%%%%%%%%%%%%% SPIS TRESCI %%%%%%%%%%%%%%%%%%%%%%
 % Add \thispagestyle{empty} to the toc file (main.toc), because \pagestyle{empty} doesn't work if the TOC has multiple pages
@@ -540,8 +542,7 @@ escapeinside={@*}{*@},%
 \chapter{Wstęp}
 \label{ch:wstep}
 
-\ksremark{Wstępem zajmiemy się na końcu.}
-Aby wyjaśnić cel tej pracy inżynierskiej, należy wspomnieć o kilku ważnych pojęciach związanych z językiem japońskim i jego nauką. Kanji razem z sylabariuszami hiragana i katakana oraz znanymi nam cyframi arabskimi i alfabetem romańskim tworzą całość japońskiego alfabetu. Są to znaki logograficzne, co oznacza że przeciwnie do alfabetów składających się z głosek, każdy znak oznacza jakieś pojęcie. Kompleksowa lista wszystkich kanji nie istnieje, jednak ich liczbę szacuje się na około czterdziestu tysięcy. Jest to ogromna liczba, na którą składa się wiele znaków przestarzałych lub bardzo rzadko używanych. Zamiast niej częstym wskaźnikiem płynności językowej w kontekście kanji jest pojęcie \textit{jōyō kanji}, które oznacza zestaw znaków wymagany przez japoński system edukacji. Po ukończeniu szkoły średniej Japończyk posługuje się 2136 znakami kanji. Podobna liczba potrzebna jest, aby zdać test znajomości języka japońskiego dla obcokrajowców (jap. \japanese{日本語能力試験}, \ksremark{Może rōmaji tu jeszcze?} ang. \textit{Japanese Language Proficiency Test} \ksremark{Angielskie słowa i frazy będziemy pisać w komendzie \english{english}. Ta komenda składa kursywą i (ważniejsze) przełącza \LaTeX\ na angielską typografię, m. in. zasady dzielenia wyrazów itd.}) na najwyższym poziomie oraz zawiera się w około 98 procentach tekstu pisanego.
+Aby wyjaśnić cel tej pracy inżynierskiej, należy wspomnieć o kilku ważnych pojęciach związanych z językiem japońskim i jego nauką. Kanji razem z sylabariuszami hiragana i katakana oraz znanymi nam cyframi arabskimi i alfabetem romańskim tworzą całość japońskiego alfabetu. Są to znaki logograficzne, co oznacza że przeciwnie do alfabetów składających się z głosek, każdy znak oznacza jakieś pojęcie. Kompleksowa lista wszystkich kanji nie istnieje, jednak ich liczbę szacuje się na około czterdziestu tysięcy. Jest to ogromna liczba, na którą składa się wiele znaków przestarzałych lub bardzo rzadko używanych. Zamiast niej częstym wskaźnikiem płynności językowej w kontekście kanji jest pojęcie \textit{jōyō kanji}, które oznacza zestaw znaków wymagany przez japoński system edukacji. Po ukończeniu szkoły średniej Japończyk posługuje się 2136 znakami kanji. Podobna liczba potrzebna jest, aby zdać test znajomości języka japońskiego dla obcokrajowców (jap. \japanese{日本語能力試験, Nihongo nōryoku shiken}, ang. \english{Japanese Language Proficiency Test}) na najwyższym poziomie oraz zawiera się w około 98 procentach tekstu pisanego.
 
 Zaznajomienie się ze znakami kanji to nieodłączna część nauki języka japońskiego. Co prawda uparty uczeń może zaprzestać na nauce gramatyki, wymowy i zromanizowanego zapisu \textit{rōmaji}, ale poskutkuje to wątpliwą płynnością językową, gdyż nie będzie w stanie przeczytać nawet książki lub restauracyjnego menu. Dla początkującego tak duża ilość materiału może być odrzucająca, dlatego na rynku pojawiło się wiele rozwiązań, które pomagają użytkownikowi w nauce kanji. Jednym z takich rozwiązań jest aplikacja mobilna opracowana na rzecz tej pracy inżynierskiej.
 
@@ -550,8 +551,9 @@ Celem pracy jest stworzenie rozwiązania wspomagającego ucznia w nauce kanji ja
 Rozwiązanie opisane w tej pracy to obok aplikacji mobilnej system wspomagający jej działanie. Na zakres pracy składa się sama aplikacja, baza danych dotyczących użytkowników oraz panel administracyjny jako aplikacja webowa. Rozwiązanie obsługuje trzy rodzaje użytkowników, którymi są uczeń, nauczyciel i administrator. Uczeń to użytkownik korzystający z takich funkcjonalności aplikacji jak przeglądanie słownika kanji, tworzenie zestawów znaków oraz tryb nauki. Aby ułatwić wybór znaków do nauki, aplikacja jest wyposażona w predefiniowane zestawy, które odpowiadają poziomom egzaminu językowego lub kolejnym klasom w japońskim szkolnictwie. Nauczyciel to użytkownik, który może tworzyć grupy uczniów, zadawać im zadania domowe i sprawdzać ich postępy. Takie rozwiązanie ma pomagać w nauce w trybie zajęć grupowych, gdzie nauczyciel spotyka się z uczniami kilka razy w miesiącu i chce motywować do dalszej pracy w domu. 
 
 % TODO
-\chapter{Komputerowe wspomaganie nauki znaków kanji w języku japońskim}
-\ksremark{Później zmienimy tytuł rozdziału na coś bardziej związanego z pracą niż dość ogólna «analiza tematu».}
+\chapter{Komputerowe wspomaganie nauki znaków kanji}
+%stwierdziłam że usunę 'w języku japońskim' bo to trochę masło maślane, kanji występują tylko w japońskim, w chinskim i koreańskim mają inne nazwy 
+
 \section{Nauka języków obcych wspomagana komputerowo}
 %\begin{itemize}
 %\item sformułowanie problemu
@@ -571,13 +573,13 @@ Rozwiązanie opisane w tej pracy to obok aplikacji mobilnej system wspomagający
 
 Próby usystematyzowania nauki, szczególnie gdy materiał wymaga więcej zapamiętywania niż analizy problemów, są naturalnie występującym skutkiem konieczności żmudnego, wielokrotnego powtarzania. Uczniowie wykazujący się większym sprytem niż pracowitością szukają drogi na skróty, aby tę samą ilość materiału przyswoić w krótszym czasie. Tak powstały pierwsze metody technik zapamiętywania, na przykład fiszki, czyli niewielkie kawałki papieru z pytaniem na jednej stronie i odpowiedzią na drugiej. Taki system pozwala na kompaktowe przechowywanie materiału, co pozwala uczyć się również w krótkich chwilach czasu i daleko od domu, na przykład w autobusie. 
 
-Dziennikarz Sebastian Leitner w 1972 wymyślił sposób na dalsze usprawnienie nauki za pomocą fiszek \cite{bib:internetLeitner}. W metodzie Leitnera fiszki są podzielone na grupy względem tego, jak dobrze uczeń zna dany materiał. Jeżeli uczeń odpowie dobrze na dane pytanie, przenosi fiszkę do następnego pudełka. Jeśli odpowie źle, fiszka wraca na początek. Grupy różni to, jak często użytkownik jest zobowiązany powtarzać dany materiał. Im materiał lepiej znany, tym rzadziej uczeń musi go powtarzać. 
+Dziennikarz Sebastian Leitner w 1972 wymyślił sposób na dalsze usprawnienie nauki za pomocą fiszek \cite{bib:internetLeitner, bib:duolingoHLR}. W metodzie Leitnera fiszki są podzielone na grupy względem tego, jak dobrze uczeń zna dany materiał. Jeżeli uczeń odpowie dobrze na dane pytanie, przenosi fiszkę do następnego pudełka. Jeśli odpowie źle, fiszka wraca na początek. Grupy różni to, jak często użytkownik jest zobowiązany powtarzać dany materiał. Im materiał lepiej znany, tym rzadziej uczeń musi go powtarzać \cite{bib:leitner}. Rysunek \ref{fig:leitner} obrazuje ideę działania systemu Leitnera.
 
 \begin{figure}
 \centering
 \includegraphics[width=0.5\textwidth]{leitner_system}
 \caption{Ilustracja reprezentująca system wykorzystujący fiszki.}
-\label{fig:etykieta-rysunku1}
+\label{fig:leitner}
 \end{figure}
 %https://en.wikipedia.org/wiki/Spaced_repetition#/media/File:Leitner_system_alternative.svg
 
@@ -585,11 +587,11 @@ Sposób Leitnera, mimo że skuteczny, jest żmudny do implementacji. Uczeń musi
 
 Algorytm powtórek w interwałach (ang. \english{spaced repetition}), którego papierową implementacją jest wyżej wspomniany system Leitnera, został poddany wielokrotnym badaniom \cite{bib:artykulAlzheimer,bib:artykulSpaced}. Wskazują one nie tylko na poprawę jakości zapamiętywania danego materiału, ale też na ogólną poprawę pamięci, szczególnie u osób chorujących na chorobę Alzheimera lub inne schorzenia związane z pogorszeniem umiejętności zapamiętywania \cite{bib:artykulAlzheimer}. Metoda powtórek w~interwałach jest szczególnie użyteczna w nauce słownictwa języków obcych. Jest to spowodowane faktem, że informacje do przyswojenia są liczne, lecz małe. Tę samą zasadę można wykorzystać przy nauce znaków kanji. 
 
-Analiza rozwiązań dostępnych na rynku i badań wskazuje na komercyjny i naukowy sukces metody powtórek w interwałach. To zdroworozsądkowe podejście ma realny wpływ na szybkość i jakość przyswajania wiedzy. Przez ostatnie kilkadziesiąt lat próbowano udoskonalić ten względnie prosty algorytm z użyciem np. metod sztucznej inteligencji do wyliczania interwałów \cite{bib:internetNN}. Takie podejście ma mieszane rezultaty, nie jest jasne jak realny jest wpływ optymalizacji długości interwału na jakość nauki \cite[rozdział 6]{bib:ksiazkaEssays}.
+Analiza rozwiązań dostępnych na rynku i badań wskazuje na komercyjny i naukowy sukces metody powtórek w interwałach. To zdroworozsądkowe podejście ma realny wpływ na szybkość i jakość przyswajania wiedzy. Przez ostatnie kilkadziesiąt lat próbowano udoskonalić ten względnie prosty algorytm z użyciem np. metod sztucznej inteligencji do wyliczania interwałów \cite{bib:internetNN, bib:lstms}. Takie podejście ma mieszane rezultaty, nie jest jasne jak realny jest wpływ optymalizacji długości interwału na jakość nauki \cite[rozdział 6]{bib:ksiazkaEssays}.
 
 \section{Rozwiązania dostępne na rynku}
 
-Aktualnie formą nauczania języków wspomaganą komputerowo cieszącą się szerokim zainteresowaniem jest jej poddziedzina, czyli nauczanie języków obcych wspomagane przez urządzenia mobilne (ang. \english{Mobile-Assisted Language Learning, MALL}) \cite{bib:artykulDuolingo}. Największą popularnością \cite{bib:internetDuolingo,bib:artykulDuolingo} cieszy się aplikacja \href{https://pl.duolingo.com/}{Duolingo}\footnote{\url{https://pl.duolingo.com/}}, która umożliwia naukę pokaźniej listy języków (aż czterdziestu trzech na czas pisania tej pracy) z urządzenia mobilnego lub strony internetowej. Jednym z powodów dobrego przyjęcia Duolingo przez uczniów języków obcych jest podejście bogate w gry i zabawy, motywujące użytkownika przez punkty, nagrody i rankingi \cite{bib:artykulDuolingo}. Aplikacja nie wymaga od użytkownika dużego zaangażowania. Tworzenie własnych zestawów fiszek nie jest konieczne, wystarczy codziennie wykonać kilkanaście zadań wygenerowanych przez system. 
+Aktualnie formą nauczania języków wspomaganą komputerowo cieszącą się szerokim zainteresowaniem jest jej poddziedzina, czyli nauczanie języków obcych wspomagane przez urządzenia mobilne (ang. \english{Mobile-Assisted Language Learning, MALL}) \cite{bib:artykulDuolingo}. Największą popularnością \cite{bib:internetDuolingo,bib:artykulDuolingo} cieszy się aplikacja \href{https://pl.duolingo.com/}{Duolingo}\footnote{\url{https://pl.duolingo.com/}}, która umożliwia naukę pokaźniej listy języków (aż czterdziestu trzech na czas pisania tej pracy) z urządzenia mobilnego lub strony internetowej. Jednym z powodów dobrego przyjęcia Duolingo przez uczniów języków obcych jest podejście bogate w gry i zabawy, motywujące użytkownika przez punkty, nagrody i rankingi \cite{bib:artykulDuolingo,bib:duolingoHLR}. Aplikacja nie wymaga od użytkownika dużego zaangażowania. Tworzenie własnych zestawów fiszek nie jest konieczne, wystarczy codziennie wykonać kilkanaście zadań wygenerowanych przez system. 
 
 Innym, bardziej angażującym użytkownika programem chętnie wykorzystywanym do nauki jest \href{https://apps.ankiweb.net/}{Anki}\footnote{\url{https://apps.ankiweb.net/}}. Jest to aplikacja oferująca większą możliwość dostosowania jej do własnych potrzeb, z tego powodu nie jest ograniczona do nauki języków obcych. Użytkownik ma możliwość stworzenie własnego zestawu do nauki złożonego z fiszek, który jest później przyswajany w interwałach zgodnie z zasadą powtórek w interwałach. Zaletą Anki jest opcja eksportowania i dzielenia się zestawami między użytkownikami. 
 
@@ -624,7 +626,7 @@ Nauka znaków kanji to wieloetapowy proces. Aplikacje i inne pomoce naukowe prze
 
 \subsection{Wymagania funkcjonalne}
 
-Wymagania funkcjonalne zostały określone jako lista funkcjonalności z przypisanymi priorytetami. Najważniejsze są wymagania określone priorytetem Krytyczny, potem Ważny, następnie Niski, najmniejszą wagę mają te z oznacznikiem Opcjonalny. \ksremark{Trzeba napisać, gdzie jest ta lista.}
+Wymagania funkcjonalne zostały określone jako lista funkcjonalności z przypisanymi priorytetami, przedstawiona w formie tabeli \ref{id:tab:wymagania}. Najważniejsze są wymagania określone priorytetem Krytyczny, potem Ważny, następnie Niski, najmniejszą wagę mają te z oznacznikiem Opcjonalny. 
 
 \begin{table}[] 
 \centering
@@ -633,26 +635,25 @@ Wymagania funkcjonalne zostały określone jako lista funkcjonalności z przypis
 \begin{tabular}{p{0.8\textwidth}|p{0.2\textwidth}}
 przypadek użycia & priorytet \\ \hline
 Użytkownik może przeglądać listę znaków kanji podzielonych na predefiniowane kategorie  &  Krytyczny   \\
-Użytkownik może uczyć się wybranego zestawu znaków według metody powtórek w interwałach, w której najtrudniejsze dla niego znaki będą się pojawiały w najkrótszych interwałach & Ważny \\
-Użytkownik ma dostęp do statystyk danego podejścia & Niski \\
+Użytkownik może uczyć się wybranego zestawu znaków według metody powtórek w interwałach, w której najtrudniejsze dla niego znaki będą się pojawiały w najkrótszych interwałach & Krytyczny \\
 Użytkownik może zalogować się loginem i hasłem jako uczeń lub nauczyciel & Ważny \\
 Użytkownik może się zarejestrować & Ważny \\
-Użytkownik może poprosić przy rejestracji o uprawnienia nauczyciela & Niski \\
+Administrator ma dostęp do osobnego panelu administracyjnego, na którym może zarządzać uprawnieniami użytkowników & Ważny \\
 Zalogowany użytkownik może tworzyć własne zestawy znaków & Ważny \\
 Nauczyciel może tworzyć grupy użytkowników, którzy uczą się razem & Ważny \\
 Nauczyciel może zadać zadanie domowe wybranej grupie użytkowników & Ważny \\
+Użytkownik może poprosić przy rejestracji o uprawnienia nauczyciela & Niski \\
 Nauczyciel może sprawdzać postępy uczniów i komentować ich podejścia & Niski \\
-Administrator ma dostęp do osobnego panelu administracyjnego, na którym może zarządzać uprawnieniami użytkowników & Ważny \\
-Zalogowany użytkownik może dzielić się swoimi zestawami znaków \\za pomocą linku & Opcjonalny \\
 W trakcie nauki uczeń może ćwiczyć pisanie rysując na telefonie & Niski \\
+Użytkownik ma dostęp do statystyk danego podejścia & Niski \\
+Zalogowany użytkownik może dzielić się swoimi zestawami znaków za pomocą linku & Opcjonalny \\
 \end{tabular}
 \end{table}
-\ksremark{Tab. \ref{id:tab:wymagania}: uporządkowałbym je wg priorytetu (od najwyższego).}
 
 \subsection{Wymagania niefunkcjonalne}
 Wymagania niefunkcjonalne, w odróżeniu od funkcjonalnych, nie opisują konkretnych zachowań systemu, a pewne cechy, które określają ogólne zachowanie systemu. Dla aplikacji stworzonej na potrzeby tej pracy wymagania niefunkcjonalne zostały określone w formie listy cech. 
 \begin{itemize}
-\item Aplikacja ma lokalną bazę danych ze znakami kanji, ich złożeniami i przykładowymi zdaniami nieprzekraczającą 20~MB. \ksremark{Może dodać, że aplikacja ma być na telefonie?}
+\item Aplikacja ma przechowywaną lokalnie na telefonie użytkownika bazę danych ze znakami kanji, ich złożeniami i przykładowymi zdaniami nieprzekraczającą 20~MB. 
 \item Podstawowa funkcjonalność aplikacji jest dostępna offline.
 \item System bezpiecznie przechowuje dane użytkowników w bazie danych hostowanej w chmurze.
 \item Aplikacja jest skierowana do osób operujących językiem angielskim.
@@ -660,31 +661,30 @@ Wymagania niefunkcjonalne, w odróżeniu od funkcjonalnych, nie opisują konkret
 \end{itemize}
 
 \section{Diagramy przypadków użycia}
-\ksremark{odnośniki do rysunków}
-Ze względu na dość dużą ilość \ksremark{policzalne, zatem: liczba} przypadków użycia, zostały one zaprezentowane jako osobne diagramy UML dla każdego z aktorów. Gość to użytkownik niezalogowany. Uczeń do użytkownik zalogowany, a Nauczyciel ma dodatkowo nadane prawa nauczycielskie. Administrator to użytkownik z dostępem do panelu administratora. Nie ma przeszkód, żeby użytkownik był jednocześnie nauczycielem i administratorem lub uczniem i administratorem.
+Ze względu na dość dużą liczbę przypadków użycia, zostały one zaprezentowane jako osobne diagramy UML dla każdego z aktorów. Diagram przypadków użycia dla Ucznia jest przedstawiony na rysunku \ref{fig:uczen}, dla Nauczyciela \ref{fig:nauczyciel}, dla Administratora \ref{fig:admin} a dla Gościa \ref{fig:guest}. Gość to użytkownik niezalogowany. Uczeń do użytkownik zalogowany, a Nauczyciel ma dodatkowo nadane prawa nauczycielskie. Administrator to użytkownik z dostępem do panelu administratora. Nie ma przeszkód, żeby użytkownik był jednocześnie Nauczycielem i Administratorem lub Uczniem i Administratorem.
 \begin{figure}[]
 \centering
 \includegraphics[width=\textwidth]{Uczen}
 \caption{Diagram przypadków użycia dla Ucznia.}
-\label{fig:etykieta-rysunku}
+\label{fig:uczen}
 \end{figure}
 \begin{figure}[]
 \centering
 \includegraphics[width=\textwidth]{Nauczyciel}
 \caption{Diagram przypadków użycia dla Nauczyciela.}
-\label{fig:etykieta-rysunku}
+\label{fig:nauczyciel}
 \end{figure}
 \begin{figure}[]
 \centering
 \includegraphics[width=\textwidth]{Admin}
 \caption{Diagram przypadków użycia dla Administratora.}
-\label{fig:etykieta-rysunku}
+\label{fig:admin}
 \end{figure}
 \begin{figure}[]
 \centering
 \includegraphics[width=\textwidth]{Gość}
 \caption{Diagram przypadków użycia dla Gościa.}
-\label{fig:etykieta-rysunku}
+\label{fig:guest}
 \end{figure}
 
 
@@ -719,9 +719,7 @@ Do tworzenia aplikacji użyto środowiska Android Studio Giraffe\footnote{\url{h
 
 Do zrealizowania aplikacji opisywanej w tej pracy kluczowym elementem było znalezienie odpowiedniego źródła wiedzy na temat kanji, słów i zdań w języku japońskim. Aby zachować najważniejszą funkcjonalność aplikacji (przeglądanie znaków, uczenie się zestawów) w trybie offline, zdecydowano się na bazę danych przechowywaną lokalnie na urządzeniu każdego z użytkowników. 
 
-Stworzenie tej aplikacji i pracy inżynierskiej jest możliwe dzięki projektowi Kanjium\footnote{\url{https://github.com/mifunetoshiro/kanjium}}. Jest to darmowa baza danych złożona z kilku plików (EDICT, KANJIDIC, KRADFILE) należących do  \english{Electronic Dictionary Research and Development Group} (EDRDG)\footnote{\url{https://www.edrdg.org/edrdg/licence.html}} Informacje na temat partykuł, fonetyki, homonimów, akcentu tonicznego i inne modyfikacje do wyżej wspomnianych plików są autorstwa Urosa Ozvatica. Na potrzeby aplikacji opisywanej w tej pracy baza została jedynie okrojona z pewnych niepotrzebnych części 
-\ksremark{np. czego? todo}
-, aby jej rozmiar umożliwiał lokalne przechowywanie na urządzeniach użytkowników. Baza danych Kanjium została wykorzystana w tej pracy zgodnie z licencjami grupy EDRDG oraz autora poprawek Urosa Ozvatica.
+Stworzenie tej aplikacji i pracy inżynierskiej jest możliwe dzięki projektowi Kanjium\footnote{\url{https://github.com/mifunetoshiro/kanjium}}. Jest to darmowa baza danych złożona z kilku plików (EDICT, KANJIDIC, KRADFILE) należących do  \english{Electronic Dictionary Research and Development Group} (EDRDG)\footnote{\url{https://www.edrdg.org/edrdg/licence.html}} Informacje na temat partykuł, fonetyki, homonimów, akcentu tonicznego i inne modyfikacje do wyżej wspomnianych plików są autorstwa Urosa Ozvatica. Na potrzeby aplikacji opisywanej w tej pracy baza została okrojona z niepotrzebnych części takich jak dane o synonimach, przysłowiach czy odmiany czasowników, aby jej rozmiar umożliwiał lokalne przechowywanie na urządzeniach użytkowników. Baza danych Kanjium została wykorzystana w tej pracy zgodnie z licencjami grupy EDRDG oraz autora poprawek Urosa Ozvatica.
 %https://github.com/mifunetoshiro/kanjium
 %https://www.edrdg.org/edrdg/licence.html
 %https://creativecommons.org/licenses/by-sa/4.0/
@@ -732,7 +730,7 @@ Ponieważ wyżej opisana baza danych zawiera pewne niezmieniające się informac
 %firebase auth, firestore
 Do zaimplementowania autoryzacji oraz bazy danych zawierającej informacje na temat zalogowanych użytkowników wykorzystano rozwiązanie Firebase\footnote{\url{firebase.google.com/}}. Jest to komplet funkcjonalności oferowanych developerom aplikacji mobilnych, webowych, gier i innych. W aplikacji opisywanej w tej pracy z kompletu narzędzi wykorzystano mechanizm autoryzacji użytkowników i Firestore, czyli bazę danych NoSQL. 
 
-Autoryzacja użytkowników z użyciem Firebase dostarcza programistom łatwe w użyciu metody, które umożliwiają logowanie się użytkowników przez email i hasło lub konto na wybranych portalach społecznościowych. W celu dalszego ułatwienia implementacji Firebase oferuje gotowy interfejs użytkownika przeznaczony do logowania, jednak w tej pracy nie wykorzystano tej możliwości. Autoryzacja użytkownika oferowana przez Firebase została wybrana dla aplikacji opisywanej w tej pracy, ponieważ gotowe, bezpieczne rozwiązanie pozwoliło na poświęcenie cennego czasu na implementację bardziej kluczowych funkcjonalności. Warto zauważyć, że Firebase jest płatne od pewnych progów zużycia zasobów, jednak są one praktycznie nieosiągalne dla aplikacji niedostępnej dla szerokiej publiki.
+Autoryzacja użytkowników z użyciem Firebase dostarcza programistom łatwe w użyciu metody, które umożliwiają logowanie się użytkowników przez email i hasło lub konto na wybranych portalach społecznościowych. W celu dalszego ułatwienia implementacji Firebase oferuje gotowy interfejs użytkownika przeznaczony do logowania, jednak w tej pracy nie wykorzystano tej możliwości. Autoryzacja użytkownika oferowana przez Firebase została wybrana dla aplikacji opisywanej w tej pracy, ponieważ gotowe, bezpieczne rozwiązanie pozwoliło na poświęcenie cennego czasu na implementację bardziej kluczowych funkcjonalności \cite{bib:ksiazkaFirebase}. Warto zauważyć, że Firebase jest płatne od pewnych progów zużycia zasobów, jednak są one praktycznie nieosiągalne dla aplikacji niedostępnej dla szerokiej publiki.
 
 Firestore, czyli baza danych oferowana jako część zestawu narzędzi Firebase, to baza NoSQL zorientowana na dokumenty. Oznacza to, że dane są przechowywane w dokumentach podobnych do formatu JSON. Różnice między bazami danych SQL i NoSQL leżą w ustrukturyzowaniu przechowywanych danych. SQL było rozwijane w czasach, gdy przechowywanie danych było bardzo drogie. Z tego powodu SQL zwraca dużą uwagę na unikanie duplikacji rekordów. Nowocześniejsze rozwiązania NoSQL mogą zajmować więcej miejsca, jednak są wygodniejsze w użyciu dla programistów. Nie mają stale ustalonych kolumn i nie są relacyjne. Ponieważ istnieje wiele rodzajów baz danych NoSQL, należy uważnie wybrać dystrybucję w zależności od potrzeb. Dla aplikacji rozwijanej na potrzeby tej pracy wybrano bazę danych NoSQL zorientowaną na dokumenty, ponieważ jest to najpopularniejsza alternatywa dla klasycznych, tabularycznych baz danych. Dodatkowym atutem jest łatwość użytku z perspektywy programisty, szczególnie we wczesnych fazach rozwoju aplikacji, gdy często zmienia się pomysł na zapisywanie i wykorzystywanie danych. 
 
@@ -769,10 +767,10 @@ Do instalacji aplikacji mobilnej użytkownik musi koniecznie posiadać urządzen
 
 Aby móc stworzyć swoją instancję systemu obsługującego dane użytkowników aplikacji mobilnej, konieczne jest urządzenie z dostępem do internetu i skonfigurowany projekt w narzędziu Firebase. Do zbudowania projektu będzie potrzebne następujące oprogramowanie:
 \begin{itemize}
-\item Android Studio,
-\item Angular w wersji 17,
-\item Node.js w wersji conajmniej 18.13 wraz z npm,
-\item przeglądarka internetowa (testowano na Firefox w wersji 120)
+\item Android Studio\footnote{\url{https://developer.android.com/studio}},
+\item Angular w wersji 17\footnote{\url{https://angular.io/}},
+\item Node.js w wersji conajmniej 18.13 wraz z npm\footnote{\url{https://nodejs.org/en}},
+\item przeglądarka internetowa (testowano na Firefox w wersji 120)\footnote{\url{https://www.mozilla.org/pl/firefox/new/}}
 \end{itemize}
 
 \section{Sposób instalacji i aktywacji}
@@ -780,7 +778,7 @@ Aby móc stworzyć swoją instancję systemu obsługującego dane użytkowników
 Podobnie jak wyżej, sposób instalacji i aktywacji oprogramowania będzie różny dla docelowego użytkownika aplikacji mobilnej i dla osoby zarządzającej systemem. 
 
 \subsection{Aplikacja mobilna}
-Większość popularnych aplikacji mobilnych w systemie Android można wygodnie i bezpiecznie zainstalować za pomocą Sklepu Play. W przypadku aplikacji opisywanej w tej pracy nie jest to możliwe, dlatego należy ręcznie pobrać plik z rozszerzeniem \texttt{apk} i otworzyć go przez menadżer plików w celu instalacji. Jeśli w przyszłości aplikacja mobilna byłaby dalej rozwijana, jest możliwość wykupienia dostępu do Sklepu Play dla deweloperów oraz opublikowania aplikacji do pobrania za darmo lub za pewną opłatą. 
+Większość popularnych aplikacji mobilnych w systemie Android można wygodnie i bezpiecznie zainstalować za pomocą Sklepu Play\footnote{\url{https://play.google.com/store/}}. W przypadku aplikacji opisywanej w tej pracy nie jest to możliwe, dlatego należy ręcznie pobrać plik z rozszerzeniem \texttt{apk} i otworzyć go przez menadżer plików w celu instalacji. Jeśli w przyszłości aplikacja mobilna byłaby dalej rozwijana, jest możliwość wykupienia dostępu do Sklepu Play dla deweloperów oraz opublikowania aplikacji do pobrania za darmo lub za pewną opłatą. 
 
 Po instalacji użytkownik może od razu przejść do korzystania z okrojonej wersji aplikacji lub zarejestrować się, aby mieć dostęp do pełnej funkcjonalności. Wersja bez rejestracji jest tożsama wersji bez dostępu do internetu, co oznacza brak możliwości przeglądania grup i zadań domowych oraz tworzenia nowych zestawów.
 
@@ -959,12 +957,12 @@ Aby skorzystać z funkcjonalności panelu administratora, należy się zalogowa�
 
 \section{Architektura systemu}
 
-System opisywany w tej pracy składa się z następujących części:
+Architektura systemu została zaprezentowana za pomocą diagramu na rysunku \ref{fig:archi}. Rozwiązanie opisywane w tej pracy składa się z następujących części:
 \begin{itemize}
-\item aplikacja mobilna do nauki kanji \ksremark{(roz. \ref{sec:1}) i analogicznie niżej},
-\item lokalna baza danych z danymi dotyczącymi języka japońskiego,
-\item baza danych przechowująca dane użytkowników, ich postępy oraz grupy, do których należą,
-\item panel administratora pozwalający na zarządzanie użytkownikami
+\item aplikacja mobilna do nauki kanji (roz. \ref{sec:1}),
+\item lokalna baza danych z danymi dotyczącymi języka japońskiego (roz. \ref{sec:2}),
+\item baza danych przechowująca dane użytkowników, ich postępy oraz grupy, do których należą (roz. \ref{sec:3}),
+\item panel administratora pozwalający na zarządzanie użytkownikami (roz. \ref{sec:4}),
 \end{itemize}
 
 \begin{figure}[]
@@ -973,30 +971,30 @@ System opisywany w tej pracy składa się z następujących części:
 \caption{Diagram przedstawiający architekturę systemu.}
 \label{fig:archi}
 \end{figure}
-\ksremark{Do rys. \ref{fig:archi} nie ma odnośnika w pracy.}
-%ten diagram jest na brudno
 
 \subsection{Aplikacja mobilna}
 \label{sec:1}
-\ksremark{Jakiś diagram modelu / diagram komponentów.}
+%\ksremark{Jakiś diagram modelu / diagram komponentów.}
 
 Większość aplikacji na system operacyjny Android jest napisanych zgodnie z architekturą MVC (\english{Model View Controller}), MVP (\english{Model View Presenter}) lub MVVM (\english{Model View ViewModel}). Wzorzec należy dobrać odpowiednio do rodzaju programu, jednak często wybór sprowadza się do preferencji programistów. 
 
 Według niektórych źródeł wzorzec MVC jest wymuszany przez samą strukturę aplikacji androidowych \cite{bib:internetMVC}. W tej wersji modelem są klasy reprezentujące dane, kontrolerem aktywności lub fragmenty stanowiące logikę działania aplikacji, a widokiem pliki z rozszerzeniem \texttt{xml} reprezentujące wygląd danego okna. Takie podejście nie oddaje do końca prawdy. Widok to statyczny plik \texttt{xml} -- nie jest w stanie sam odświeżać danych. Z tego powodu klasa aktywności oprócz odpowiedzialności kontrolera wykonuje rownież zadania widoku. Konsekwencją tego jest w pewnym sensie zatracenie się sensu architektury MVC, której głównym zadaniem jest rozdzielenie odpowiedzialności modelu, widoku i kontrolera. W większych projektach jest to dużym problemem, ponieważ utrudnia testy jednostkowe aplikacji.
 
-Odpowiedzią na ten problem jest architektura MVP, która w sposób dostosowany do aplikacji Androidowych rozdziela model, widok i odpowiednik kontrolera -- prezenter. Prezenter w tej wersji to osobna klasa w pełni oddzielona od widoku, co umożliwia testowanie jednostkowe logiki aplikacji. We wzorcu MVP jedynie widok dziedziczy po klasach typowych dla Androida, takich jak \english{Activity} lub \english{Fragment}. Wadą architektury MVP jest większa ilość szablonowego kodu, który należy napisać na potrzeby komunikacji między modelem, widokiem i prezenterem. Może to skutkować również mniejszą czytelnością.
+Odpowiedzią na ten problem jest architektura MVP, która w sposób dostosowany do aplikacji Androidowych rozdziela model, widok i odpowiednik kontrolera -- prezenter. Prezenter w tej wersji to osobna klasa w pełni oddzielona od widoku, co umożliwia testowanie jednostkowe logiki aplikacji \cite{bib:lou2016comparison}. We wzorcu MVP jedynie widok dziedziczy po klasach typowych dla Androida, takich jak \english{Activity} lub \english{Fragment}. Wadą architektury MVP jest większa ilość szablonowego kodu, który należy napisać na potrzeby komunikacji między modelem, widokiem i prezenterem. Może to skutkować również mniejszą czytelnością.
 
 Na etapie planowania architektury aplikacji mobilnej wybrano wzorzec MVC. Ponieważ MVC jest powszechny w materiałach edukacyjnych oraz w pewnym sensie wymuszany przez samo środowisko pracy w Androidzie, to podejście pozwoliło na skupienie się na odpowiednim działaniu aplikacji bez większego problemu z projektowaniem architektury systemu. W przypadku dalszego rozwijania aplikacji, również w kwestii testów jednostkowych, warto wykonać refraktoryzację kodu na wzorzec MVP. 
 
 \subsection{Panel administratora}
+\label{sec:2}
 
-Panel administratora to aplikacja webowa stworzona w całości dzięki frameworkowi Angular\footnote{\url{https://angular.io/}}. Ponieważ ta aplikacja nie jest zbyt rozbudowana, jej architektura nie jest skomplikowana i nie wymaga modyfikacji narzędzi dostarczanych przez Angular. Częściami aplikacji wykonanej w tym frameworku są komponenty, czyli widoki \ksremark{jakiś przykład}. Komponent ma plik z rozszerzeniem \texttt{html}, który definiuje wygląd elementu aplikacji oraz klasę w języku Typescript, która odpowiada za logikę. Komponenty używają serwisów, czyli klas wyspecjalizowanych do zarządzania danymi. Angular silnie polega na mechanizmie wstrzykiwania zależności, którego używa do łączenia serwisów z komponentami. 
+Panel administratora to aplikacja webowa stworzona w całości dzięki frameworkowi Angular\footnote{\url{https://angular.io/}}. Ponieważ ta aplikacja nie jest zbyt rozbudowana, jej architektura nie jest skomplikowana i nie wymaga modyfikacji narzędzi dostarczanych przez Angular. Częściami aplikacji wykonanej w tym frameworku są komponenty, czyli widoki. Przykładem komponentu jest pasek nawigacyjny, który widnieje w górnej części strony lub część strony odpowiedzialna za logowanie (rys. \ref{fig:login}). Komponent ma plik z rozszerzeniem \texttt{html}, który definiuje wygląd elementu aplikacji oraz klasę w języku Typescript, która odpowiada za logikę. Komponenty używają serwisów, czyli klas wyspecjalizowanych do zarządzania danymi. Angular silnie polega na mechanizmie wstrzykiwania zależności, którego używa do łączenia serwisów z komponentami. 
 
 \section{Organizacja baz danych}
 
 W rozwiązaniu opisywanym w tej pracy występują dwie bazy danych. Pierwsza z nich jest przechowywana lokalnie i dotyczy reguł języka japońskiego, a druga znajduje się na zdalnym serwerze i zawiera dane dotyczące użytkowników i grup.
 
 \subsection{Baza danych dotycząca języka japońskiego}
+\label{sec:3}
 
 Dane dotyczące znaków, słownictwa, przykładowych zdań i innych informacji są przechowywane lokalnie w pliku sqlite. Jest on okrojoną wersją bazy danych Kanjium\footnote{\url{https://github.com/mifunetoshiro/kanjium}}, która łączy wiele źródeł informacji na temat języka japońskiego w spójną bazę danych. 
 
@@ -1007,13 +1005,13 @@ Ostatecznie okrojona baza danych ma rozmiar 18 MB, co nieco przekracza wstępne 
 Diagram przedstawiający schemat bazy danych (rys. \ref{fig:kanjidb}) został wygenerowany przez otwartoźródłowe oprogramowanie schemacrawler\footnote{\url{https://www.schemacrawler.com/}}.
 \begin{figure}[]
 \centering
-\includegraphics[width=0.8\textwidth]{kanjidb}
+\includegraphics[width=0.8\textwidth]{kanjidbrelations}
 \caption{Diagram przedstawiający schemat bazy danych sqlite dotyczących języka japońskiego.}
 \label{fig:kanjidb}
 \end{figure}
-\ksremark{Rys. \ref{fig:kanjidb}: Czy są jakieś relacje między tabelami?} %nie ma foreign keys wiec chyba nie?
 
 \subsection{Baza danych przechowująca dane użytkowników}
+\label{sec:4}
 
 Dane dotyczące użytkowników są przechowywane w bazie danych NoSQL zorientowanej na dokumenty. Na rysunku \ref{fig:firestore} przedstawiono kolekcje jako foldery, które przechowują dokumenty. Dokumenty mogą mieć zagnieżdżone kolekcje, które na diagramie są zaznaczone pogrubionym tekstem. 
 
@@ -1037,18 +1035,22 @@ W tym podrozdziale zostanie opisana struktura projektów aplikacji mobilnej i pa
 
 \subsection{Aplikacja mobilna}
 
-Kod aplikacji mobilnej został podzielony na pięć pakietów, które odpowiadają za różne części funkcjonowania programu. Oprócz nich w repozytorium znajduje się plik \texttt{MainActivity.java}, który pełni rolę punktu startowego programu, zarządzania nawigacją oraz paskiem menu. 
+Kod aplikacji mobilnej został podzielony na pięć pakietów, które odpowiadają za różne części funkcjonowania programu. Pakiety i zależności między nimi zostały zaprezentowane na rysunku \ref{fig:package}. Oprócz nich w repozytorium znajduje się plik \texttt{MainActivity.java}, który pełni rolę punktu startowego programu, zarządzania nawigacją oraz paskiem menu. 
 
-Aplikacja jest zbudowana z następujących pakietów \ksremark{diagram pakietów}:
+Aplikacja jest zbudowana z następujących pakietów:
 \begin{itemize}
 \item \texttt{adapters} -- klasy pośredniczące między elementami interfejsu użytkownika i danymi,
 \item \texttt{models} -- klasy reprezentujące dane,
 \item \texttt{types} -- typy wyliczeniowe,
 \item \texttt{utils} -- klasy pomocnicze, służące do komunikacji z bazą danych lub generowania pytań,
 \item \texttt{views} -- klasy obsługujące interfejs użytkownika.
-\end{itemize}
-
-
+\end{itemize} 
+\begin{figure}[]
+\centering
+\includegraphics[width=\textwidth]{packages}
+\caption{Diagram modułu aplikacji panelu administratora.}
+\label{fig:package}
+\end{figure}
 
 \subsection{Panel administratora}
 
@@ -1069,7 +1071,7 @@ Kod panelu administratora składa się z komponentów odpowiedzialnych za interf
 .2 shared/.
 .3 auth.service.
 .3 data.service.
-}angy
+}
 \caption{Struktura plików w kodzie panelu administratora.}
 \label{fig:dirtree}
 \end{figure}
@@ -1080,7 +1082,11 @@ Kod panelu administratora składa się z komponentów odpowiedzialnych za interf
 \caption{Diagram modułu aplikacji panelu administratora.}
 \label{fig:angular}
 \end{figure}
-\ksremark{Rys. \ref{fig:angular}: Czy dałoby się, żeby ten rysunek nie był tak mocno poziomy. Jaką relację oznaczają strzałki na tym diagramie?}
+\ksremark{Rys. \ref{fig:angular}: Czy dałoby się, żeby ten rysunek nie był tak mocno poziomy. Jaką relację oznaczają strzałki na tym diagramie?}
+
+%\section{Algorytm SM-2}
+
+
 
 % TODO
 \chapter{Weryfikacja i walidacja}
@@ -1109,10 +1115,9 @@ Panel administratora został przetestowany z użyciem przeglądarki internetowej
 
 Na potrzeby zautomatyzowanego testowania aplikacji przeznaczonych na system Android można wykorzystać:
 \begin{itemize}
-\item testy jednostkowe -- testujące pewien kawałek \ksremark{fragment} kodu taki jak klasa lub metoda,
+\item testy jednostkowe -- testujące pewien fragment kodu taki jak klasa lub metoda,
 \item testy integracyjne -- wykorzystujące narzędzia takie jak Robolectric\footnote{\url{https://robolectric.org/}} do testowania większej części kodu lokalnie lub na urządzeniu,
-\item testy interfejsu użytkownika -- symulujące realne używanie aplikacji przez użytkownika za pomocą metod umożliwiających interakcję z interfejsem użytkownika z poziomu kodu.
-\ksremark{Ta lista nie jest zgodna z rys. \ref{fig:testscopes}. Tak ma być?}
+\item testy kompleksowe (ang. \english{end-to-end}) -- symulujące realne używanie aplikacji przez użytkownika za pomocą metod umożliwiających interakcję z interfejsem użytkownika z poziomu kodu.
 \end{itemize}
 
 \begin{figure}[]
@@ -1122,7 +1127,7 @@ Na potrzeby zautomatyzowanego testowania aplikacji przeznaczonych na system Andr
 \label{fig:testscopes}
 \end{figure}
 
-Na zakres testowania aplikacji mobilnej opisywanej w tej pracy oprócz testów manualnych składają się testy jednostkowe w niepełnym zakresie (tylko niektóre klasy zostały przetestowane). Aby móc bezpiecznie wydać aplikację na przykład w Sklepie Play, należałoby rozszerzyć testowanie o testy integracyjne i testy interfejsu użytkownika. 
+Na zakres testowania aplikacji mobilnej opisywanej w tej pracy oprócz testów manualnych składają się testy jednostkowe tych klas, które są odpowiedzialne za zadania bardziej skomplikowane niż wymiana informacji z bazą danych. Aby móc bezpiecznie wydać aplikację na przykład w Sklepie Play, należałoby rozszerzyć testowanie o testy integracyjne i testy interfejsu użytkownika. 
 
 Przykładem klasy przetestowanej za pomocą testów jednostkowych jest \texttt{QuestionGenerator}. Ta klasa jest odpowiedzialna za generowanie pytań (obiektów typu \texttt{QuestionModel}) w sposób, który pozwoli jak najlepiej przyswoić informacje użytkownikowi. Bierze pod uwagę między innymi liczbę odpowiadającą każdemu znakowi, która oznacza biegłość użytkownika w pytaniach dotyczących tego znaku. Na podstawie tych danych generuje losowe pytania dotyczących tych znaków w zestawie, z którymi użytkownik do tej pory radził sobie najgorzej. 
 
@@ -1131,11 +1136,9 @@ Do przetestowania wyżej opisanej klasy użyto narzędzia Junit\footnote{\url{ht
 \section{Wykryte i usunięte błędy}
 
 %crashe przy uczeniu
-Przy testach manualnych aplikacji mobilnej wykryto wiele błędów, większość z nich skutkowała gwałtownym zatrzymaniem działania aplikacji spowodowanym na przykład \ksremark{najpierw po polsku, potem po angielsku} \english{null pointer exception} lub nieprawidłowym indeksowaniem listy czy tablicy. Takie błędy wynikały z drobnych pomyłek w kodzie i zostały szybko poprawione. Za pomocą testów automatycznych udało się wykryć błąd w klasie odpowiedzialnej za generowanie pytań, która przy przyjęciu błędnie sformatowanego znaku generowała na miejscu pytania wartość \texttt{null}, co powodowało późniejsze gwałtowne zatrzymanie aplikacji.
+Przy testach manualnych aplikacji mobilnej wykryto wiele błędów, większość z nich skutkowała gwałtownym zatrzymaniem działania aplikacji spowodowanym na przykład błędnym odwołaniem do zmiennej lub nieprawidłowym indeksowaniem listy czy tablicy. Takie błędy wynikały z drobnych pomyłek w kodzie i zostały szybko poprawione. Za pomocą testów automatycznych udało się wykryć błąd w klasie odpowiedzialnej za generowanie pytań, która przy przyjęciu błędnie sformatowanego znaku generowała na miejscu pytania wartość \texttt{null}, co powodowało późniejsze gwałtowne zatrzymanie aplikacji.
 
 Przykładowy błąd przy rozwijaniu panelu administratora ujawnił się przy budowaniu aplikacji i umieszczaniu jej na zdalnym serwerze. Przy pierwszych próbach odwiedzenia strony internetowej zawierającej panel administratora wyświetlał się pusty biały ekran. Było to spowodowane błędną konfiguracją przy budowaniu za pomocą Angulara, który używając domyślnej optymalizacji nie współpracował z narzędziami autoryzacji użytkownika Firebase. Problem udało się usunąć dzięki użyciu flagi (\texttt{--optimization=false}) przy budowaniu aplikacji.
-
-Ponieważ zakres testowania jest niepełny, możliwe są niewykryte błędy w kodzie aplikacji mobilnej oraz webowej.
 
 % TODO
 \chapter{Podsumowanie i wnioski}
@@ -1146,18 +1149,17 @@ Ponieważ zakres testowania jest niepełny, możliwe są niewykryte błędy w ko
 
 %\section{Uzyskane wyniki}
 
-W trakcie pisania tej pracy udało się zbudować aplikację mobilną do nauki znaków kanji oraz system służący do administracji jej użytkownikami. Wymagania funkcjonalne zostały w większości spełnione, jednak pozostało kilka elementów które zostały pominięte na rzecz ważniejszych zadań, których nie udało się przewidzieć na początku planowania pracy. \ksremark{$\gets$ nie tak. Tutaj piszemy, jakie ma cechy aplikacja. Czyli coś w stylu: W ramach niniejszej pracy inżynierskiej powstała aplikacja taka i siaka. Aplikacja umożliwia, no i tu piszemy, jaka jest jej funkcjonalność.} Najważniejsze cechy aplikacji, czyli możliwość przeglądania słownika znaków oraz nauka z użyciem metody powtórek w interwałach zostały zaimplementowane. Pominięto takie funkcjonalności jak nauka pisania poprzez rysowanie na telefonie lub informacja zwrotna dla nauczyciela zadającego zadanie domowe. Aplikacja jest otwarta na modyfikacje, więc w przyszłości \ksremark{To jest przypadek «od więc nie zaczyna się zdania» :-) Lepiej będzie: «\ldots\ modyfikacje, w przyszłości więc jest \ldots».} jest możliwość dodania wyżej wymienionych przypadków użycia. Rozwiązanie spełnia założenia wymagań niefunkcjonalnych za wyjątkiem nieco większego pliku lokalnie przechowywanej bazy danych niż zakładano.
+W ramach niniejszej pracy inżynierskiej udało się zbudować aplikację mobilną do nauki znaków kanji oraz strone internetową służącą do administracji. Aplikacja mobilna oferuje możliwość przeglądania słownika znaków według predefiniowanych poziomów trudności oraz nauki owych lub samodzielnie stworzonych zestawów zgodnie z metodą powtórek w interwałach. Dodatkowo, dzięki połączeniu z bazą danych hostowaną w chmurze i serwisem autoryzacji użytkowników Firebase jest możliwość stworzenia konta z uprawnieniami Ucznia bądź złożenia prośby o uprawnienia Nauczyciela, który może tworzyć grupy wspólnej nauki i zadawać im zadania domowe. Kolejny typ użytkownika, czyli Administrator, ma pogląd na listę użytkowników i może zarządzać ich uprawnieniami z poziomu panelu administratora. 
 
-%\section{Rozbudowa funkcjonalna w przyszłości}
+%W trakcie pisania tej pracy udało się zbudować aplikację mobilną do nauki znaków kanji oraz system służący do administracji jej użytkownikami. Wymagania funkcjonalne zostały w większości spełnione, jednak pozostało kilka elementów które zostały pominięte na rzecz ważniejszych zadań, których nie udało się przewidzieć na początku planowania pracy. \ksremark{$\gets$ nie tak. Tutaj piszemy, jakie ma cechy aplikacja. Czyli coś w stylu: W ramach niniejszej pracy inżynierskiej powstała aplikacja taka i siaka. Aplikacja umożliwia, no i tu piszemy, jaka jest jej funkcjonalność.} Najważniejsze cechy aplikacji, czyli możliwość przeglądania słownika znaków oraz nauka z użyciem metody powtórek w interwałach zostały zaimplementowane. Pominięto takie funkcjonalności jak nauka pisania poprzez rysowanie na telefonie lub informacja zwrotna dla nauczyciela zadającego zadanie domowe. Aplikacja jest otwarta na modyfikacje, w przyszłości więc jest możliwość dodania wyżej wymienionych przypadków użycia. Rozwiązanie spełnia założenia wymagań niefunkcjonalnych za wyjątkiem nieco większego pliku lokalnie przechowywanej bazy danych niż zakładano.
 
 Aplikacja do nauki znaków kanji ma duży potencjał na rozwój jej funkcjonalności. Nauka badająca sposoby, w jakie ludzie zapamiętują nowe informacje, szczególnie w kontekście języków obcych nauczanych komputerowo może przynieść wiele inspiracji do udoskonalania algorytmu dostarczającego zadania do użytkownika. Dodatkowo można znacznie ulepszyć działanie aplikacji z programistycznego punktu widzenia, na przykład wykonać refraktoryzację kodu na wzorzec projektowy MVP lub zaprojektować bardziej intuicyjny interfejs użytkownika.
 
-Często występującym problemem w dziedzinie komputerowo wspomaganego nauczania języków jest binarne postrzeganie problemu przez komputer. Jeśli sprawdzanie poprawności odpowiedzi odbywa się po prostu za pomocą porównania łańcuchów znaków, wszystkie nieszablonowe lub zawierające drobne literówki odpowiedzi będą traktowane jako niepoprawne. Przy takim podejściu nie ma możliwości przyznania części punktu, jak to odbywa się w tradycyjnym nauczaniu. Implementując inteligentniejszy system sprawdzania odpowiedzi można też zauważyć pewnie tendencje użytkownika i wykorzystać tą wiedzę do dostosowania strategii nauczania. Przy takich zadaniach mogą się okazać pomocne technologie przetwarzania języka naturalnego (ang. \english{natural language processing}, NLP}).
+Często występującym problemem w dziedzinie komputerowo wspomaganego nauczania języków jest binarne postrzeganie problemu przez komputer. Jeśli sprawdzanie poprawności odpowiedzi odbywa się po prostu za pomocą porównania łańcuchów znaków, wszystkie nieszablonowe lub zawierające drobne literówki odpowiedzi będą traktowane jako niepoprawne. Przy takim podejściu nie ma możliwości przyznania części punktu, jak to odbywa się w tradycyjnym nauczaniu. Implementując inteligentniejszy system sprawdzania odpowiedzi można też zauważyć pewnie tendencje użytkownika i wykorzystać tą wiedzę do dostosowania strategii nauczania. Przy takich zadaniach mogą się okazać pomocne technologie przetwarzania języka naturalnego (ang. \english{natural language processing, NLP}).
 
 Dużym obszarem, w którym aplikacja mobilna mogłaby się rozwinąć jest testowanie. Zaczynając od pokrycia testami jednostkowymi całego kodu, przez testy integracyjne aż do testów interfejsu użytkownika -- dzięki kompleksowemu testowaniu aplikacja mogłaby dużo zyskać na stabilności i bezpieczeństwie. W dalszych etapach rozwoju można by też rozważyć wykorzystanie praktyk ciągłej integracji i ciągłego wdrażania.
 
-%\section{Problemy napotkane w trakcie pracy}
-
+Kod źródłowy rozwiązania jest dostępny na serwisie GitHub\footnote{\url{https://github.com/aleksandrakyc/kanji-learning-app}}, a panel administratora można odwiedzić na stronie internetowej\footnote{\url{https://kanjilearningapp-e002b.web.app/}}.
 \backmatter
 
 %\bibliographystyle{plplain}  % bibtex
@@ -1165,7 +1167,6 @@ Dużym obszarem, w którym aplikacja mobilna mogłaby się rozwinąć jest testo
 \printbibliography           % biblatex
 \addcontentsline{toc}{chapter}{Bibliografia} 
 \begin{appendices}
-\ksremark{Trochę krótka bibliografia.}
 % TODO
 \chapter{Spis skrótów i symboli}
 
