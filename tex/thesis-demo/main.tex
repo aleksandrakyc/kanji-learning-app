@@ -614,7 +614,7 @@ Inną kwestią, często lekceważoną przez samouków, jest kolejność stawiani
 
 Podobnie jak inne języki, japoński posiada swój własny system egzaminów przeznaczonych dla obcokrajowców. Egzaminy JLPT (jap. \japanese{日本語能力試験} ang. \english{Japanese Language Proficiency Test}) wydzielają pewne poziomy, które określają umiejętności językowe ucznia. W języku japońskim te poziomy oznacza się literą N oraz cyfrą od 1 do 5, gdzie N5 to najniższy, a N1 najbardziej biegły. Do zdania każdego z tych egzaminów potrzebny jest rosnący z poziomu na poziom zasób kanji. Zaczynając od niewielkich liczb jak około sto dla N5 i trzysta dla N4, kończymy na ponad dwu tysiącach dla pełnej biegłości w pisaniu i czytaniu według egzaminatorów.
 
-Podział znaków kanji według trudności wygląda inaczej dla rodzimych mieszkańców Japonii. Jest on ułożony względem systemu szkolnictwa publicznego, podzielony na klasy w których uczniowie poznają dane znaki. Do zestawu dwu tysięcy znaków wymaganych w szkole, czyli \japanese{常用漢字, jōyō kanji} dochodzi 846 znaków \japanese{人名用, jinmeiyō}, które są dopuszczane w imionach i nazwiskach, mimo że nie należą do \japanese{jōyō kanji}.
+Podział znaków kanji według trudności wygląda inaczej dla rodzimych mieszkańców Japonii. Jest on ułożony względem systemu szkolnictwa publicznego, podzielony na klasy w których uczniowie poznają dane znaki. Do zestawu dwu tysięcy znaków wymaganych w szkole, czyli \japanese{常用漢字, jōyō kanji}, dochodzi 846 znaków \japanese{人名用, jinmeiyō}, które są dopuszczane w imionach i nazwiskach, mimo że nie należą do \japanese{jōyō kanji}.
 
 Nauka znaków kanji to wieloetapowy proces. Aplikacje i inne pomoce naukowe przeznaczone do tego celu mogą być wysoko wyspecjalizowane, aby jak najbardziej ułatwić przyswajanie informacji.
 %%%%%%%%%%%%%%%%%%%%%%%%
@@ -630,6 +630,7 @@ Nauka znaków kanji to wieloetapowy proces. Aplikacje i inne pomoce naukowe prze
 
 Wymagania funkcjonalne zostały określone jako lista funkcjonalności z przypisanymi priorytetami, przedstawiona w formie tabeli \ref{id:tab:wymagania}. Najważniejsze są wymagania określone priorytetem Krytyczny, potem Ważny, następnie Niski, najmniejszą wagę mają te z oznacznikiem Opcjonalny. 
 
+\ksremark{Tab. \ref{id:tab:wymagania}: Kolumna `priorytety': małymi literami}
 \begin{table}[] 
 \centering
 \caption{Tabela przedstawiająca wymagania funkcjonalne zestawione z priorytetami.}
@@ -813,12 +814,12 @@ Panel administratora zawiera większość funkcjonalności potrzebnych do admini
 
 \section{Bezpieczeństwo}
 
-System pobiera pewne wrażliwe dane na temat użytkowników, takie jak adres mailowy, dlatego ważne są kwestie bezpieczeństwa aplikacji. Narzędzia Firebase wykorzystywane w tej pracy, czyli autoryzacja użytkowników oraz baza danych, posiadają certyfikaty prywatności i bezpieczeństwa ISO 27001, ISO 27017, ISO 27018 oraz SOC 1, SOC 2, i SOC 3\footnote{\url{https://firebase.google.com/support/privacy}}. 
+System pobiera pewne wrażliwe dane na temat użytkowników, takie jak adres mailowy, dlatego ważne są kwestie bezpieczeństwa aplikacji. Narzędzia Firebase wykorzystywane w tej pracy, czyli autoryzacja użytkowników oraz baza danych, posiadają certyfikaty prywatności i bezpieczeństwa ISO~27001, ISO~27017, ISO~27018 oraz SOC~1, SOC~2, i SOC~3\footnote{\url{https://firebase.google.com/support/privacy}}. 
 Baza danych jest zabezpieczona regułami (rys. \ref{fig:rules}), które blokują dostęp do danych użytkownikom niezalogowanym, co stanowi kolejną barierę.
 
 \begin{figure}[]
 \centering
-\includegraphics[width=0.5\textwidth]{Firestore}
+\includegraphics[width=0.7\textwidth]{Firestore}
 \caption{Przykład reguł definiujących dostęp do bazy danych.}
 \label{fig:rules}
 \end{figure}
@@ -964,7 +965,7 @@ Architektura systemu została zaprezentowana za pomocą diagramu na rysunku \ref
 \item aplikacja mobilna do nauki kanji (roz. \ref{sec:1}),
 \item lokalna baza danych z danymi dotyczącymi języka japońskiego (roz. \ref{sec:2}),
 \item baza danych przechowująca dane użytkowników, ich postępy oraz grupy, do których należą (roz. \ref{sec:3}),
-\item panel administratora pozwalający na zarządzanie użytkownikami (roz. \ref{sec:4}),
+\item panel administratora pozwalający na zarządzanie użytkownikami (roz. \ref{sec:4}).
 \end{itemize}
 
 \begin{figure}[]
