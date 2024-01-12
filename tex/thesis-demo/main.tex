@@ -519,7 +519,7 @@ This thesis describes a mobile application for learning kanji as well as an admi
 \end{otherlanguage}
 \subsubsection*{Key words}  
 \begin{otherlanguage}{british}
-Android, Japanese language learning, mobile application, kanji
+Android, Japanese language learning, mobile application, Kanji
 \end{otherlanguage}
 
 %%%%%%%%%%%%%%%%%% SPIS TRESCI %%%%%%%%%%%%%%%%%%%%%%
@@ -585,7 +585,9 @@ Dziennikarz Sebastian Leitner w 1972 wymyślił sposób na dalsze usprawnienie n
 
 Sposób Leitnera, mimo że skuteczny, jest żmudny do implementacji. Uczeń musi napisać ręcznie wszystkie fiszki, zrobić lub zakupić kilka pudełek o podobnym rozmiarze, rozkładać ten obszerny zestaw za każdym razem, gdy chce powtórzyć materiał. Tym samym traci mobilność, która jest dużą zaletą fiszek. W tym miejscu z pomocą przychodzi nauka języków wspomagana komputerowo (ang. {\english{Computer-Assisted Language Learning}}, CALL). Jest to rozwijana od lat pięćdziesiątych dwudziestego wieku dziedzina wykorzystująca komputery do poprawiania umiejętności językowych \citep{bib:konferencjaCALLhistory}. Ten sposób podejścia do problemu zrzuca z barków uczniów część problemów z tworzeniem fiszek, a wraz z popularyzacją urządzeń takich jak smartfony czy tablety zwraca mobilność nauki. 
 
-Algorytm powtórek w interwałach (ang. \english{spaced repetition}), którego papierową implementacją jest wyżej wspomniany system Leitnera, został poddany wielokrotnym badaniom \cite{bib:artykulAlzheimer,bib:artykulSpaced}. Wskazują one nie tylko na poprawę jakości zapamiętywania danego materiału, ale też na ogólną poprawę pamięci, szczególnie u osób chorujących na chorobę Alzheimera lub inne schorzenia związane z pogorszeniem umiejętności zapamiętywania \cite{bib:artykulAlzheimer}. Metoda powtórek w~interwałach jest szczególnie użyteczna w nauce słownictwa języków obcych. Jest to spowodowane faktem, że informacje do przyswojenia są liczne, lecz małe. Tę samą zasadę można wykorzystać przy nauce znaków kanji. 
+Dużą zaletą komputerowo wspomaganej nauki jest możliwość wykorzystania algorytmów do polepszenia jakości zapamiętywania informacji. SM-2 to naśladujący papierowy system Leitnera algorytm autorstwa Piotra Woźniaka stworzony na potrzeby aplikacji SuperMemo\footnote{\url{https://www.supermemo.com/pl}}. W algorytmie SM-2 należy podzielić wiedzę na najmniejsze możliwe części, po czym po każdej powtórce przydzielić wartość od zera do pięciu oznaczającą jakość zapamiętania danej informacji. Na podstawie tej wartości wyliczany jest \textit{współczynnik łatwości} (ang. \english{easiness factor}), a na jego podstawie generowane są pytania w przyszłej sesji powtórek \cite{bib:wozniak}. Sama aplikacja SuperMemo okazała się umiarkowanym sukcesem, jednak algorytm SM-2 cieszy się ogólnym uznaniem i jego zmodyfikowane wersje występują w najpopularniejszych narzędziach komputerowo wspomaganej nauki języków, takich jak Anki\footnote{\url{https://apps.ankiweb.net/}} czy Mnemosyne\footnote{\url{https://mnemosyne-proj.org/}}.
+
+Algorytm powtórek w interwałach (ang. \english{spaced repetition}), którego implementacją jest wyżej wspomniany SM-2, został poddany wielokrotnym badaniom \cite{bib:artykulAlzheimer,bib:artykulSpaced}. Wskazują one nie tylko na poprawę jakości zapamiętywania danego materiału, ale też na ogólną poprawę pamięci, szczególnie u osób chorujących na chorobę Alzheimera lub inne schorzenia związane z pogorszeniem umiejętności zapamiętywania \cite{bib:artykulAlzheimer}. Metoda powtórek w interwałach jest szczególnie użyteczna w nauce słownictwa języków obcych. Jest to spowodowane faktem, że informacje do przyswojenia są liczne, lecz małe. Tę samą zasadę można wykorzystać przy nauce znaków kanji. 
 
 Analiza rozwiązań dostępnych na rynku i badań wskazuje na komercyjny i naukowy sukces metody powtórek w interwałach. To zdroworozsądkowe podejście ma realny wpływ na szybkość i jakość przyswajania wiedzy. Przez ostatnie kilkadziesiąt lat próbowano udoskonalić ten względnie prosty algorytm z użyciem np. metod sztucznej inteligencji do wyliczania interwałów \cite{bib:internetNN, bib:lstms}. Takie podejście ma mieszane rezultaty, nie jest jasne jak realny jest wpływ optymalizacji długości interwału na jakość nauki \cite[rozdział 6]{bib:ksiazkaEssays}.
 
@@ -967,7 +969,7 @@ Architektura systemu została zaprezentowana za pomocą diagramu na rysunku \ref
 
 \begin{figure}[]
 \centering
-\includegraphics[width=0.8\textwidth]{archi}
+\includegraphics[width=\textwidth]{component}
 \caption{Diagram przedstawiający architekturę systemu.}
 \label{fig:archi}
 \end{figure}
@@ -1048,13 +1050,13 @@ Aplikacja jest zbudowana z następujących pakietów:
 \begin{figure}[]
 \centering
 \includegraphics[width=\textwidth]{packages}
-\caption{Diagram modułu aplikacji panelu administratora.}
+\caption{Diagram pakietów aplikacji mobilnej.}
 \label{fig:package}
 \end{figure}
 
 \subsection{Panel administratora}
 
-Kod panelu administratora składa się z komponentów odpowiedzialnych za interfejs użytkownika, serwisów zarządzających danymi oraz modeli reprezentujących dane. Diagram na rysunku \ref{fig:angular} przedstawia strukturę modułu aplikacji i komponentów które zawiera.
+Kod panelu administratora składa się z komponentów odpowiedzialnych za interfejs użytkownika, serwisów zarządzających danymi oraz modeli reprezentujących dane. Drzewo na rysunku \ref{fig:dirtree} przedstawia strukturę plików aplikacji, a architekturę na rysunku \ref{fig:archi}.
 
 \begin{figure}
 \dirtree{%
@@ -1075,18 +1077,6 @@ Kod panelu administratora składa się z komponentów odpowiedzialnych za interf
 \caption{Struktura plików w kodzie panelu administratora.}
 \label{fig:dirtree}
 \end{figure}
-
-\begin{figure}[]
-\centering
-\includegraphics[width=\textwidth]{angular}
-\caption{Diagram modułu aplikacji panelu administratora.}
-\label{fig:angular}
-\end{figure}
-\ksremark{Rys. \ref{fig:angular}: Czy dałoby się, żeby ten rysunek nie był tak mocno poziomy. Jaką relację oznaczają strzałki na tym diagramie?}
-
-%\section{Algorytm SM-2}
-
-
 
 % TODO
 \chapter{Weryfikacja i walidacja}
@@ -1127,7 +1117,7 @@ Na potrzeby zautomatyzowanego testowania aplikacji przeznaczonych na system Andr
 \label{fig:testscopes}
 \end{figure}
 
-Na zakres testowania aplikacji mobilnej opisywanej w tej pracy oprócz testów manualnych składają się testy jednostkowe tych klas, które są odpowiedzialne za zadania bardziej skomplikowane niż wymiana informacji z bazą danych. Aby móc bezpiecznie wydać aplikację na przykład w Sklepie Play, należałoby rozszerzyć testowanie o testy integracyjne i testy interfejsu użytkownika. 
+Na zakres testowania aplikacji mobilnej opisywanej w tej pracy oprócz testów manualnych składają się testy jednostkowe klas odpowiedzialnych za logikę aplikacji. Aby móc bezpiecznie wydać aplikację na przykład w Sklepie Play, należałoby rozszerzyć testowanie o testy integracyjne i testy interfejsu użytkownika. 
 
 Przykładem klasy przetestowanej za pomocą testów jednostkowych jest \texttt{QuestionGenerator}. Ta klasa jest odpowiedzialna za generowanie pytań (obiektów typu \texttt{QuestionModel}) w sposób, który pozwoli jak najlepiej przyswoić informacje użytkownikowi. Bierze pod uwagę między innymi liczbę odpowiadającą każdemu znakowi, która oznacza biegłość użytkownika w pytaniach dotyczących tego znaku. Na podstawie tych danych generuje losowe pytania dotyczących tych znaków w zestawie, z którymi użytkownik do tej pory radził sobie najgorzej. 
 
@@ -1159,7 +1149,7 @@ Często występującym problemem w dziedzinie komputerowo wspomaganego nauczania
 
 Dużym obszarem, w którym aplikacja mobilna mogłaby się rozwinąć jest testowanie. Zaczynając od pokrycia testami jednostkowymi całego kodu, przez testy integracyjne aż do testów interfejsu użytkownika -- dzięki kompleksowemu testowaniu aplikacja mogłaby dużo zyskać na stabilności i bezpieczeństwie. W dalszych etapach rozwoju można by też rozważyć wykorzystanie praktyk ciągłej integracji i ciągłego wdrażania.
 
-Kod źródłowy rozwiązania jest dostępny na serwisie GitHub\footnote{\url{https://github.com/aleksandrakyc/kanji-learning-app}}, a panel administratora można odwiedzić na stronie internetowej\footnote{\url{https://kanjilearningapp-e002b.web.app/}}.
+Kod źródłowy rozwiązania jest dostępny na repozytorium w serwisie GitHub\footnote{\url{https://github.com/aleksandrakyc/kanji-learning-app}}, a panel administratora można odwiedzić na stronie internetowej\footnote{\url{https://kanjilearningapp-e002b.web.app/}}.
 \backmatter
 
 %\bibliographystyle{plplain}  % bibtex
