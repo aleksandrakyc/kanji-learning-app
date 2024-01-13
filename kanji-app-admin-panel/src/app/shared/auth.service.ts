@@ -50,6 +50,7 @@ export class AuthService {
         this.fireauth.signOut()
           .then(() => {
             console.log("log out");
+            this.router.navigate(['/login']);
             resolve();
           }).catch((error) => {
             reject();
@@ -65,7 +66,6 @@ export class AuthService {
         {
           user?.updatePassword(newP).then(
             res => console.log(res)
-            
           )
         }
         ).then( res =>
