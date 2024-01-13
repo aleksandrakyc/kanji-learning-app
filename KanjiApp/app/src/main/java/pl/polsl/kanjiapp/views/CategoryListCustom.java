@@ -1,7 +1,12 @@
 package pl.polsl.kanjiapp.views;
 
-import android.app.AlertDialog;
 import android.os.Bundle;
+import android.util.Log;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.ProgressBar;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -10,32 +15,16 @@ import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.util.Log;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.ProgressBar;
-import android.widget.Toast;
-
-import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentSnapshot;
-import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
-import java.util.stream.Stream;
 
 import pl.polsl.kanjiapp.R;
 import pl.polsl.kanjiapp.adapters.CategoryListAdapter;
 import pl.polsl.kanjiapp.types.CategoryType;
-import pl.polsl.kanjiapp.types.Grade;
-import pl.polsl.kanjiapp.types.Jlpt;
 import pl.polsl.kanjiapp.utils.FirestoreAdapter;
 
 public class CategoryListCustom extends Fragment implements CategoryListAdapter.ItemClickListener{

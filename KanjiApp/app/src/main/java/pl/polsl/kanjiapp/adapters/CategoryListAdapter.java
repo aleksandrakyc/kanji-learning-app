@@ -22,18 +22,12 @@ public class CategoryListAdapter extends RecyclerView.Adapter<CategoryListAdapte
     private ItemClickListener mClickListener;
     private int tag;
 
-    /**
-     * Provide a reference to the type of views that you are using
-     * (custom ViewHolder)
-     */
     public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
         private final TextView textView;
 
         public ViewHolder(View view) {
             super(view);
-            // Define click listener for the ViewHolder's View
-
-            textView = (TextView) view.findViewById(R.id.textView);
+            textView = view.findViewById(R.id.textView);
             textView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -52,18 +46,11 @@ public class CategoryListAdapter extends RecyclerView.Adapter<CategoryListAdapte
         }
     }
 
-    /**
-     * Initialize the dataset of the Adapter
-     *
-     * @param dataSet String[] containing the data to populate views to be used
-     * by RecyclerView
-     */
     public CategoryListAdapter(Context context, ArrayList<String> dataSet, int tag) {
         localDataSet = dataSet;
         this.tag = tag;
     }
 
-    // Create new views (invoked by the layout manager)
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup viewGroup, int viewType) {
         // Create a new view, which defines the UI of the list item
@@ -73,30 +60,24 @@ public class CategoryListAdapter extends RecyclerView.Adapter<CategoryListAdapte
         return new ViewHolder(view);
     }
 
-    // Replace the contents of a view (invoked by the layout manager)
     @Override
     public void onBindViewHolder(ViewHolder viewHolder, final int position) {
 
-        // Get element from your dataset at this position and replace the
-        // contents of the view with that element
         if (tag == 1)
             viewHolder.getTextView().setText(localDataSet.get(position).substring(28));
         else
             viewHolder.getTextView().setText(localDataSet.get(position));
     }
 
-    // Return the size of your dataset (invoked by the layout manager)
     @Override
     public int getItemCount() {
         return localDataSet.size();
     }
 
-    // allows clicks events to be caught
     public void setClickListener(ItemClickListener itemClickListener) {
         this.mClickListener = itemClickListener;
     }
 
-    // parent activity will implement this method to respond to click events
     public interface ItemClickListener {
         void onItemClick(View view, int position);
     }

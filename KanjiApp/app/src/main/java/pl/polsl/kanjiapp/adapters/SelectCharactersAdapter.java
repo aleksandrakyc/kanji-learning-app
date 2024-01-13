@@ -31,7 +31,6 @@ public class SelectCharactersAdapter extends RecyclerView.Adapter<SelectCharacte
         this.selectedCharacters = new TreeSet<>();
     }
 
-    // inflates the cell layout from xml when needed
     @Override
     @NonNull
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
@@ -39,7 +38,6 @@ public class SelectCharactersAdapter extends RecyclerView.Adapter<SelectCharacte
         return new ViewHolder(view);
     }
 
-    // binds the data to the TextView in each cell
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         CharacterModel character = charModelArrayList.get(position);
@@ -55,7 +53,6 @@ public class SelectCharactersAdapter extends RecyclerView.Adapter<SelectCharacte
         //notifyItemChanged(position);
     }
 
-    // total number of cells
     @Override
     public int getItemCount() {
         return charModelArrayList.size();
@@ -65,7 +62,6 @@ public class SelectCharactersAdapter extends RecyclerView.Adapter<SelectCharacte
         this.selectedCharacters = selectedCharacters;
     }
 
-    // stores and recycles views as they are scrolled off screen
     public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         TextView kanji;
         TextView meaning;
@@ -83,17 +79,14 @@ public class SelectCharactersAdapter extends RecyclerView.Adapter<SelectCharacte
         }
     }
 
-    // convenience method for getting data at click position
     CharacterModel getItem(int id) {
         return charModelArrayList.get(id);
     }
 
-    // allows clicks events to be caught
     public void setClickListener(ItemClickListener itemClickListener) {
         this.mClickListener = itemClickListener;
     }
 
-    // parent activity will implement this method to respond to click events
     public interface ItemClickListener {
         void onItemClick(View view, int position);
     }

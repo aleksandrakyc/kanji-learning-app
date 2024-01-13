@@ -109,6 +109,33 @@ public class DataBaseAdapter {
         }
     }
 
+    public ArrayList<CharacterModel> searchByMeaning(String userMeaning) {
+        ArrayList<CharacterModel> returnList = new ArrayList<>();
+        try {
+            String sql = "SELECT kanji, onyomi, kunyomi, meaning, compact_meaning, grade, jlpt, frequency FROM kanjidict WHERE meaning LIKE '%" + userMeaning + "%';";
+            Log.d(TAG, "getAllKanji: " + sql);
+            Cursor cursor = mDb.rawQuery(sql, null);
+            if (cursor.moveToFirst()) {
+                do {
+                    String kanji = cursor.getString(0);
+                    String onyomi = cursor.getString(1);
+                    String kunyomi = cursor.getString(2);
+                    String meaning = cursor.getString(3);
+                    String compact_meaning = cursor.getString(4);
+                    String grade = cursor.getString(5);
+                    String jlpt = cursor.getString(6);
+                    String frequency = cursor.getString(7);
+                    CharacterModel newCharacter = new CharacterModel(kanji, onyomi, kunyomi, meaning, compact_meaning, grade, jlpt, frequency);
+                    returnList.add(newCharacter);
+                } while (cursor.moveToNext());
+            }
+            return returnList;
+        } catch (SQLException mSQLException) {
+            Log.e(TAG, "readDatabase >>" + mSQLException);
+            throw mSQLException;
+        }
+    }
+
     public ArrayList<CharacterModel> getKanjiByJlpt(Jlpt level) {
         ArrayList<CharacterModel> returnList = new ArrayList<>();
         try {

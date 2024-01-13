@@ -58,7 +58,7 @@ public class KanjiListView extends Fragment {
         if (getArguments() != null) {
             Log.d(TAG, "onCreate: " + getArguments().getInt("categoryType"));
             type = CategoryType.intToCategoryType(getArguments().getInt("categoryType"));
-            if (type == CategoryType.Custom){
+            if (type == CategoryType.Custom || type == CategoryType.Search){
                 setId = getArguments().getString("level");
             }
             else
@@ -79,6 +79,9 @@ public class KanjiListView extends Fragment {
 
         btn = getView().findViewById(R.id.button);
 
+        if (type == CategoryType.Search){
+            btn.setVisibility(View.GONE);
+        }
         btn.setOnClickListener(new View.OnClickListener() {
             Bundle bundle = new Bundle();;
             @Override
@@ -106,6 +109,10 @@ public class KanjiListView extends Fragment {
                     break;
                 case Grade:
                     characterModelArrayList = dataBaseAdapter.getKanjiByGrade(Grade.intToGrade(mLevel));
+                    break;
+                case Search:
+                    characterModelArrayList = dataBaseAdapter.searchByMeaning(setId);
+                    Log.d(TAG, "onViewCreated: " + characterModelArrayList);
                     break;
                 case invalid:
                 default:

@@ -5,8 +5,6 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentActivity;
 import androidx.viewpager2.adapter.FragmentStateAdapter;
 
-import org.checkerframework.checker.units.qual.C;
-
 import pl.polsl.kanjiapp.views.CategoryListCustom;
 import pl.polsl.kanjiapp.views.CategoryListHomework;
 import pl.polsl.kanjiapp.views.CategoryListPredefined;

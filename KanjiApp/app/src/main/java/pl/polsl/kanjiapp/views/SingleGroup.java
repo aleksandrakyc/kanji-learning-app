@@ -52,6 +52,7 @@ public class SingleGroup extends Fragment implements CategoryListAdapter.ItemCli
     Button addMemberBtn, addSetBtn;
     private ArrayList<String> members, sets, customSets;
     CategoryListAdapter adapterMembers, adapterHomework;
+    private Boolean isTeacher;
     public SingleGroup() {
         // Required empty public constructor
     }
@@ -85,6 +86,7 @@ public class SingleGroup extends Fragment implements CategoryListAdapter.ItemCli
         sets = new ArrayList<>();
         adapterHomework = new CategoryListAdapter(getContext(), sets, 0);
         recyclerViewSets.setAdapter(adapterHomework);
+        checkTeacherPermissions();
         getHomework();
 
         members = new ArrayList<>();
@@ -94,6 +96,10 @@ public class SingleGroup extends Fragment implements CategoryListAdapter.ItemCli
         getMembers();
 
         addMemberBtn = getView().findViewById(R.id.buttonAddMember);
+
+        addSetBtn = getView().findViewById(R.id.buttonAddSet);
+        addMemberBtn.setVisibility(View.GONE);
+        addSetBtn.setVisibility(View.GONE);
         addMemberBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -112,8 +118,6 @@ public class SingleGroup extends Fragment implements CategoryListAdapter.ItemCli
                 dialog.show();
             }
         });
-
-        addSetBtn = getView().findViewById(R.id.buttonAddSet);
         addSetBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -225,6 +229,29 @@ public class SingleGroup extends Fragment implements CategoryListAdapter.ItemCli
                     adapterHomework.notifyItemChanged(sets.indexOf(setName));
                 });
                 Log.d(TAG, "onSuccess: "+sets);
+            }
+        });
+    }
+
+    private void checkTeacherPermissions(){
+        firestore.getCurrentUserInfo().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                if (task.isSuccessful()){
+                    DocumentSnapshot document = task.getResult();
+                    if (document.exists()){
+                        isTeacher = document.getBoolean("isTeacher");
+                        if(isTeacher != null && isTeacher){
+                            Log.d(TAG, "onComplete: teacher");
+
+                            addMemberBtn.setVisibility(View.VISIBLE);
+                            addSetBtn.setVisibility(View.VISIBLE);
+                        }
+                        else{
+                            Log.d(TAG, "onComplete: student");
+                        }
+                    }
+                }
             }
         });
     }
